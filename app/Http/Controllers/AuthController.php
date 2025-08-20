@@ -10,7 +10,7 @@ use App\Models\User;
 
 class AuthController extends Controller
 {
-    // 🔑 Login
+    //  Login
     public function login(Request $request)
     {
         $request->validate([
@@ -36,7 +36,7 @@ class AuthController extends Controller
         ]);
     }
 
-    // 🚪 Logout
+    //  Logout
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();

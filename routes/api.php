@@ -23,7 +23,7 @@ Route::get('/testimonials', [TestimonialController::class, 'index']);
 Route::post('/inquiries', [InquiryController::class, 'store']);
 
 // Protected Admin routes
-Route::middleware('auth:sanctum', 'is_admin')->group(function () {
+Route::middleware(['auth:sanctum', 'is_admin'])->group(function () {
     // Projects management (Admin only)
     Route::post('/projects', [ProjectController::class, 'store']);
     Route::put('/projects/{id}', [ProjectController::class, 'update']);

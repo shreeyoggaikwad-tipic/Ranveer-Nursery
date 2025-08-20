@@ -8,12 +8,13 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('services', function (Blueprint $table) {
-            $table->id();
-            $table->string('title'); // Service name (e.g., Renovation)
-            $table->text('description')->nullable();
-            $table->string('icon')->nullable(); // Icon or image path
-            $table->timestamps();
-        });
+    $table->id();
+    $table->string('title'); // Service name (e.g., Renovation)
+    $table->text('description')->nullable();
+    $table->text('benefits')->nullable(); // Store as text (could be JSON if multiple benefits)
+    $table->json('photos')->nullable(); // Array of photo URLs/paths
+    $table->timestamps();
+});
     }
 
     public function down(): void

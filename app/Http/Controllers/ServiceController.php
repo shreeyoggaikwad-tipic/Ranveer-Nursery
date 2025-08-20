@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
@@ -32,6 +31,9 @@ class ServiceController extends Controller
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
+            'benefits' => 'nullable|string',
+            'photos' => 'nullable|array',
+            'photos.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'icon' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
@@ -42,12 +44,15 @@ class ServiceController extends Controller
             ], 422);
         }
 
-        $serviceData = $request->except('icon');
-        
-        // Handle icon upload
-        if ($request->hasFile('icon')) {
-            $iconPath = $request->file('icon')->store('services', 'public');
-            $serviceData['icon'] = $iconPath;
+        $serviceData = $request->except(['photos']);
+
+        // Handle photos upload (multiple)
+        if ($request->hasFile('photos')) {
+            $photoPaths = [];
+            foreach ($request->file('photos') as $photo) {
+                $photoPaths[] = $photo->store('services/photos', 'public');
+            }
+            $serviceData['photos'] = json_encode($photoPaths);
         }
 
         $service = Service::create($serviceData);
@@ -96,6 +101,9 @@ class ServiceController extends Controller
         $validator = Validator::make($request->all(), [
             'title' => 'sometimes|required|string|max:255',
             'description' => 'nullable|string',
+            'benefits' => 'nullable|string',
+            'photos' => 'nullable|array',
+            'photos.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'icon' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
@@ -106,17 +114,22 @@ class ServiceController extends Controller
             ], 422);
         }
 
-        $serviceData = $request->except('icon');
-        
-        // Handle new icon upload
-        if ($request->hasFile('icon')) {
-            // Delete old icon if exists
-            if ($service->icon) {
-                Storage::disk('public')->delete($service->icon);
+        $serviceData = $request->except(['photos']);
+
+        // Handle new photos upload
+        if ($request->hasFile('photos')) {
+            // Delete old photos
+            if ($service->photos) {
+                foreach (json_decode($service->photos, true) as $oldPhoto) {
+                    Storage::disk('public')->delete($oldPhoto);
+                }
             }
-            
-            $iconPath = $request->file('icon')->store('services', 'public');
-            $serviceData['icon'] = $iconPath;
+
+            $photoPaths = [];
+            foreach ($request->file('photos') as $photo) {
+                $photoPaths[] = $photo->store('services/photos', 'public');
+            }
+            $serviceData['photos'] = json_encode($photoPaths);
         }
 
         $service->update($serviceData);
@@ -145,6 +158,13 @@ class ServiceController extends Controller
         // Delete associated icon
         if ($service->icon) {
             Storage::disk('public')->delete($service->icon);
+        }
+
+        // Delete associated photos
+        if ($service->photos) {
+            foreach (json_decode($service->photos, true) as $photo) {
+                Storage::disk('public')->delete($photo);
+            }
         }
 
         $service->delete();
