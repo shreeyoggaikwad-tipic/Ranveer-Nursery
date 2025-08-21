@@ -122,8 +122,8 @@ function InputField({ label, name, value, onChange, placeholder, type = 'text' }
 
 // WhatsApp Floating Button Component
 function WhatsAppButton() {
-     const [user, setUser] = useState({});
-    
+    const [user, setUser] = useState({});
+
     useEffect(() => {
         const fetchUser = async () => {
             try {
@@ -144,13 +144,15 @@ function WhatsAppButton() {
             "Hello! I'm interested in your construction services. Could we discuss my project requirements?"
         );
 
-        // Ensure full international number, no spaces
-        let phoneNumber = user.number.replace(/\D/g, ''); 
-        if (!phoneNumber.startsWith('91')) {
-            phoneNumber = '91' + phoneNumber; 
+        // Remove all non-digits
+        let phoneNumber = user.number.replace(/\D/g, '');
+
+        // If number length is 10, assume it's local and prepend country code
+        if (phoneNumber.length === 10) {
+            phoneNumber = '91' + phoneNumber;
         }
 
-        window.open(`https://wa.me/9552679797?text=${message}`, '_blank');
+        window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
     };
 
     return (
@@ -198,7 +200,7 @@ function ContactPage() {
 // Map & Business Hours component
 function MapAndBusinessHours() {
     const [user, setUser] = useState({});
-    
+
     useEffect(() => {
         const fetchUser = async () => {
             try {

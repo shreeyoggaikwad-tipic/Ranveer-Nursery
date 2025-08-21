@@ -45,7 +45,7 @@ Route::middleware(['auth:sanctum', 'is_admin'])->group(function () {
     // View inquiries (Admin only)
     Route::get('/inquiries', [InquiryController::class, 'index']);
     Route::get('/inquiries/export', [InquiryController::class, 'export']);
-    Route::get('/inquiries/{id}', [InquiryController::class, 'show']); // To be Checked
+    // Route::get('/inquiries/{id}', [InquiryController::class, 'show']); // To be Checked
     Route::delete('/inquiries/{id}', [InquiryController::class, 'destroy']);
     
     // Admin user info

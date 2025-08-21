@@ -105,38 +105,19 @@ class InquiryController extends Controller
     /**
      * Export inquiries to CSV (Admin only)
      */
-    public function export(): \Symfony\Component\HttpFoundation\StreamedResponse
+public function export()
 {
-    $inquiries = Inquiry::latest()->get();
+    $inquiries = \App\Models\Inquiry::all();
 
-    $filename = 'inquiries_' . date('Y-m-d_H-i-s') . '.csv';
+    $csvData = "Name,Email,Phone,Message\n";
+    foreach ($inquiries as $inq) {
+        $csvData .= "\"{$inq->name}\",\"{$inq->email}\",\"{$inq->phone}\",\"{$inq->message}\"\n";
+    }
 
-    $headers = [
-        "Content-type" => "text/csv",
-        "Content-Disposition" => "attachment; filename=$filename",
-        "Pragma" => "no-cache",
-        "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
-        "Expires" => "0"
-    ];
-
-    $callback = function() use ($inquiries) {
-        $handle = fopen('php://output', 'w');
-        fputcsv($handle, ['ID', 'Name', 'Email', 'Phone', 'Message', 'Submitted At']);
-
-        foreach ($inquiries as $inquiry) {
-            fputcsv($handle, [
-                $inquiry->id,
-                $inquiry->name,
-                $inquiry->email ?? 'N/A',
-                $inquiry->phone ?? 'N/A',
-                $inquiry->message,
-                $inquiry->created_at->format('Y-m-d H:i:s')
-            ]);
-        }
-        fclose($handle);
-    };
-
-    return response()->stream($callback, 200, $headers);
+    return response($csvData)
+        ->header('Content-Type', 'text/csv')
+        ->header('Content-Disposition', 'attachment; filename="inquiries.csv"');
 }
+
 
 }

@@ -17,8 +17,8 @@ function TestimonialCard({ testimonial, index }) {
             <div className="flex items-center">
                 {testimonial.photo ? (
                     <img
-                        src={testimonial.photo}
-                        // src={UserImg}
+                        // src={testimonial.photo}
+                        src={UserImg}
                         alt={testimonial.name}
                         className="w-12 h-12 rounded-full object-cover mr-4"
                     />
