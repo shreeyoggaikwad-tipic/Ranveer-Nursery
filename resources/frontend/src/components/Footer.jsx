@@ -1,7 +1,32 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 function Footer() {
+
+    const [user, setUser] = useState([]);
+
+    useEffect(() => {
+        const fetchStats = async () => {
+            try {
+
+                // Fetch user (assuming 1st user = admin)
+                const userRes = await axios.get("http://127.0.0.1:8000/api/users/1");
+                const user = userRes.data.data;
+
+                setUser([
+                    { number: user.email + "+", label: "📧" },
+                    { number: user.number + "+", label: "📞" },
+                    { number: user.location + "+", label: "📍" },
+                ]);
+            } catch (error) {
+                console.error("Error fetching stats:", error);
+            }
+        };
+
+        fetchStats();
+    }, []);
+
     return (
         <footer className="bg-gray-900 text-white pb-4 pt-8">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -24,10 +49,11 @@ function Footer() {
                     <div>
                         <h5 className="font-bold mb-4">Quick Links</h5>
                         <ul className="space-y-2 text-gray-400">
-                            <li><a href="#" className="hover:text-white transition-colors">About Us</a></li>
-                            <li><a href="#" className="hover:text-white transition-colors">Projects</a></li>
-                            <li><a href="#" className="hover:text-white transition-colors">Services</a></li>
-                            <li><a href="#" className="hover:text-white transition-colors">Contact</a></li>
+                            <li><Link to="/about" className="hover:text-white transition-colors">About Us</Link></li>
+                            <li><Link to="/projects" className="hover:text-white transition-colors">Projects</Link></li>
+                            <li><Link to="/services" className="hover:text-white transition-colors">Services</Link></li>
+                            <li><Link to="/testimonials" className="hover:text-white transition-colors">Testimonials</Link></li>
+                            <li><Link to="/contact" className="hover:text-white transition-colors">Contact</Link></li>
                         </ul>
                     </div>
 
@@ -44,9 +70,12 @@ function Footer() {
                     <div>
                         <h5 className="font-bold mb-4">Contact Info</h5>
                         <div className="space-y-2 text-gray-400">
-                            <p>📧 info@rachnakar.com</p>
-                            <p>📞 +91 98765 43210</p>
-                            <p>📍 Pune, Maharashtra</p>
+                            {user.map((info, index) => (
+                                <div key={index} className="flex items-center space-x-2">
+                                    <span className="text-sm">{info.label}</span>
+                                    <span className="font-semibold">{info.number}</span>
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </div>

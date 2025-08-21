@@ -7,6 +7,7 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\InquiryController;
 use App\Http\Controllers\TestimonialController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 
 // Authentication routes
 Route::post('/auth/login', [AuthController::class, 'login']);
@@ -21,6 +22,8 @@ Route::get('/testimonials', [TestimonialController::class, 'index']);
 
 // Contact/Inquiry submission (public)
 Route::post('/inquiries', [InquiryController::class, 'store']);
+
+Route::get('/users/{id}', [UserController::class, 'show']);
 
 // Protected Admin routes
 Route::middleware(['auth:sanctum', 'is_admin'])->group(function () {
@@ -41,7 +44,8 @@ Route::middleware(['auth:sanctum', 'is_admin'])->group(function () {
     
     // View inquiries (Admin only)
     Route::get('/inquiries', [InquiryController::class, 'index']);
-    Route::get('/inquiries/{id}', [InquiryController::class, 'show']);
+    Route::get('/inquiries/export', [InquiryController::class, 'export']);
+    Route::get('/inquiries/{id}', [InquiryController::class, 'show']); // To be Checked
     Route::delete('/inquiries/{id}', [InquiryController::class, 'destroy']);
     
     // Admin user info

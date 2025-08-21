@@ -41,7 +41,7 @@ function AdminLogin() {
             });
 
 
-            localStorage.setItem("auth_token", response.data.token);
+            localStorage.setItem("token", response.data.token);
 
             // Redirect to admin dashboard
             window.location.href = "/admin/dashboard";
@@ -200,7 +200,7 @@ function AdminLogin() {
                 </div>
             </div>
 
-            <style jsx>{`
+            <style>{`
                 @keyframes fade-in {
                     from {
                         opacity: 0;

@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
-import TestimonialCard from '../components/TestimonialCard';
-import { Link } from 'react-router-dom';
+import TestimonialCard from '../../components/TestimonialCard';
 import axios from 'axios';
+import AdminNav from '../../components/AdminNav';
 
-
-// Main Testimonials Page Component
-function TestimonialsPage() {
-
+function ManageTestimonials() {
+  
   const [testimonials, setTestimonials] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -33,7 +29,7 @@ function TestimonialsPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
-      <Navbar />
+      <AdminNav />
 
       {/* Hero Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8">
@@ -42,9 +38,6 @@ function TestimonialsPage() {
             <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
               Client <span className="text-blue-600">Testimonials</span>
             </h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed mb-8">
-              Don't just take our word for it. Hear what our satisfied clients have to say about their experience working with Rachnakar Enterprises.
-            </p>
             {testimonials.length > 0 && (
               <div className="inline-flex items-center bg-blue-100 text-blue-800 px-4 py-2 rounded-full">
                 <span className="text-yellow-400 mr-2">⭐</span>
@@ -66,29 +59,6 @@ function TestimonialsPage() {
           </div>
         </div>
       </section>
-
-      {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-blue-600 to-indigo-600 mx-4 sm:mx-6 lg:mx-8 rounded-3xl my-16">
-        <div className="max-w-4xl mx-auto text-center px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6 animate-fade-in">
-            Ready to Join Our Happy Clients?
-          </h2>
-          <p className="text-xl text-blue-100 mb-8 animate-fade-in">
-            Experience the same quality and satisfaction that our clients rave about.
-            Let's start building your dream project today.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in">
-            <Link to="/contact" className="bg-white text-blue-600 px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transform hover:scale-105 transition-all duration-300 shadow-lg">
-              Book Free Consultation
-            </Link>
-            <Link to="/projects" className="border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-blue-600 transform hover:scale-105 transition-all duration-300">
-              View Our Projects
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      <Footer />
 
       <style >{`
                 @keyframes fade-in {
@@ -125,4 +95,4 @@ function TestimonialsPage() {
   );
 }
 
-export default TestimonialsPage;
+export default ManageTestimonials

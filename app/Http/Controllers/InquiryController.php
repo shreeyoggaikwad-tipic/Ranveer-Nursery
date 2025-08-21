@@ -7,6 +7,7 @@ use App\Models\Inquiry;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 
 class InquiryController extends Controller
 {
@@ -104,42 +105,38 @@ class InquiryController extends Controller
     /**
      * Export inquiries to CSV (Admin only)
      */
-    public function export(): JsonResponse
-    {
-        $inquiries = Inquiry::latest()->get();
-        
-        $csvData = [];
-        $csvData[] = ['ID', 'Name', 'Email', 'Phone', 'Message', 'Submitted At'];
-        
+    public function export(): \Symfony\Component\HttpFoundation\StreamedResponse
+{
+    $inquiries = Inquiry::latest()->get();
+
+    $filename = 'inquiries_' . date('Y-m-d_H-i-s') . '.csv';
+
+    $headers = [
+        "Content-type" => "text/csv",
+        "Content-Disposition" => "attachment; filename=$filename",
+        "Pragma" => "no-cache",
+        "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
+        "Expires" => "0"
+    ];
+
+    $callback = function() use ($inquiries) {
+        $handle = fopen('php://output', 'w');
+        fputcsv($handle, ['ID', 'Name', 'Email', 'Phone', 'Message', 'Submitted At']);
+
         foreach ($inquiries as $inquiry) {
-            $csvData[] = [
+            fputcsv($handle, [
                 $inquiry->id,
                 $inquiry->name,
                 $inquiry->email ?? 'N/A',
                 $inquiry->phone ?? 'N/A',
                 $inquiry->message,
                 $inquiry->created_at->format('Y-m-d H:i:s')
-            ];
+            ]);
         }
+        fclose($handle);
+    };
 
-        $filename = 'inquiries_' . date('Y-m-d_H-i-s') . '.csv';
-        $filePath = 'exports/' . $filename;
-        
-        // Create CSV content
-        $csvContent = '';
-        foreach ($csvData as $row) {
-            $csvContent .= implode(',', array_map(function($field) {
-                return '"' . str_replace('"', '""', $field) . '"';
-            }, $row)) . "\n";
-        }
-        
-        // Store the CSV file
-        Storage::disk('public')->put($filePath, $csvContent);
-        
-        return response()->json([
-            'success' => true,
-            'message' => 'Inquiries exported successfully',
-            'download_url' => asset('storage/' . $filePath)
-        ]);
-    }
+    return response()->stream($callback, 200, $headers);
+}
+
 }

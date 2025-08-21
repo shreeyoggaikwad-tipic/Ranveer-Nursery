@@ -1,4 +1,5 @@
 import React from 'react'
+import UserImg from '../assets/user.jpg'
 
 function TestimonialCard({ testimonial, index }) {
     return (
@@ -14,9 +15,20 @@ function TestimonialCard({ testimonial, index }) {
             </div>
             <p className="text-gray-600 mb-6 leading-relaxed">"{testimonial.feedback}"</p>
             <div className="flex items-center">
-                <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full flex items-center justify-center text-white font-bold mr-4">
-                    {testimonial.name.charAt(0)}
-                </div>
+                {testimonial.photo ? (
+                    <img
+                        src={testimonial.photo}
+                        // src={UserImg}
+                        alt={testimonial.name}
+                        className="w-12 h-12 rounded-full object-cover mr-4"
+                    />
+                ) : (
+                    <img
+                        src={UserImg}
+                        alt={testimonial.name}
+                        className="w-12 h-12 rounded-full object-cover mr-4"
+                    />
+                )}
                 <div>
                     <h5 className="font-bold text-gray-900">{testimonial.name}</h5>
                     <p className="text-gray-600 text-sm">Satisfied Client</p>

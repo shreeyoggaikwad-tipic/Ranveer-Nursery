@@ -49,7 +49,7 @@ class ProjectController extends Controller
             'description' => 'nullable|string',
             'budget' => 'nullable|numeric|min:0',
             'duration' => 'nullable|string|max:255',
-            'images' => 'nullable|array',
+            'images' => 'nullable',
             'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 

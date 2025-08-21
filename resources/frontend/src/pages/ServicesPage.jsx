@@ -1,53 +1,30 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import ServiceCard from '../components/ServiceCard';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 function ServicesPage() {
-    const services = [
-        {
-            id: 1,
-            title: "Custom Home Construction",
-            description: "Design and build your dream home with our expert team. From concept to completion, we handle every detail with precision and care.",
-            icon: "🏠",
-            features: ["Architectural Planning", "Interior Design", "Quality Materials", "Timeline Management"]
-        },
-        {
-            id: 2,
-            title: "Apartment Development",
-            description: "Modern apartment complexes designed for comfort and lifestyle. We create spaces that residents love to call home.",
-            icon: "🏢",
-            features: ["Multi-unit Planning", "Amenity Integration", "Parking Solutions", "Security Systems"]
-        },
-        {
-            id: 3,
-            title: "Renovation Services",
-            description: "Transform your existing space with our comprehensive renovation services. Breathe new life into your property.",
-            icon: "🔨",
-            features: ["Kitchen Remodeling", "Bathroom Upgrades", "Flooring Installation", "Electrical Updates"]
-        },
-        {
-            id: 4,
-            title: "Commercial Construction",
-            description: "Professional commercial buildings designed for business success. Modern facilities that enhance productivity.",
-            icon: "🏗️",
-            features: ["Office Complexes", "Retail Spaces", "Industrial Buildings", "Compliance Management"]
-        },
-        {
-            id: 5,
-            title: "Interior Design",
-            description: "Complete interior design solutions that reflect your style and personality. Every detail carefully curated.",
-            icon: "🎨",
-            features: ["Space Planning", "Furniture Selection", "Lighting Design", "Color Coordination"]
-        },
-        {
-            id: 6,
-            title: "Project Management",
-            description: "End-to-end project management ensuring timely delivery and quality execution of all construction phases.",
-            icon: "📋",
-            features: ["Timeline Planning", "Budget Management", "Quality Control", "Vendor Coordination"]
-        }
-    ];
+
+    const [services, setServices] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    
+
+    useEffect(() => {
+        // Fetch all API data in parallel
+        Promise.all([
+            axios.get("http://127.0.0.1:8000/api/services")
+        ])
+            .then((responses) => {
+                setServices(responses[0].data.data);
+            })
+            .catch(err => {
+                console.error("Error fetching data:", err);
+            })
+            .finally(() => setLoading(false));
+    }, []);
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
@@ -61,7 +38,7 @@ function ServicesPage() {
                             Our <span className="text-blue-600">Services</span>
                         </h1>
                         <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-                            Comprehensive construction and design solutions tailored to bring your vision to life. 
+                            Comprehensive construction and design solutions tailored to bring your vision to life.
                             Quality craftsmanship meets innovative design in every project we undertake.
                         </p>
                     </div>
@@ -86,16 +63,16 @@ function ServicesPage() {
                         Ready to Start Your Project?
                     </h2>
                     <p className="text-xl text-blue-100 mb-8 animate-fade-in">
-                        Let's discuss your vision and create something extraordinary together. 
+                        Let's discuss your vision and create something extraordinary together.
                         Quality construction with affordable pricing in Pune.
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in">
-                        <button className="bg-white text-blue-600 px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transform hover:scale-105 transition-all duration-300 shadow-lg">
+                        <Link to="/contact" className="bg-white text-blue-600 px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transform hover:scale-105 transition-all duration-300 shadow-lg">
                             Book Free Consultation
-                        </button>
-                        <button className="border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-blue-600 transform hover:scale-105 transition-all duration-300">
+                        </Link>
+                        <Link to="/projects" className="border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-blue-600 transform hover:scale-105 transition-all duration-300">
                             View Our Projects
-                        </button>
+                        </Link>
                     </div>
                 </div>
             </section>

@@ -1,14 +1,38 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 function Status() {
 
-    const stats = [
-        { number: "50+", label: "Projects Completed" },
-        { number: "100+", label: "Happy Clients" },
-        { number: "5+", label: "Years Experience" },
-        { number: "24/7", label: "Support Available" },
-    ];
-    
+    const [stats, setStats] = useState([]);
+
+    useEffect(() => {
+        const fetchStats = async () => {
+            try {
+                // Fetch projects
+                const projectRes = await axios.get("http://127.0.0.1:8000/api/projects");
+                const completedProjects = projectRes.data.data.filter(
+                    (p) => p.status === "completed"
+                ).length;
+
+                // Fetch user (assuming 1st user = admin)
+                const userRes = await axios.get("http://127.0.0.1:8000/api/users/1");
+                const user = userRes.data.data;
+
+                setStats([
+                    { number: completedProjects + "+", label: "Projects Completed" },
+                    { number: user.happy_clients + "+", label: "Happy Clients" },
+                    { number: user.years_of_experience + "+", label: "Years of Experience" },
+                    { number: "24/7", label: "Support Available" },
+                ]);
+            } catch (error) {
+                console.error("Error fetching stats:", error);
+            }
+        };
+
+        fetchStats();
+    }, []);
+
+
     return (
         <section className="py-16 bg-white/50 backdrop-blur-sm">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

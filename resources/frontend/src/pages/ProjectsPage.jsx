@@ -3,74 +3,34 @@ import { Building2, Filter, Search, MapPin, Calendar, Users, Award, ArrowRight, 
 import ProjectCard from '../components/ProjectCard';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 export default function ProjectsPage() {
     const [activeFilter, setActiveFilter] = useState('all');
     const [searchTerm, setSearchTerm] = useState('');
     const [isVisible, setIsVisible] = useState(false);
+    const [projects, setProjects] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         setIsVisible(true);
     }, []);
 
-    // Sample project data
-    const projects = [
-        {
-            id: 1,
-            name: "Green Valley Residences",
-            location: "Baner, Pune",
-            type: "home",
-            status: "completed",
-            images: ["https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=500&h=300&fit=crop&crop=center"]
-        },
-        {
-            id: 2,
-            name: "Tech Park Plaza",
-            location: "Hinjewadi, Pune", 
-            type: "apartment",
-            status: "in-progress",
-            images: ["https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=500&h=300&fit=crop&crop=center"]
-        },
-        {
-            id: 3,
-            name: "Sunrise Villas",
-            location: "Kothrud, Pune",
-            type: "home",
-            status: "completed",
-            images: ["https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=500&h=300&fit=crop&crop=center"]
-        },
-        {
-            id: 4,
-            name: "Metro Heights",
-            location: "Wakad, Pune",
-            type: "apartment",
-            status: "completed",
-            images: ["https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=500&h=300&fit=crop&crop=center"]
-        },
-        {
-            id: 5,
-            name: "Royal Gardens",
-            location: "Viman Nagar, Pune",
-            type: "home",
-            status: "in-progress",
-            images: ["https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=500&h=300&fit=crop&crop=center"]
-        },
-        {
-            id: 6,
-            name: "Skyline Towers",
-            location: "Magarpatta, Pune",
-            type: "apartment",
-            status: "completed",
-            images: ["https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=500&h=300&fit=crop&crop=center"]
-        }
-    ];
 
-    const stats = [
-        { icon: <Building2 className="w-8 h-8" />, label: "Total Projects", value: "50+", color: "text-blue-600" },
-        { icon: <Users className="w-8 h-8" />, label: "Happy Clients", value: "200+", color: "text-green-600" },
-        { icon: <Calendar className="w-8 h-8" />, label: "Years Experience", value: "5+", color: "text-orange-600" },
-        { icon: <Award className="w-8 h-8" />, label: "Awards Won", value: "15+", color: "text-purple-600" }
-    ];
+    useEffect(() => {
+        // Fetch all API data in parallel
+        Promise.all([
+            axios.get("http://127.0.0.1:8000/api/projects")
+        ])
+            .then((responses) => {
+                setProjects(responses[0].data.data);
+            })
+            .catch(err => {
+                console.error("Error fetching data:", err);
+            })
+            .finally(() => setLoading(false));
+    }, []);
 
     const filterOptions = [
         { key: 'all', label: 'All Projects', icon: <Building2 className="w-4 h-4" /> },
@@ -81,17 +41,17 @@ export default function ProjectsPage() {
     ];
 
     const filteredProjects = projects.filter(project => {
-        const matchesFilter = activeFilter === 'all' || 
-                             project.type === activeFilter || 
-                             project.status === activeFilter;
+        const matchesFilter = activeFilter === 'all' ||
+            project.type === activeFilter ||
+            project.status === activeFilter;
         const matchesSearch = project.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                             project.location.toLowerCase().includes(searchTerm.toLowerCase());
+            project.location.toLowerCase().includes(searchTerm.toLowerCase());
         return matchesFilter && matchesSearch;
     });
 
     return (
         <div className="min-h-screen bg-gray-50">
-            <style jsx>{`
+            <style >{`
                 @keyframes fadeInUp {
                     from {
                         opacity: 0;
@@ -148,24 +108,24 @@ export default function ProjectsPage() {
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                         <div className={`${isVisible ? 'animate-slide-in-left' : 'opacity-0'}`}>
                             <h1 className="text-5xl font-bold text-gray-900 mb-6 leading-tight">
-                                Our Featured 
+                                Our Featured
                                 <span className="text-blue-600 block">Projects</span>
                                 in Pune
                             </h1>
                             <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-                                Quality construction with affordable pricing in Pune. We transform 
-                                your vision into reality with expert craftsmanship and innovative 
+                                Quality construction with affordable pricing in Pune. We transform
+                                your vision into reality with expert craftsmanship and innovative
                                 designs.
                             </p>
                         </div>
                         <div className={`${isVisible ? 'animate-slide-in-right' : 'opacity-0'}`} style={{ animationDelay: '0.2s' }}>
                             <div className="relative">
-                                <img 
+                                <img
                                     src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600&h=400&fit=crop&crop=center"
                                     alt="Modern construction project"
                                     className="w-full h-96 object-cover rounded-2xl shadow-2xl"
                                 />
-                                <div className="absolute -bottom-6 -left-6 bg-white p-6 rounded-xl shadow-xl">
+                                {/* <div className="absolute -bottom-6 -left-6 bg-white p-6 rounded-xl shadow-xl">
                                     <div className="flex items-center space-x-4">
                                         <div className="bg-green-100 p-3 rounded-full">
                                             <Building2 className="w-6 h-6 text-green-600" />
@@ -175,7 +135,7 @@ export default function ProjectsPage() {
                                             <p className="font-semibold text-gray-900">Tech Park Plaza</p>
                                         </div>
                                     </div>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                     </div>
@@ -194,11 +154,10 @@ export default function ProjectsPage() {
                                 <button
                                     key={option.key}
                                     onClick={() => setActiveFilter(option.key)}
-                                    className={`px-4 py-3 rounded-xl font-medium transition-all duration-300 flex items-center space-x-2 ${
-                                        activeFilter === option.key
+                                    className={`px-4 py-3 rounded-xl font-medium transition-all duration-300 flex items-center space-x-2 ${activeFilter === option.key
                                             ? 'bg-blue-600 text-white shadow-lg scale-105'
                                             : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                                    }`}
+                                        }`}
                                 >
                                     {option.icon}
                                     <span>{option.label}</span>
@@ -224,10 +183,10 @@ export default function ProjectsPage() {
 
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                             {filteredProjects.map((project, index) => (
-                                <ProjectCard 
-                                    key={project.id} 
-                                    project={project} 
-                                    index={index} 
+                                <ProjectCard
+                                    key={project.id}
+                                    project={project}
+                                    index={index}
                                 />
                             ))}
                         </div>
@@ -249,19 +208,19 @@ export default function ProjectsPage() {
             <div className="bg-white py-20">
                 <div className="max-w-4xl mx-auto text-center px-6 animate-fade-in-up" style={{ animationDelay: '1.2s' }}>
                     <h2 className="text-4xl font-bold text-gray-900 mb-4">
-                        Ready to Start Your 
+                        Ready to Start Your
                         <span className="text-blue-600"> Dream Project</span>?
                     </h2>
                     <p className="text-xl text-gray-600 mb-10 leading-relaxed max-w-2xl mx-auto">
                         Let's discuss your vision and bring it to life with our expert civil engineering solutions in Pune.
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        <button className="bg-blue-600 text-white px-10 py-4 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
-                            Get Free Consultation
-                        </button>
-                        <button className="border border-gray-300 text-gray-700 px-10 py-4 rounded-lg font-semibold hover:bg-gray-50 transition-colors duration-300">
-                            Contact Us Today
-                        </button>
+                        <Link to="/contact" className="bg-white text-blue-600 px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transform hover:scale-105 transition-all duration-300 shadow-lg">
+                            Book Free Consultation
+                        </Link>
+                        <Link to="/projects" className="border-2 border-blue-600 text-blue-600 px-8 py-4 rounded-full font-semibold hover:bg-blue-600 hover:text-white transform hover:scale-105 transition-all duration-300">
+                            View Our Projects
+                        </Link>
                     </div>
                 </div>
             </div>

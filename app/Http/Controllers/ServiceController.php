@@ -32,7 +32,7 @@ class ServiceController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'benefits' => 'nullable|string',
-            'photos' => 'nullable|array',
+            'photos' => 'nullable',
             'photos.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'icon' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
@@ -145,33 +145,34 @@ class ServiceController extends Controller
      * Remove the specified service (Admin only)
      */
     public function destroy(string $id): JsonResponse
-    {
-        $service = Service::find($id);
-        
-        if (!$service) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Service not found'
-            ], 404);
-        }
-
-        // Delete associated icon
-        if ($service->icon) {
-            Storage::disk('public')->delete($service->icon);
-        }
-
-        // Delete associated photos
-        if ($service->photos) {
-            foreach (json_decode($service->photos, true) as $photo) {
-                Storage::disk('public')->delete($photo);
-            }
-        }
-
-        $service->delete();
-
+{
+    $service = Service::find($id);
+    
+    if (!$service) {
         return response()->json([
-            'success' => true,
-            'message' => 'Service deleted successfully'
-        ]);
+            'success' => false,
+            'message' => 'Service not found'
+        ], 404);
     }
+
+    // Delete associated icon
+    if ($service->icon) {
+        Storage::disk('public')->delete($service->icon);
+    }
+
+    // Delete associated photos
+    if ($service->photos && is_array($service->photos)) {
+        foreach ($service->photos as $photo) {
+            Storage::disk('public')->delete($photo);
+        }
+    }
+
+    $service->delete();
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Service deleted successfully'
+    ]);
+}
+
 }
