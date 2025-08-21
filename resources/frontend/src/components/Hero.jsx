@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import HomeImg from '../assets/homepage.jfif'
 
 function Hero() {
     return (
@@ -30,7 +31,7 @@ function Hero() {
                     <div className="relative animate-fade-in-right">
                         <div className="relative z-10">
                             <img
-                                src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600"
+                                src={HomeImg}
                                 alt="Modern Construction"
                                 className="rounded-2xl shadow-2xl w-full"
                             />

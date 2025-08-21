@@ -3,10 +3,12 @@ import { Award, DollarSign, Settings, CheckCircle } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import axios from 'axios';
+import AboutImg from '../assets/aboutpage.jfif';
 
 const AboutPage = () => {
   const [isVisible, setIsVisible] = useState({});
   const [activeTab, setActiveTab] = useState('vision');
+  const [loading, setLoading] = useState(true);
 
   const [user, setUser] = useState([]);
 
@@ -28,6 +30,7 @@ const AboutPage = () => {
           { number: user.happy_clients + "+", label: "Happy Clients", icon: "🏡" },
           { number: user.years_of_experience + "+", label: "Years of Experience", icon: "📅" },
         ]);
+
 
       } catch (error) {
         console.error("Error fetching user:", error);
@@ -107,6 +110,7 @@ const AboutPage = () => {
   ];
 
 
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
       {/* Navbar */}
@@ -160,7 +164,7 @@ const AboutPage = () => {
             <div className="relative">
               <div className="relative z-10">
                 <img
-                  src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=600"
+                  src={AboutImg}
                   alt="Construction Team at Work"
                   className="rounded-2xl shadow-2xl w-full"
                 />

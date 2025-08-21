@@ -56,15 +56,29 @@ const HomePage = () => {
     };
   }, [loading]);
 
-
-
-  if (loading) {
+    if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-blue-50">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
       </div>
     );
   }
+
+
+  if (loading) {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen w-screen">
+        <div className="w-20 h-20 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center
+                      animate-bounce-slow">
+          <span className="text-white font-bold text-3xl">R</span>
+        </div>
+        <h1 className="mt-5 text-2xl font-bold text-gray-900 animate-pulse">
+          Rachnakar Enterprises
+        </h1>
+      </div>
+    );
+  }
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
@@ -144,58 +158,85 @@ const HomePage = () => {
       <Footer />
 
       {/* Custom Styles */}
-      <style >{`
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        
-        @keyframes fadeInRight {
-          from {
-            opacity: 0;
-            transform: translateX(30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
-        }
-        
-        @keyframes float {
-          0%, 100% {
-            transform: translateY(0px);
-          }
-          50% {
-            transform: translateY(-20px);
-          }
-        }
-        
-        .animate-fade-in-up {
-          animation: fadeInUp 1s ease-out;
-        }
-        
-        .animate-fade-in-right {
-          animation: fadeInRight 1s ease-out 0.3s both;
-        }
-        
-        .animate-float {
-          animation: float 6s ease-in-out infinite;
-        }
-        
-        .animate-float-delayed {
-          animation: float 6s ease-in-out infinite 2s;
-        }
-        
-        html {
-          scroll-behavior: smooth;
-        }
-      `}</style>
+      <style>{`
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeInRight {
+    from {
+      opacity: 0;
+      transform: translateX(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+
+  @keyframes bounce-slow {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-15px);
+    }
+  }
+
+  @keyframes pulse-fade {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.6;
+    }
+  }
+
+  .animate-fade-in-up {
+    animation: fadeInUp 1s ease-out;
+  }
+
+  .animate-fade-in-right {
+    animation: fadeInRight 1s ease-out 0.3s both;
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-float-delayed {
+    animation: float 6s ease-in-out infinite 2s;
+  }
+
+  .animate-bounce-slow {
+    animation: bounce-slow 2s ease-in-out infinite;
+  }
+
+  .animate-pulse-fade {
+    animation: pulse-fade 2s ease-in-out infinite;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+`}</style>
+
     </div>
   );
 };

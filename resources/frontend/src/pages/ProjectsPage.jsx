@@ -5,6 +5,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import ProjectImg from '../assets/projectpage.jfif';
 
 export default function ProjectsPage() {
     const [activeFilter, setActiveFilter] = useState('all');
@@ -121,7 +122,7 @@ export default function ProjectsPage() {
                         <div className={`${isVisible ? 'animate-slide-in-right' : 'opacity-0'}`} style={{ animationDelay: '0.2s' }}>
                             <div className="relative">
                                 <img
-                                    src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600&h=400&fit=crop&crop=center"
+                                    src={ProjectImg}
                                     alt="Modern construction project"
                                     className="w-full h-96 object-cover rounded-2xl shadow-2xl"
                                 />

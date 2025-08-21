@@ -1,6 +1,6 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react';
 import { Menu, X, ChevronDown } from "lucide-react";
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 function AdminNav() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -10,6 +10,9 @@ function AdminNav() {
         localStorage.removeItem("token");
         window.location.href = "/";
     };
+
+    const activeClass = "text-indigo-600 font-semibold";
+    const normalClass = "text-gray-700 hover:text-indigo-600 transition-colors";
 
     return (
         <nav className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
@@ -27,45 +30,21 @@ function AdminNav() {
 
                     {/* Desktop Navigation */}
                     <div className="hidden lg:flex items-center space-x-8">
-                        <Link
-                            to="/admin/dashboard"
-                            className="flex items-center px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-indigo-600 hover:bg-gray-50 transition-colors"
-                        >
-                            <span className="mr-2">📊</span>
-                            Dashboard
-                        </Link>
-
-                        <Link
-                            to="/admin/projects"
-                            className="flex items-center px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-indigo-600 hover:bg-gray-50 transition-colors"
-                        >
-                            <span className="mr-2">🏗️</span>
-                            Projects
-                        </Link>
-
-                        <Link
-                            to="/admin/services"
-                            className="flex items-center px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-indigo-600 hover:bg-gray-50 transition-colors"
-                        >
-                            <span className="mr-2">⚙️</span>
-                            Services
-                        </Link>
-
-                        <Link
-                            to="/admin/testimonials"
-                            className="flex items-center px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-indigo-600 hover:bg-gray-50 transition-colors"
-                        >
-                            <span className="mr-2">💬</span>
-                            Testimonials
-                        </Link>
-
-                        <Link
-                            to="/admin/inquiries"
-                            className="flex items-center px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-indigo-600 hover:bg-gray-50 transition-colors"
-                        >
-                            <span className="mr-2">📩</span>
-                            Inquiries
-                        </Link>
+                        <NavLink to="/admin/dashboard" className={({ isActive }) => isActive ? activeClass : normalClass}>
+                            <span className="mr-2">📊</span> Dashboard
+                        </NavLink>
+                        <NavLink to="/admin/projects" className={({ isActive }) => isActive ? activeClass : normalClass}>
+                            <span className="mr-2">🏗️</span> Projects
+                        </NavLink>
+                        <NavLink to="/admin/services" className={({ isActive }) => isActive ? activeClass : normalClass}>
+                            <span className="mr-2">⚙️</span> Services
+                        </NavLink>
+                        <NavLink to="/admin/testimonials" className={({ isActive }) => isActive ? activeClass : normalClass}>
+                            <span className="mr-2">💬</span> Testimonials
+                        </NavLink>
+                        <NavLink to="/admin/inquiries" className={({ isActive }) => isActive ? activeClass : normalClass}>
+                            <span className="mr-2">📩</span> Inquiries
+                        </NavLink>
                     </div>
 
                     {/* User Profile Dropdown */}
@@ -109,50 +88,45 @@ function AdminNav() {
             {mobileMenuOpen && (
                 <div className="lg:hidden bg-white border-t border-gray-200">
                     <div className="px-2 pt-2 pb-3 space-y-1">
-                        <Link
+                        <NavLink
                             to="/admin/dashboard"
-                            className="flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-indigo-600 hover:bg-gray-50"
+                            className={({ isActive }) => isActive ? activeClass : normalClass}
                             onClick={() => setMobileMenuOpen(false)}
                         >
-                            <span className="mr-3">📊</span>
-                            Dashboard
-                        </Link>
+                            <span className="mr-3">📊</span> Dashboard
+                        </NavLink>
 
-                        <Link
+                        <NavLink
                             to="/admin/projects"
-                            className="flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-indigo-600 hover:bg-gray-50"
+                            className={({ isActive }) => isActive ? activeClass : normalClass}
                             onClick={() => setMobileMenuOpen(false)}
                         >
-                            <span className="mr-3">🏗️</span>
-                            Projects
-                        </Link>
+                            <span className="mr-3">🏗️</span> Projects
+                        </NavLink>
 
-                        <Link
+                        <NavLink
                             to="/admin/services"
-                            className="flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-indigo-600 hover:bg-gray-50"
+                            className={({ isActive }) => isActive ? activeClass : normalClass}
                             onClick={() => setMobileMenuOpen(false)}
                         >
-                            <span className="mr-3">⚙️</span>
-                            Services
-                        </Link>
+                            <span className="mr-3">⚙️</span> Services
+                        </NavLink>
 
-                        <Link
+                        <NavLink
                             to="/admin/testimonials"
-                            className="flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-indigo-600 hover:bg-gray-50"
+                            className={({ isActive }) => isActive ? activeClass : normalClass}
                             onClick={() => setMobileMenuOpen(false)}
                         >
-                            <span className="mr-3">💬</span>
-                            Testimonials
-                        </Link>
+                            <span className="mr-3">💬</span> Testimonials
+                        </NavLink>
 
-                        <Link
+                        <NavLink
                             to="/admin/inquiries"
-                            className="flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-indigo-600 hover:bg-gray-50"
+                            className={({ isActive }) => isActive ? activeClass : normalClass}
                             onClick={() => setMobileMenuOpen(false)}
                         >
-                            <span className="mr-3">📩</span>
-                            Inquiries
-                        </Link>
+                            <span className="mr-3">📩</span> Inquiries
+                        </NavLink>
                     </div>
 
                     {/* Mobile User Profile */}
@@ -183,7 +157,7 @@ function AdminNav() {
                 />
             )}
         </nav>
-    )
+    );
 }
 
-export default AdminNav
+export default AdminNav;
