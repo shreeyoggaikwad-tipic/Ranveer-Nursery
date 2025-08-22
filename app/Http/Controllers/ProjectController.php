@@ -43,8 +43,8 @@ class ProjectController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'location' => 'nullable|string|max:255',
-            'type' => 'required|in:home,apartment,other',
+            'location' => 'nullable|string|max:255', 
+            'type' => 'required|in:home,apartment',
             'status' => 'required|in:completed,in-progress',
             'description' => 'nullable|string',
             'budget' => 'nullable|numeric|min:0',
@@ -118,7 +118,7 @@ class ProjectController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'sometimes|required|string|max:255',
             'location' => 'nullable|string|max:255',
-            'type' => 'sometimes|required|in:home,apartment,other',
+            'type' => 'sometimes|required|in:home,apartment',
             'status' => 'sometimes|required|in:completed,in-progress',
             'description' => 'nullable|string',
             'budget' => 'nullable|numeric|min:0',

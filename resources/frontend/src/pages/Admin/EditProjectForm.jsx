@@ -102,6 +102,7 @@ export default function EditProjectPage() {
           <input
             type="text"
             name="name"
+            maxLength={255}
             value={formData.name}
             onChange={handleChange}
             className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
@@ -117,8 +118,8 @@ export default function EditProjectPage() {
             name="location"
             value={formData.location}
             onChange={handleChange}
+            maxLength={255}
             className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            required
           />
         </div>
 
@@ -142,6 +143,7 @@ export default function EditProjectPage() {
             name="budget"
             value={formData.budget}
             onChange={handleChange}
+            min={0}
             className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
         </div>
@@ -153,6 +155,7 @@ export default function EditProjectPage() {
             type="text"
             name="duration"
             value={formData.duration}
+            maxLength={255}
             onChange={handleChange}
             className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />

@@ -144,6 +144,7 @@ export default function AddServiceForm({ onSubmit, onCancel }) {
                 <input
                   type="text"
                   name="name"
+                  maxLength={255}
                   value={formData.name}
                   onChange={handleChange}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
@@ -165,7 +166,6 @@ export default function AddServiceForm({ onSubmit, onCancel }) {
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors resize-none"
                   rows="4"
                   placeholder="Describe your service in detail."
-                  required
                 />
                 <p className="text-xs text-gray-500 mt-1">
                   Provide a comprehensive overview of what this service includes

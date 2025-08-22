@@ -156,6 +156,7 @@ export default function AddProjectForm({ onSubmit, onCancel }) {
                 <input
                   type="text"
                   name="name"
+                  maxLength={255}
                   value={formData.name}
                   onChange={handleChange}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
@@ -172,11 +173,11 @@ export default function AddProjectForm({ onSubmit, onCancel }) {
                 <input
                   type="text"
                   name="location"
+                  maxLength={255}
                   value={formData.location}
                   onChange={handleChange}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
                   placeholder="Enter project location"
-                  required
                 />
               </div>
 
@@ -190,12 +191,13 @@ export default function AddProjectForm({ onSubmit, onCancel }) {
                   <select
                     name="type"
                     value={formData.type}
+                    required
                     onChange={handleChange}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
                   >
                     <option value="home">🏠 Home</option>
                     <option value="apartment">🏢 Apartment</option>
-                    <option value="other">📋 Other</option>
+                    {/* <option value="other">📋 Other</option> */}
                   </select>
                 </div>
 
@@ -207,6 +209,7 @@ export default function AddProjectForm({ onSubmit, onCancel }) {
                   <select
                     name="status"
                     value={formData.status}
+                    required
                     onChange={handleChange}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
                   >
@@ -230,6 +233,7 @@ export default function AddProjectForm({ onSubmit, onCancel }) {
                       name="budget"
                       value={formData.budget}
                       onChange={handleChange}
+                      min={0}
                       className="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
                       placeholder="Enter budget amount"
                     />
@@ -245,6 +249,7 @@ export default function AddProjectForm({ onSubmit, onCancel }) {
                     type="text"
                     name="duration"
                     value={formData.duration}
+                    maxLength={255}
                     onChange={handleChange}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
                     placeholder="e.g., 6 months, 3 weeks"

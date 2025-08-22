@@ -95,6 +95,7 @@ export default function EditServicePage() {
           <input
             type="text"
             name="title"
+            maxLength={255}
             value={formData.title}
             onChange={handleChange}
             placeholder="Enter service title"

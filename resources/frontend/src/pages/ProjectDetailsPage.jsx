@@ -1,18 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
-import { 
-  ArrowLeft, 
-  MapPin, 
-  Calendar, 
-  DollarSign, 
-  Clock, 
-  ChevronLeft, 
-  ChevronRight, 
+import {
+  ArrowLeft,
+  MapPin,
+  IndianRupee,
+  Clock,
+  ChevronLeft,
+  ChevronRight,
   X,
   Share2,
-  Download,
-  Eye,
   LocateIcon
 } from 'lucide-react';
 
@@ -48,13 +45,13 @@ function ProjectDetailsPage() {
   }, [id]);
 
   const nextImage = () => {
-    setCurrentImageIndex((prev) => 
+    setCurrentImageIndex((prev) =>
       prev === project.images.length - 1 ? 0 : prev + 1
     );
   };
 
   const prevImage = () => {
-    setCurrentImageIndex((prev) => 
+    setCurrentImageIndex((prev) =>
       prev === 0 ? project.images.length - 1 : prev - 1
     );
   };
@@ -84,8 +81,8 @@ function ProjectDetailsPage() {
           </div>
           <h2 className="text-xl font-semibold text-gray-900 mb-2">Project Not Found</h2>
           <p className="text-gray-600 mb-4">{error}</p>
-          <Link 
-            to="/projects" 
+          <Link
+            to="/projects"
             className="inline-flex items-center px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
@@ -111,18 +108,17 @@ function ProjectDetailsPage() {
               </Link>
               <div>
                 <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">{project.name}</h1>
-                <div className="flex items-center text-gray-600 mt-1">
+                {project.location ? <div className="flex items-center text-gray-600 mt-1">
                   <MapPin className="w-4 h-4 mr-1" />
                   <span className="text-sm sm:text-base">{project.location}</span>
-                </div>
+                </div> : null}
               </div>
             </div>
             <div className="flex items-center space-x-2">
-              <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-                project.status === 'completed'
+              <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${project.status === 'completed'
                   ? 'bg-green-100 text-green-800'
                   : 'bg-yellow-100 text-yellow-800'
-              }`}>
+                }`}>
                 {project.status === 'completed' ? '✅ Completed' : '🔄 In Progress'}
               </span>
             </div>
@@ -149,7 +145,7 @@ function ProjectDetailsPage() {
                       className="w-full h-96 object-cover rounded-lg cursor-pointer"
                       onClick={() => openLightbox(currentImageIndex)}
                     />
-                    
+
                     {project.images.length > 1 && (
                       <>
                         <button
@@ -164,7 +160,7 @@ function ProjectDetailsPage() {
                         >
                           <ChevronRight className="w-5 h-5 text-gray-700" />
                         </button>
-                        
+
                         <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/50 text-white px-3 py-1 rounded-full text-sm">
                           {currentImageIndex + 1} / {project.images.length}
                         </div>
@@ -179,11 +175,10 @@ function ProjectDetailsPage() {
                         <button
                           key={index}
                           onClick={() => setCurrentImageIndex(index)}
-                          className={`relative aspect-square rounded-lg overflow-hidden border-2 transition-all ${
-                            index === currentImageIndex
+                          className={`relative aspect-square rounded-lg overflow-hidden border-2 transition-all ${index === currentImageIndex
                               ? 'border-indigo-500 ring-2 ring-indigo-200'
                               : 'border-gray-200 hover:border-gray-300'
-                          }`}
+                            }`}
                         >
                           <img
                             src={image}
@@ -223,7 +218,7 @@ function ProjectDetailsPage() {
             {/* Project Details Card */}
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-4">Project Details</h3>
-              
+
               <div className="space-y-4">
                 {/* Project Type */}
                 <div className="flex items-center justify-between py-3 border-b border-gray-100">
@@ -237,7 +232,7 @@ function ProjectDetailsPage() {
                 {project.budget && (
                   <div className="flex items-center justify-between py-3 border-b border-gray-100">
                     <div className="flex items-center">
-                      <DollarSign className="w-4 h-4 text-gray-400 mr-2" />
+                      <IndianRupee className="w-4 h-4 text-gray-400 mr-2" />
                       <span className="text-sm font-medium text-gray-600">Budget</span>
                     </div>
                     <span className="text-sm font-semibold text-gray-900">
@@ -258,24 +253,27 @@ function ProjectDetailsPage() {
                 )}
 
                 {/* Created Date */}
-                <div className="flex items-center justify-between py-3">
-                  <div className="flex items-center">
-                    <LocateIcon className="w-4 h-4 text-gray-400 mr-2" />
-                    <span className="text-sm font-medium text-gray-600">Location</span>
+                {project.location && (
+                  <div className="flex items-center justify-between py-3">
+                    <div className="flex items-center">
+                      <LocateIcon className="w-4 h-4 text-gray-400 mr-2" />
+                      <span className="text-sm font-medium text-gray-600">Location</span>
+                    </div>
+
+                    <span className="text-sm font-semibold text-gray-900">
+                      {project.location}
+                    </span>
                   </div>
-                  <span className="text-sm font-semibold text-gray-900">
-                    {project.location}
-                  </span>
-                </div>
+                )}
               </div>
             </div>
 
 
-            
+
             {/* Quick Stats */}
             <div className="bg-gradient-to-br from-indigo-50 to-blue-50 rounded-xl border border-indigo-100 p-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-4">Project Stats</h3>
-              
+
               <div className="grid grid-cols-2 gap-4">
                 <div className="text-center">
                   <div className="text-2xl font-bold text-indigo-600 mb-1">
@@ -283,7 +281,7 @@ function ProjectDetailsPage() {
                   </div>
                   <div className="text-xs text-gray-600">Images</div>
                 </div>
-                
+
                 <div className="text-center">
                   <div className="text-2xl font-bold text-indigo-600 mb-1">
                     {project.status === 'completed' ? '100' : '75'}%

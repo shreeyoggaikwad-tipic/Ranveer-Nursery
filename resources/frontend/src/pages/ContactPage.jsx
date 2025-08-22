@@ -29,8 +29,8 @@ function ContactForm() {
             alert('Please enter a valid email address');
             return;
         }
-        else if (!/^\d{10}$/.test(formData.phone)) {
-            alert('Please enter a valid 10-digit phone number');
+        else if (!/^[987]\d{9}$/.test(formData.phone)) {
+            alert('Please enter a valid 10-digit phone number.');
             return;
         }
         else if (!/^[\s\S]{10,500}$/.test(formData.message)) {

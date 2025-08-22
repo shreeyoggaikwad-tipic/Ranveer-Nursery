@@ -11,7 +11,7 @@ return new class extends Migration {
             $table->id();
             $table->string('name'); // Project name
             $table->string('location')->nullable(); // City / Area
-            $table->enum('type', ['home', 'apartment', 'other'])->default('home'); 
+            $table->enum('type', ['home', 'apartment'])->default('home'); 
             $table->enum('status', ['completed', 'in-progress'])->default('in-progress');
             $table->text('description')->nullable(); 
             $table->json('images')->nullable(); // Multiple images stored as JSON
