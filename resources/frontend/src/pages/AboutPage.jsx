@@ -14,6 +14,7 @@ const AboutPage = () => {
 
   useEffect(() => {
     const fetchUser = async () => {
+
       try {
         // Fetch user (assuming 1st user = admin)
         const userRes = await axios.get("http://127.0.0.1:8000/api/users/1");
@@ -62,7 +63,7 @@ const AboutPage = () => {
     };
   }, []);
 
-  
+
 
   const features = [
     {

@@ -187,6 +187,7 @@ function WhatsAppButton() {
 
 // Main Contact Page
 function ContactPage() {
+    
     return (
         <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
             <Navbar />

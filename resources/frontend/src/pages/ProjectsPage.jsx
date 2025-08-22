@@ -50,6 +50,14 @@ export default function ProjectsPage() {
         return matchesFilter && matchesSearch;
     });
 
+    if (loading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-blue-50">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+            </div>
+        );
+    }
+
     return (
         <div className="min-h-screen bg-gray-50">
             <style >{`
@@ -156,8 +164,8 @@ export default function ProjectsPage() {
                                     key={option.key}
                                     onClick={() => setActiveFilter(option.key)}
                                     className={`px-4 py-3 rounded-xl font-medium transition-all duration-300 flex items-center space-x-2 ${activeFilter === option.key
-                                            ? 'bg-blue-600 text-white shadow-lg scale-105'
-                                            : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                                        ? 'bg-blue-600 text-white shadow-lg scale-105'
+                                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                                         }`}
                                 >
                                     {option.icon}

@@ -28,8 +28,8 @@ function ManageProjects() {
   }, []);
 
   const handleDeleteProject = (deletedId) => {
-        setProjects(prev => prev.filter(project => project.id !== deletedId));
-    };
+    setProjects(prev => prev.filter(project => project.id !== deletedId));
+  };
 
   const filterOptions = [
     { key: 'all', label: 'All Projects', icon: <Building2 className="w-4 h-4" /> },
@@ -47,6 +47,14 @@ function ManageProjects() {
       project.location.toLowerCase().includes(searchTerm.toLowerCase());
     return matchesFilter && matchesSearch;
   });
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-blue-50">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">

@@ -30,29 +30,37 @@ function ManageInquiries() {
   }, []);
 
   const downloadCSV = async () => {
-  try {
-    const token = localStorage.getItem("token");
+    try {
+      const token = localStorage.getItem("token");
 
-    const response = await axios.get("http://127.0.0.1:8000/api/inquiries/export", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      responseType: "blob", // very important!
-    });
+      const response = await axios.get("http://127.0.0.1:8000/api/inquiries/export", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        responseType: "blob", // very important!
+      });
 
-    // Create a download link
-    const url = window.URL.createObjectURL(new Blob([response.data]));
-    const link = document.createElement("a");
-    link.href = url;
-    link.setAttribute("download", "inquiries.csv"); // default filename
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-  } catch (error) {
-    console.error("CSV download failed:", error);
-    alert("Failed to export inquiries. Check your token or backend.");
+      // Create a download link
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "inquiries.csv"); // default filename
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    } catch (error) {
+      console.error("CSV download failed:", error);
+      alert("Failed to export inquiries. Check your token or backend.");
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-blue-50">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      </div>
+    );
   }
-};
 
 
   return (

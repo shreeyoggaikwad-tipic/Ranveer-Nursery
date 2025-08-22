@@ -56,25 +56,10 @@ const HomePage = () => {
     };
   }, [loading]);
 
-    if (loading) {
+  if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-blue-50">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-      </div>
-    );
-  }
-
-
-  if (loading) {
-    return (
-      <div className="flex flex-col items-center justify-center h-screen w-screen">
-        <div className="w-20 h-20 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center
-                      animate-bounce-slow">
-          <span className="text-white font-bold text-3xl">R</span>
-        </div>
-        <h1 className="mt-5 text-2xl font-bold text-gray-900 animate-pulse">
-          Rachnakar Enterprises
-        </h1>
       </div>
     );
   }

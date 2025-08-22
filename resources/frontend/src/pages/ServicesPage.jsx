@@ -10,7 +10,7 @@ function ServicesPage() {
     const [services, setServices] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    
+
 
     useEffect(() => {
         // Fetch all API data in parallel
@@ -25,6 +25,14 @@ function ServicesPage() {
             })
             .finally(() => setLoading(false));
     }, []);
+
+    if (loading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-blue-50">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+            </div>
+        );
+    }
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
