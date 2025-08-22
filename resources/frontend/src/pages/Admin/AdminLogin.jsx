@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import axios from "axios";
+import { ArrowLeft } from "lucide-react";
+import { Link } from 'react-router-dom';
+
 
 function AdminLogin() {
     const [loginData, setLoginData] = useState({
@@ -68,6 +71,14 @@ function AdminLogin() {
             {/* Login Card */}
             <div className="relative w-full max-w-md">
                 <div className="bg-white rounded-3xl shadow-2xl p-8 animate-fade-in">
+                    <div className="mb-8 flex items-center">
+                        <Link
+                            to="/"
+                            className="mr-4 p-2 text-gray-600 hover:text-indigo-600 hover:bg-gray-100 rounded-lg transition-colors"
+                        >
+                            <ArrowLeft className="w-5 h-5" />
+                        </Link>
+                    </div>
                     {/* Header */}
                     <div className="text-center mb-8">
                         <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-4">

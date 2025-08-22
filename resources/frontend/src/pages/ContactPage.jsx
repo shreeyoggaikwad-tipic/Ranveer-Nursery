@@ -21,8 +21,20 @@ function ContactForm() {
     };
 
     const handleSubmit = async () => {
-        if (!formData.name || !formData.email || !formData.phone || !formData.message) {
-            alert('Please fill in all required fields');
+        if (!formData.name) {
+            alert('Please fill in your name');
+            return;
+        }
+        else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+            alert('Please enter a valid email address');
+            return;
+        }
+        else if (!/^\d{10}$/.test(formData.phone)) {
+            alert('Please enter a valid 10-digit phone number');
+            return;
+        }
+        else if (!/^[\s\S]{10,500}$/.test(formData.message)) {
+            alert('Message must be between 10 and 500 characters');
             return;
         }
 
@@ -31,12 +43,15 @@ function ContactForm() {
 
         try {
             const response = await axios.post("http://127.0.0.1:8000/api/inquiries", formData);
-            if (response.status === 200) {
+            if (response.status >= 200 && response.status < 300) {
                 setSubmitted(true);
 
+                // ✅ Reset form data immediately after alert
+                setFormData({ name: '', email: '', phone: '', message: '' });
+
+                // Optional: hide success state after some time
                 setTimeout(() => {
                     setSubmitted(false);
-                    setFormData({ name: '', email: '', phone: '', message: '' });
                 }, 3000);
             }
         } catch (error) {
@@ -54,7 +69,7 @@ function ContactForm() {
                     <span className="text-green-600 text-2xl">✓</span>
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-2">Thank You!</h3>
-                <p className="text-gray-600">We'll get back to you within 24 hours.</p>
+                <p className="text-gray-600">We'll get back to you shortly</p>
             </div>
         );
     }
@@ -66,9 +81,9 @@ function ContactForm() {
             <div className="space-y-6">
                 {errorMessage && <p className="text-red-600 font-medium">{errorMessage}</p>}
 
-                <InputField label="Full Name *" name="name" value={formData.name} onChange={handleChange} placeholder="Enter your full name" />
-                <InputField label="Email Address *" name="email" value={formData.email} onChange={handleChange} placeholder="Enter your email address" type="email" />
-                <InputField label="Phone Number *" name="phone" value={formData.phone} onChange={handleChange} placeholder="Enter your phone number" type="tel" />
+                <InputField label="Full Name *" name="name" value={formData.name} onChange={handleChange} placeholder="Enter your full name" required />
+                <InputField label="Email Address *" name="email" value={formData.email} onChange={handleChange} placeholder="Enter your email address" type="email" required />
+                <InputField label="Phone Number *" name="phone" value={formData.phone} onChange={handleChange} placeholder="Enter your phone number" type="tel" required />
 
                 <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Message *</label>

@@ -15,9 +15,9 @@ function Footer() {
                 const user = userRes.data.data;
 
                 setUser([
-                    { number: user.email + "+", label: "📧" },
-                    { number: user.number + "+", label: "📞" },
-                    { number: user.location + "+", label: "📍" },
+                    { number: user.email , label: "📧" , a: `mailto:${user.email}` },
+                    { number: user.number , label: "📞" , a: `tel:+91${user.number}` },
+                    { number: user.location , label: "📍" , a: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(user.location)}` },
                 ]);
             } catch (error) {
                 console.error("Error fetching stats:", error);
@@ -66,6 +66,7 @@ function Footer() {
                             <li>Interior Design</li>
                         </ul>
                     </div>
+                    
 
                     <div>
                         <h5 className="font-bold mb-4">Contact Info</h5>
@@ -73,8 +74,10 @@ function Footer() {
                             {user.map((info, index) => (
                                 <div key={index} className="flex items-center space-x-2">
                                     <span className="text-sm">{info.label}</span>
-                                    <span className="font-semibold">{info.number}</span>
+                                    <a href={info.a} className="font-semibold">{info.number}</a>
                                 </div>
+
+                                
                             ))}
                         </div>
                     </div>
