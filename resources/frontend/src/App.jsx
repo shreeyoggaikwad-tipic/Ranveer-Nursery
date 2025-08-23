@@ -12,6 +12,7 @@ import ServiceDetailsPage from './pages/ServiceDetailsPage';
 
 // Admin pages
 import AdminLogin from "./pages/Admin/AdminLogin";
+import AdminProfile from './pages/Admin/AdminProfile';
 import ForgotPasswordPage from './pages/Admin/ForgotPasswordPage';
 import ResetPasswordPage from './pages/Admin/ResetPasswordPage';
 
@@ -19,7 +20,7 @@ import AdminDashboard from './pages/admin/AdminDashboard';
 import ManageProjects from './pages/admin/ManageProjects';
 import ManageServices from './pages/Admin/ManageServices';
 import ManageTestimonials from './pages/admin/ManageTestimonials';
-import ManageInquiries from './pages/admin/ManageInquiries';
+import ManageInquiries from './pages/Admin/ManageInquiries';
 import AddProjectForm from './pages/Admin/AddProjectForm';
 import AddServiceForm from './pages/Admin/AddServiceForm';
 import EditServiceForm from './pages/Admin/EditServiceForm';
@@ -105,6 +106,9 @@ function App() {
         } />
         <Route path="/admin/editProject/:id" element={
           <PrivateRoute><EditProjectForm /></PrivateRoute>
+        } />
+        <Route path="/admin/profile" element={
+          <PrivateRoute><AdminProfile /></PrivateRoute>
         } />
       </Routes>
     </>

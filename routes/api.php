@@ -55,4 +55,6 @@ Route::middleware(['auth:sanctum', 'is_admin'])->group(function () {
     //     return $request->user();
     // });
     Route::get('/user', [AuthController::class, 'user']);
+    Route::get('/profile', [AuthController::class, 'getAdminProfile']);
+    Route::put('/profile', [AuthController::class, 'updateAdminProfile']);
 });

@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
 import { Menu, X, ChevronDown } from "lucide-react";
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink, Link, useNavigate } from 'react-router-dom';
 
 function AdminNav() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [dropdownOpen, setDropdownOpen] = useState(false);
+    const navigate = useNavigate();
 
     const handleLogout = () => {
         localStorage.removeItem("token");
-        window.location.href = "/";
+        navigate("/");
+    };
+
+    const handleProfile = () => {
+        navigate("/admin/profile");
     };
 
     const activeClass = "text-indigo-600 font-semibold";
@@ -20,9 +25,9 @@ function AdminNav() {
                 <div className="flex justify-between items-center h-16">
                     {/* Logo and Brand */}
                     <div className="flex items-center">
-                        <div className="w-10 h-10 bg-indigo-600 rounded-lg flex items-center justify-center">
+                        <Link to="/admin/dashboard" className="w-10 h-10 bg-indigo-600 rounded-lg flex items-center justify-center">
                             <span className="text-white font-bold text-xl">R</span>
-                        </div>
+                        </Link>
                         <div className="ml-3 hidden sm:block">
                             <p className="text-xl font-bold text-black">Rachnakar Enterprises</p>
                         </div>
@@ -67,6 +72,10 @@ function AdminNav() {
                                     <p className="text-sm font-medium text-gray-900">Admin User</p>
                                     <p className="text-xs text-gray-500">admin@example.com</p>
                                 </div>
+
+                                <button onClick={handleProfile} className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+                                    Profile
+                                </button>
                                 <button onClick={handleLogout} className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
                                     Logout
                                 </button>
@@ -88,7 +97,7 @@ function AdminNav() {
             {/* Mobile Navigation Menu */}
             {mobileMenuOpen && (
                 <div className="lg:hidden bg-white border-t border-gray-200">
-                    <div className="px-2 pt-2 pb-3 space-y-1">
+                    <div className="flex flex-row flex-wrap justify-evenly items-center px-2 pt-2 pb-3 space-y-1">
                         <NavLink
                             to="/admin/dashboard"
                             className={({ isActive }) => isActive ? activeClass : normalClass}
@@ -142,12 +151,13 @@ function AdminNav() {
                             </div>
                         </div>
                         <div className="mt-3 px-2 space-y-1">
+                            <button onClick={handleProfile} className="w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-indigo-600 hover:bg-gray-50">
+                               Profile
+                           </button>
                             <button onClick={handleLogout} className="w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-indigo-600 hover:bg-gray-50">
                                 Logout
                             </button>
-                            <Link to="/admin/Profile" className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
-                                Profile
-                            </Link>
+                           
                         </div>
                     </div>
                 </div>

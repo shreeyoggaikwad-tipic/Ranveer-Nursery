@@ -4,7 +4,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import axios from 'axios';
 import AboutImg from '../assets/aboutpage.jfif';
-import "../utils/host"
+import host from "../utils/host"
 
 const AboutPage = () => {
   const [isVisible, setIsVisible] = useState({});

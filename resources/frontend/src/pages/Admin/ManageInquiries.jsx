@@ -18,7 +18,6 @@ function ManageInquiries() {
           Authorization: `Bearer ${token}`, // 🔑 Send Sanctum token
           Accept: "application/json",
         },
-        withCredentials: true, // optional if using Sanctum cookies
       })
       .then((res) => {
         setInquiries(res.data.data || []);
