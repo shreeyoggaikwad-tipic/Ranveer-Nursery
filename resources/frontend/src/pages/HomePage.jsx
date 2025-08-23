@@ -8,6 +8,8 @@ import TestimonialCard from '../components/TestimonialCard';
 import HomeContact from '../components/HomeContact';
 import Footer from '../components/Footer';
 import { Link } from 'react-router-dom';
+import host from '../utils/host'
+
 
 const HomePage = () => {
   const [projects, setProjects] = useState([]);
@@ -19,9 +21,9 @@ const HomePage = () => {
   useEffect(() => {
     // Fetch all API data in parallel
     Promise.all([
-      fetch("http://127.0.0.1:8000/api/projects").then(res => res.json()),
-      fetch("http://127.0.0.1:8000/api/services").then(res => res.json()),
-      fetch("http://127.0.0.1:8000/api/testimonials").then(res => res.json()),
+      fetch(`${host}/api/projects`).then(res => res.json()),
+      fetch(`${host}/api/services`).then(res => res.json()),
+      fetch(`${host}/api/testimonials`).then(res => res.json()),
     ])
       .then(([projectsData, servicesData, testimonialsData]) => {
         setProjects(projectsData.data.slice(0, 3));

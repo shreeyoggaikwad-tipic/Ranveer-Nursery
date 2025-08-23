@@ -12,6 +12,8 @@ import {
   Share2,
   LocateIcon
 } from 'lucide-react';
+import host from '../utils/host'
+
 
 
 function ProjectDetailsPage() {
@@ -27,7 +29,7 @@ function ProjectDetailsPage() {
       try {
         const token = localStorage.getItem("token");
         const response = await axios.get(
-          `http://127.0.0.1:8000/api/projects/${id}`,
+          `${host}/api/projects/${id}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }

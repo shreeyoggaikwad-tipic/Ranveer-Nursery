@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from "axios";
 import { ArrowLeft } from "lucide-react";
 import { Link } from 'react-router-dom';
+import host from '../../utils/host'
 
 
 function AdminLogin() {
@@ -38,7 +39,7 @@ function AdminLogin() {
         setIsLoading(true);
 
         try {
-            const response = await axios.post("http://127.0.0.1:8000/api/auth/login", {
+            const response = await axios.post(`${host}/api/auth/login`, {
                 email: loginData.email,
                 password: loginData.password
             });
@@ -165,19 +166,10 @@ function AdminLogin() {
                         </div>
 
                         {/* Remember Me & Forgot Password */}
-                        <div className="flex items-center justify-between">
-                            <label className="flex items-center">
-                                <input
-                                    type="checkbox"
-                                    checked={rememberMe}
-                                    onChange={(e) => setRememberMe(e.target.checked)}
-                                    className="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                                />
-                                <span className="ml-2 text-sm text-gray-600">Remember me</span>
-                            </label>
-                            <button className="text-sm text-blue-600 hover:text-blue-800 transition-colors">
+                        <div className="flex items-center justify-end space-x-4">
+                            <Link to="/admin/forgot-password" className="text-sm text-blue-600 hover:text-blue-800 transition-colors">
                                 Forgot password?
-                            </button>
+                            </Link>
                         </div>
 
                         {/* Login Button */}

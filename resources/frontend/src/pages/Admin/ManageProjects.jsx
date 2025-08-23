@@ -4,6 +4,8 @@ import ProjectCard from '../../components/ProjectCard';
 import axios from 'axios';
 import AdminNav from '../../components/AdminNav';
 import { Link } from 'react-router-dom';
+import host from '../../utils/host'
+
 
 function ManageProjects() {
   const [activeFilter, setActiveFilter] = useState('all');
@@ -17,7 +19,7 @@ function ManageProjects() {
   }, []);
 
   useEffect(() => {
-    axios.get("http://127.0.0.1:8000/api/projects")
+    axios.get(`${host}/api/projects`)
       .then((res) => {
         setProjects(res.data.data);
       })

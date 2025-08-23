@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import AdminNav from '../../components/AdminNav';
 import { Link } from 'react-router-dom';
+import host from '../../utils/host'
+
 
 const AdminDashboard = () => {
   
@@ -18,16 +20,16 @@ const AdminDashboard = () => {
     const token = localStorage.getItem("token");
 
     Promise.all([
-      axios.get("http://127.0.0.1:8000/api/projects", {
+      axios.get(`${host}/api/projects`, {
         headers: { Authorization: `Bearer ${token}` },
       }),
-      axios.get("http://127.0.0.1:8000/api/services", {
+      axios.get(`${host}/api/services`, {
         headers: { Authorization: `Bearer ${token}` },
       }),
-      axios.get("http://127.0.0.1:8000/api/testimonials", {
+      axios.get(`${host}/api/testimonials`, {
         headers: { Authorization: `Bearer ${token}` },
       }),
-      axios.get("http://127.0.0.1:8000/api/inquiries", {
+      axios.get(`${host}/api/inquiries`, {
         headers: { Authorization: `Bearer ${token}` },
       }),
     ])

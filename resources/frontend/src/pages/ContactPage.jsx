@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import axios from 'axios';
+import host from '../utils/host'
 
 // Contact Form Component
 function ContactForm() {
@@ -42,7 +43,7 @@ function ContactForm() {
         setErrorMessage('');
 
         try {
-            const response = await axios.post("http://127.0.0.1:8000/api/inquiries", formData);
+            const response = await axios.post(`${host}/api/inquiries`, formData);
             if (response.status >= 200 && response.status < 300) {
                 setSubmitted(true);
 

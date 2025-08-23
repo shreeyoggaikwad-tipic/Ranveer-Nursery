@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios';
+import host from '../utils/host'
 
 
 function ProjectCard({ project, index, onDelete, onEdit }) {
@@ -15,7 +16,7 @@ function ProjectCard({ project, index, onDelete, onEdit }) {
         if (!confirmed) return;
 
         try {
-            await axios.delete(`http://127.0.0.1:8000/api/projects/${project.id}`, {
+            await axios.delete(`${host}/api/projects/${project.id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

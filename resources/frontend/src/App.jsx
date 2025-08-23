@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import { Routes, Route, Navigate } from "react-router-dom";
 import HomePage from './pages/HomePage'
 import AboutPage from './pages/AboutPage'
@@ -11,7 +11,10 @@ import ProjectDetailsPage from './pages/ProjectDetailsPage';
 import ServiceDetailsPage from './pages/ServiceDetailsPage';
 
 // Admin pages
-import AdminLogin from './pages/admin/AdminLogin';
+import AdminLogin from "./pages/Admin/AdminLogin";
+import ForgotPasswordPage from './pages/Admin/ForgotPasswordPage';
+import ResetPasswordPage from './pages/Admin/ResetPasswordPage';
+
 import AdminDashboard from './pages/admin/AdminDashboard';
 import ManageProjects from './pages/admin/ManageProjects';
 import ManageServices from './pages/Admin/ManageServices';
@@ -28,7 +31,35 @@ function PrivateRoute({ children }) {
   return token ? children : <Navigate to="/admin/login" />;
 }
 
+
+
 function App() {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate a loading delay (e.g., fetching initial data)
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000); // Adjust time if needed
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen w-screen">
+        <div className="w-20 h-20 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center
+                      animate-bounce-slow">
+          <span className="text-white font-bold text-3xl">R</span>
+        </div>
+        <h1 className="mt-5 text-2xl font-bold text-gray-900 animate-pulse">
+          Rachnakar Enterprises
+        </h1>
+      </div>
+    ); // Show loading logo
+  }
+
+
   return (
     <>
       <ScrollToTop />
@@ -45,7 +76,9 @@ function App() {
 
         {/* Admin routes */}
         <Route path="/admin/login" element={<AdminLogin />} />
-        
+        <Route path="/admin/forgot-password" element={<ForgotPasswordPage />} />
+        <Route path="/admin/reset-password/:token" element={<ResetPasswordPage />} />
+
         <Route path="/admin/dashboard" element={
           <PrivateRoute><AdminDashboard /></PrivateRoute>
         } />

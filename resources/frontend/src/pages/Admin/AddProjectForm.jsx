@@ -4,10 +4,11 @@ import axios from 'axios';
 import { Upload, X, Plus, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import host from '../../utils/host'
 
 export default function AddProjectForm({ onSubmit, onCancel }) {
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
 
   const handleAddProject = async (formData) => {
@@ -15,7 +16,7 @@ export default function AddProjectForm({ onSubmit, onCancel }) {
       const token = localStorage.getItem("token");
 
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/projects",
+        `${host}/api/projects`,
         formData,
         {
           headers: {
@@ -33,7 +34,7 @@ export default function AddProjectForm({ onSubmit, onCancel }) {
       alert("Failed to save project. Check console for details.");
     }
   };
-  
+
   const [formData, setFormData] = useState({
     name: "",
     images: [],
@@ -73,7 +74,7 @@ export default function AddProjectForm({ onSubmit, onCancel }) {
     e.preventDefault();
     e.stopPropagation();
     setDragActive(false);
-    
+
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
       const files = e.dataTransfer.files;
       const fileArray = Array.from(files);
@@ -85,7 +86,7 @@ export default function AddProjectForm({ onSubmit, onCancel }) {
   const removeFile = (indexToRemove) => {
     const newFiles = selectedFiles.filter((_, index) => index !== indexToRemove);
     setSelectedFiles(newFiles);
-    
+
     const dt = new DataTransfer();
     newFiles.forEach(file => dt.items.add(file));
     setFormData({ ...formData, images: dt.files });
@@ -121,14 +122,13 @@ export default function AddProjectForm({ onSubmit, onCancel }) {
         <div className="mb-8">
           <div className="flex items-center justify-between">
             <div className="flex items-center">
-              {onCancel && (
-                <button
-                  onClick={onCancel}
-                  className="mr-4 p-2 text-gray-600 hover:text-indigo-600 hover:bg-gray-100 rounded-lg transition-colors"
-                >
-                  <ArrowLeft className="w-5 h-5" />
-                </button>
-              )}
+              <Link
+                to="/admin/projects"
+                onClick={onCancel}
+                className="mr-4 p-2 text-gray-600 hover:text-indigo-600 hover:bg-gray-100 rounded-lg transition-colors"
+              >
+                <ArrowLeft className="w-5 h-5" />
+              </Link>
               <div>
                 <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Add New Project</h1>
                 <p className="text-gray-600 mt-1 text-sm sm:text-base">
@@ -284,11 +284,10 @@ export default function AddProjectForm({ onSubmit, onCancel }) {
             <div className="px-6 py-6">
               {/* Drag and Drop Area */}
               <div
-                className={`relative border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
-                  dragActive
+                className={`relative border-2 border-dashed rounded-lg p-8 text-center transition-colors ${dragActive
                     ? "border-indigo-500 bg-indigo-50"
                     : "border-gray-300 hover:border-gray-400"
-                }`}
+                  }`}
                 onDragEnter={handleDrag}
                 onDragLeave={handleDrag}
                 onDragOver={handleDrag}
@@ -302,7 +301,7 @@ export default function AddProjectForm({ onSubmit, onCancel }) {
                   multiple
                   accept="image/*"
                 />
-                
+
                 <Upload className="mx-auto h-12 w-12 text-gray-400 mb-4" />
                 <p className="text-lg font-medium text-gray-900 mb-2">
                   Drop your images here, or{" "}

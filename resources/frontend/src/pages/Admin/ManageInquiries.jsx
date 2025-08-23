@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Mail, Phone, User, MessageSquare } from "lucide-react";
 import AdminNav from "../../components/AdminNav";
-import { Plus } from 'lucide-react';
+import host from '../../utils/host'
 
 
 function ManageInquiries() {
@@ -13,7 +13,7 @@ function ManageInquiries() {
     const token = localStorage.getItem("token");
 
     axios
-      .get("http://127.0.0.1:8000/api/inquiries", {
+      .get(`${host}/api/inquiries`, {
         headers: {
           Authorization: `Bearer ${token}`, // 🔑 Send Sanctum token
           Accept: "application/json",
@@ -33,7 +33,7 @@ function ManageInquiries() {
     try {
       const token = localStorage.getItem("token");
 
-      const response = await axios.get("http://127.0.0.1:8000/api/inquiries/export", {
+      const response = await axios.get(`${host}/api/inquiries/export`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import host from '../../utils/host'
+
 
 export default function EditProjectPage() {
   const { id } = useParams();
@@ -23,7 +25,7 @@ export default function EditProjectPage() {
   // Fetch project by ID
   useEffect(() => {
     axios
-      .get(`http://127.0.0.1:8000/api/projects/${id}`)
+      .get(`${host}/api/projects/${id}`)
       .then(res => {
         const data = res.data.data;
         setProject(data);

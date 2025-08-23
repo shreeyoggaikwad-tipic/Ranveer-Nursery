@@ -4,6 +4,8 @@ import ServiceCard from '../../components/ServiceCard';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import AdminNav from '../../components/AdminNav';
+import host from '../../utils/host'
+
 
 function ManageServices() {
   const [services, setServices] = useState([]);
@@ -12,7 +14,7 @@ function ManageServices() {
   useEffect(() => {
     // Fetch all API data in parallel
     Promise.all([
-      axios.get("http://127.0.0.1:8000/api/services")
+      axios.get(`${host}/api/services`)
     ])
       .then((responses) => {
         setServices(responses[0].data.data);

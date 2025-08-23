@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import axios from 'axios';
 import { Upload, X, Plus, ArrowLeft, Settings } from "lucide-react";
 import { Link , useNavigate} from "react-router-dom";
+import host from '../../utils/host'
+
 
 export default function AddServiceForm({ onSubmit, onCancel }) {
   const navigate = useNavigate();
@@ -12,7 +14,7 @@ export default function AddServiceForm({ onSubmit, onCancel }) {
       const token = localStorage.getItem("token");
 
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/services",
+        `${host}/api/services`,
         formData,
         {
           headers: {
@@ -109,14 +111,13 @@ export default function AddServiceForm({ onSubmit, onCancel }) {
         <div className="mb-8">
           <div className="flex items-center justify-between">
             <div className="flex items-center">
-              {onCancel && (
-                <button
+                <Link to="/admin/services"
                   onClick={onCancel}
                   className="mr-4 p-2 text-gray-600 hover:text-indigo-600 hover:bg-gray-100 rounded-lg transition-colors"
                 >
                   <ArrowLeft className="w-5 h-5" />
-                </button>
-              )}
+                </Link>
+          
               <div>
                 <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Add New Service</h1>
                 <p className="text-gray-600 mt-1 text-sm sm:text-base">

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { ArrowLeft, ChevronLeft, ChevronRight, X } from "lucide-react";
+import host from '../utils/host'
+
 
 function ServiceDetailsPage() {
   const { id } = useParams();
@@ -16,7 +18,7 @@ function ServiceDetailsPage() {
       try {
         const token = localStorage.getItem("token");
         const response = await axios.get(
-          `http://127.0.0.1:8000/api/services/${id}`,
+          `${host}/api/services/${id}`,
           {
             headers: { Authorization: token ? `Bearer ${token}` : undefined },
           }

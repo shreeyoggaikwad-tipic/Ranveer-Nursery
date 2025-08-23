@@ -6,6 +6,8 @@ import Footer from '../components/Footer';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import ProjectImg from '../assets/projectpage.jfif';
+import host from '../utils/host'
+
 
 export default function ProjectsPage() {
     const [activeFilter, setActiveFilter] = useState('all');
@@ -22,7 +24,7 @@ export default function ProjectsPage() {
     useEffect(() => {
         // Fetch all API data in parallel
         Promise.all([
-            axios.get("http://127.0.0.1:8000/api/projects")
+            axios.get(`${host}/api/projects`)
         ])
             .then((responses) => {
                 setProjects(responses[0].data.data);

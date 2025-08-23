@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import axios from 'axios';
 import AboutImg from '../assets/aboutpage.jfif';
+import "../utils/host"
 
 const AboutPage = () => {
   const [isVisible, setIsVisible] = useState({});
@@ -17,11 +18,11 @@ const AboutPage = () => {
 
       try {
         // Fetch user (assuming 1st user = admin)
-        const userRes = await axios.get("http://127.0.0.1:8000/api/users/1");
+        const userRes = await axios.get(`${host}/api/users/1`);
         const user = userRes.data.data;
 
         // Fetch projects
-        const projectRes = await axios.get("http://127.0.0.1:8000/api/projects");
+        const projectRes = await axios.get(`${host}/api/projects`);
         const completedProjects = projectRes.data.data.filter(
           (p) => p.status === "completed"
         ).length;

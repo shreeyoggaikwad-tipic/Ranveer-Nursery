@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import host from '../../utils/host'
+
 
 export default function EditServicePage() {
   const { id } = useParams();
@@ -21,7 +23,7 @@ export default function EditServicePage() {
   // Fetch service by ID
   useEffect(() => {
     axios
-      .get(`http://127.0.0.1:8000/api/services/${id}`)
+      .get(`${host}/api/services/${id}`)
       .then(res => {
         setService(res.data.data);
         setFormData({

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import host from '../utils/host'
+
 
 function Status() {
 
@@ -9,13 +11,13 @@ function Status() {
         const fetchStats = async () => {
             try {
                 // Fetch projects
-                const projectRes = await axios.get("http://127.0.0.1:8000/api/projects");
+                const projectRes = await axios.get(`${host}/api/projects`);
                 const completedProjects = projectRes.data.data.filter(
                     (p) => p.status === "completed"
                 ).length;
 
                 // Fetch user (assuming 1st user = admin)
-                const userRes = await axios.get("http://127.0.0.1:8000/api/users/1");
+                const userRes = await axios.get(`${host}/api/users/1`);
                 const user = userRes.data.data;
 
                 setStats([

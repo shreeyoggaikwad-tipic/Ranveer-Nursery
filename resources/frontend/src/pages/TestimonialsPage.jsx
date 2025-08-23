@@ -4,6 +4,8 @@ import Footer from '../components/Footer';
 import TestimonialCard from '../components/TestimonialCard';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import host from '../utils/host'
+
 
 
 // Main Testimonials Page Component
@@ -19,7 +21,7 @@ function TestimonialsPage() {
   useEffect(() => {
     // Fetch all API data in parallel
     Promise.all([
-      axios.get("http://127.0.0.1:8000/api/testimonials")
+      axios.get(`${host}/api/testimonials`)
     ])
       .then((responses) => {
         setTestimonials(responses[0].data.data);

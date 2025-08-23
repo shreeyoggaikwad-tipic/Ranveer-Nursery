@@ -12,6 +12,8 @@ use App\Http\Controllers\UserController;
 // Authentication routes
 Route::post('/auth/login', [AuthController::class, 'login']);
 Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+Route::post('/auth/forgot-password', [AuthController::class, 'forgotPassword']);
+Route::post('/auth/reset-password', [AuthController::class, 'resetPassword']);
 
 // Public routes (accessible without authentication)
 Route::get('/projects', [ProjectController::class, 'index']);

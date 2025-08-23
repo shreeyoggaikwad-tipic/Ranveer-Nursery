@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link , useNavigate} from 'react-router-dom';
 import axios from 'axios';
+import host from '../utils/host'
+
 
 function ServiceCard({ service, index, onDelete, onEdit }) {
     const token = localStorage.getItem("token"); 
@@ -16,7 +18,7 @@ function ServiceCard({ service, index, onDelete, onEdit }) {
         if (!confirmed) return;
 
         try {
-            await axios.delete(`http://127.0.0.1:8000/api/services/${service.id}`, {
+            await axios.delete(`${host}/api/services/${service.id}`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
 

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import TestimonialCard from '../../components/TestimonialCard';
 import axios from 'axios';
 import AdminNav from '../../components/AdminNav';
+import host from '../../utils/host'
+
 
 function ManageTestimonials() {
 
@@ -15,7 +17,7 @@ function ManageTestimonials() {
   useEffect(() => {
     // Fetch all API data in parallel
     Promise.all([
-      axios.get("http://127.0.0.1:8000/api/testimonials")
+      axios.get(`${host}/api/testimonials`)
     ])
       .then((responses) => {
         setTestimonials(responses[0].data.data);
