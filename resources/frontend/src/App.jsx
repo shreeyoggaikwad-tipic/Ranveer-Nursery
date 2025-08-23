@@ -78,7 +78,7 @@ function App() {
         {/* Admin routes */}
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/admin/forgot-password" element={<ForgotPasswordPage />} />
-        <Route path="/admin/reset-password/:token" element={<ResetPasswordPage />} />
+        <Route path="/admin/reset-password" element={<ResetPasswordPage />} />
 
         <Route path="/admin/dashboard" element={
           <PrivateRoute><AdminDashboard /></PrivateRoute>
