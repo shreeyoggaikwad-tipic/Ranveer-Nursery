@@ -28,6 +28,31 @@ function ManageInquiries() {
       .finally(() => setLoading(false));
   }, []);
 
+  const toggleRequestServed = async (id) => {
+    try {
+      const token = localStorage.getItem("token");
+      const res = await axios.patch(`${host}/api/inquiries/${id}/toggle-served`, {}, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setInquiries((prev) => {
+        const updated = prev.map((inq) =>
+          inq.id === id ? { ...inq, request_served: res.data.request_served } : inq
+        );
+        // Sort updated list
+        return updated.sort((a, b) => {
+          return a.request_served === b.request_served ? 0 : a.request_served ? 1 : -1;
+        });
+      });
+    } catch (err) {
+      console.error("Failed to toggle:", err);
+    }
+  };
+
+
+
   const downloadCSV = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -63,7 +88,7 @@ function ManageInquiries() {
 
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+    <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-blue-50 via-white to-indigo-50">
       <AdminNav />
 
       {/* Hero Section */}
@@ -85,60 +110,71 @@ function ManageInquiries() {
         </div>
       </section>
 
-      {/* Inquiries Section */}
-      <div className="max-w-7xl mx-auto px-6 pb-20">
-        {loading ? (
-          <div className="text-center text-lg text-gray-600">Loading inquiries...</div>
-        ) : inquiries.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 animate-fade-in-up">
-            {inquiries.map((inq, index) => (
-              <div
-                key={inq.id}
-                className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-2xl transition duration-300"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                <div className="flex items-center gap-3 mb-4">
-                  <User className="w-6 h-6 text-blue-600" />
-                  <h3 className="text-xl font-semibold text-gray-800">
-                    {inq.name}
-                  </h3>
-                </div>
-
-                <div className="flex items-center gap-3 text-gray-600 mb-2">
-                  <Mail className="w-5 h-5" />
-                  <span>{inq.email}</span>
-                </div>
-                <div className="flex items-center gap-3 text-gray-600 mb-2">
-                  <Phone className="w-5 h-5" />
-                  <span>{inq.phone}</span>
-                </div>
-
-                <div className="mt-4">
-                  <div className="flex items-center gap-2 mb-1 text-gray-700 font-medium">
-                    <MessageSquare className="w-5 h-5 text-blue-500" />
-                    <span>Message:</span>
-                  </div>
-                  <p className="text-gray-600 bg-gray-50 p-3 rounded-lg text-sm">
-                    {inq.message}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div className="text-center py-20 animate-fade-in-up">
-            <div className="bg-white rounded-2xl p-12 shadow-lg max-w-md mx-auto">
-              <MessageSquare className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-gray-600 mb-2">
-                No Inquiries Found
-              </h3>
-              <p className="text-gray-500">
-                Once clients submit inquiries through the contact form, they
-                will appear here.
-              </p>
+      <div className="w-[80%] mb-20">
+        {/* Table Section */}
+        <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+          {loading ? (
+            <div className="flex justify-center items-center p-8">
+              <Loader2 className="w-6 h-6 text-blue-600 animate-spin" />
+              <span className="ml-2 text-gray-600">Loading inquiries...</span>
             </div>
-          </div>
-        )}
+          ) : inquiries.length > 0 ? (
+            <div className="overflow-x-auto">
+              <table className="min-w-full border-collapse">
+                <thead className="bg-gray-100 text-gray-700 text-left text-sm font-semibold">
+                  <tr>
+                    <th className="px-6 py-3 border-b">Sr. No.</th>
+                    <th className="px-6 py-3 border-b">Name</th>
+                    <th className="px-6 py-3 border-b">Email</th>
+                    <th className="px-6 py-3 border-b">Phone</th>
+                    <th className="px-6 py-3 border-b">Message</th>
+                    <th className="px-6 py-3 border-b">Request Served</th>
+                  </tr>
+                </thead>
+                <tbody className="text-sm text-gray-600">
+                  {inquiries.map((inq, index) => (
+                    <tr
+                      key={inq.id}
+                      className="hover:bg-gray-50 transition-colors"
+                    >
+                      <td className="px-6 py-3 border-b">{index + 1}</td>
+                      <td className="px-6 py-3 border-b">{inq.name}</td>
+                      <td className="px-6 py-3 border-b">{inq.email}</td>
+                      <td className="px-6 py-3 border-b">{inq.phone}</td>
+                      <td className="px-6 py-3 border-b">
+                        {inq.message}
+                      </td>
+                      <td className="px-6 py-3 border-b text-center">
+                        <div className="flex items-center justify-center">
+                          <button
+                            onClick={() => toggleRequestServed(inq.id)}
+                            className={`relative inline-flex h-8 w-16 items-center rounded-full transition-colors duration-300 ease-in-out ${inq.request_served ? 'bg-green-500 hover:bg-green-600' : 'bg-gray-300 hover:bg-gray-400'
+                              }`}
+                            role="switch"
+                            aria-checked={inq.request_served}
+                          >
+                            <span
+                              className={`inline-block h-6 w-6 transform rounded-full bg-white shadow-lg transition-transform duration-300 ease-in-out ${inq.request_served ? 'translate-x-9' : 'translate-x-1'
+                                }`}
+                            />
+                          </button>
+                          <span className={`ml-3 text-sm font-medium ${inq.request_served ? 'text-green-600' : 'text-gray-500'
+                            }`}>
+                            {inq.request_served ? "Served" : "Pending"}
+                          </span>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <div className="p-8 text-center text-gray-500">
+              No inquiries found.
+            </div>
+          )}
+        </div>
       </div>
 
       <style>{`

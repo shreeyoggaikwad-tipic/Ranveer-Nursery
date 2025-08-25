@@ -50,6 +50,8 @@ Route::middleware(['auth:sanctum', 'is_admin'])->group(function () {
     Route::get('/inquiries/export', [InquiryController::class, 'export']);
     // Route::get('/inquiries/{id}', [InquiryController::class, 'show']); // To be Checked
     Route::delete('/inquiries/{id}', [InquiryController::class, 'destroy']);
+    Route::patch('/inquiries/{id}/toggle-served', [InquiryController::class, 'toggleRequestServed']);
+
     
     // Admin user info
     // Route::get('/user', function (Request $request) {

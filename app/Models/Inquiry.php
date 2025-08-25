@@ -12,6 +12,7 @@ class Inquiry extends Model
         'name',
         'email',
         'phone',
-        'message'
+        'message',
+        'request_served'
     ];
 }

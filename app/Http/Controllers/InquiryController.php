@@ -119,5 +119,18 @@ public function export()
         ->header('Content-Disposition', 'attachment; filename="inquiries.csv"');
 }
 
+public function toggleRequestServed($id)
+{
+    $inquiry = Inquiry::findOrFail($id);
+    $inquiry->request_served = !$inquiry->request_served;
+    $inquiry->save();
+
+    return response()->json([
+        'success' => true,
+        'request_served' => $inquiry->request_served
+    ]);
+}
+
+
 
 }
