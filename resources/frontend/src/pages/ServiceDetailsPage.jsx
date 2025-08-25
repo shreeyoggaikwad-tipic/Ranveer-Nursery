@@ -10,8 +10,7 @@ function ServiceDetailsPage() {
   const [service, setService] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [lightboxOpen, setLightboxOpen] = useState(false);
+
 
   useEffect(() => {
     const fetchService = async () => {
@@ -34,23 +33,6 @@ function ServiceDetailsPage() {
 
     fetchService();
   }, [id]);
-
-  const nextImage = () => {
-    setCurrentImageIndex((prev) =>
-      prev === service.photos_urls.length - 1 ? 0 : prev + 1
-    );
-  };
-
-  const prevImage = () => {
-    setCurrentImageIndex((prev) =>
-      prev === 0 ? service.photos_urls.length - 1 : prev - 1
-    );
-  };
-
-  const openLightbox = (index) => {
-    setCurrentImageIndex(index);
-    setLightboxOpen(true);
-  };
 
   if (loading) {
     return (
@@ -77,7 +59,6 @@ function ServiceDetailsPage() {
     );
   }
 
-  const hasPhotos = service.photos_urls && service.photos_urls.length > 0;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -107,60 +88,16 @@ function ServiceDetailsPage() {
                 </p>
               </div>
 
-              {hasPhotos ? (
+              {service.photos ? (
                 <div className="p-6">
                   {/* Main Image */}
                   <div className="relative mb-6">
                     <img
-                      src={service.photos_urls[currentImageIndex]}
-                      alt={`${service.title} - Image ${currentImageIndex + 1}`}
+                      src={`${host}/storage/${service.photos}`}
                       className="w-full h-96 object-cover rounded-lg cursor-pointer"
-                      onClick={() => openLightbox(currentImageIndex)}
                     />
-
-                    {service.photos_urls.length > 1 && (
-                      <>
-                        <button
-                          onClick={prevImage}
-                          className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow-lg"
-                        >
-                          <ChevronLeft className="w-5 h-5 text-gray-700" />
-                        </button>
-                        <button
-                          onClick={nextImage}
-                          className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow-lg"
-                        >
-                          <ChevronRight className="w-5 h-5 text-gray-700" />
-                        </button>
-                        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/50 text-white px-3 py-1 rounded-full text-sm">
-                          {currentImageIndex + 1} / {service.photos_urls.length}
-                        </div>
-                      </>
-                    )}
                   </div>
 
-                  {/* Thumbnails */}
-                  {service.photos_urls.length > 1 && (
-                    <div className="grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-8 gap-3">
-                      {service.photos_urls.map((image, index) => (
-                        <button
-                          key={index}
-                          onClick={() => setCurrentImageIndex(index)}
-                          className={`relative aspect-square rounded-lg overflow-hidden border-2 transition-all ${
-                            index === currentImageIndex
-                              ? "border-indigo-500 ring-2 ring-indigo-200"
-                              : "border-gray-200 hover:border-gray-300"
-                          }`}
-                        >
-                          <img
-                            src={image}
-                            alt={`Thumbnail ${index + 1}`}
-                            className="w-full h-full object-cover"
-                          />
-                        </button>
-                      ))}
-                    </div>
-                  )}
                 </div>
               ) : (
                 <div className="p-12 text-center text-gray-500">
@@ -197,42 +134,6 @@ function ServiceDetailsPage() {
         </div>
       </div>
 
-      {/* Lightbox */}
-      {lightboxOpen && hasPhotos && (
-        <div className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4">
-          <div className="relative max-w-4xl max-h-full">
-            <button
-              onClick={() => setLightboxOpen(false)}
-              className="absolute top-4 right-4 z-10 bg-black/50 text-white p-2 rounded-full hover:bg-black/70"
-            >
-              <X className="w-5 h-5" />
-            </button>
-
-            {service.photos_urls.length > 1 && (
-              <>
-                <button
-                  onClick={prevImage}
-                  className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70"
-                >
-                  <ChevronLeft className="w-6 h-6" />
-                </button>
-                <button
-                  onClick={nextImage}
-                  className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70"
-                >
-                  <ChevronRight className="w-6 h-6" />
-                </button>
-              </>
-            )}
-
-            <img
-              src={service.photos_urls[currentImageIndex]}
-              alt={`${service.title} - Image ${currentImageIndex + 1}`}
-              className="max-w-full max-h-full object-contain rounded-lg"
-            />
-          </div>
-        </div>
-      )}
     </div>
   );
 }

@@ -49,8 +49,7 @@ class ProjectController extends Controller
             'description' => 'nullable|string',
             'budget' => 'nullable|numeric|min:0',
             'duration' => 'nullable|string|max:255',
-            'images' => 'nullable',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 
         if ($validator->fails()) {
@@ -60,17 +59,12 @@ class ProjectController extends Controller
             ], 422);
         }
 
-        $projectData = $request->except('images');
+        $projectData = $request->except('image');
         
-        // Handle image uploads
-        if ($request->hasFile('images')) {
-            $imagePaths = [];
-            foreach ($request->file('images') as $image) {
-                $path = $image->store('projects', 'public');
-                $imagePaths[] = $path;
-            }
-            $projectData['images'] = $imagePaths;
-        }
+        if ($request->hasFile('image')) {
+    $path = $request->file('image')->store('projects', 'public');
+    $projectData['image'] = $path;
+}
 
         $project = Project::create($projectData);
 
@@ -105,62 +99,56 @@ class ProjectController extends Controller
      * Update the specified project (Admin only)
      */
     public function update(Request $request, string $id): JsonResponse
-    {
-        $project = Project::find($id);
-        
-        if (!$project) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Project not found'
-            ], 404);
-        }
+{
+    $project = Project::find($id);
 
-        $validator = Validator::make($request->all(), [
-            'name' => 'sometimes|required|string|max:255',
-            'location' => 'nullable|string|max:255',
-            'type' => 'sometimes|required|in:home,apartment',
-            'status' => 'sometimes|required|in:completed,in-progress',
-            'description' => 'nullable|string',
-            'budget' => 'nullable|numeric|min:0',
-            'duration' => 'nullable|string|max:255',
-            'images' => 'nullable|array',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'errors' => $validator->errors()
-            ], 422);
-        }
-
-        $projectData = $request->except('images');
-        
-        // Handle new image uploads
-        if ($request->hasFile('images')) {
-            // Delete old images if needed
-            if ($project->images) {
-                foreach ($project->images as $oldImage) {
-                    Storage::disk('public')->delete($oldImage);
-                }
-            }
-            
-            $imagePaths = [];
-            foreach ($request->file('images') as $image) {
-                $path = $image->store('projects', 'public');
-                $imagePaths[] = $path;
-            }
-            $projectData['images'] = $imagePaths;
-        }
-
-        $project->update($projectData);
-
+    if (!$project) {
         return response()->json([
-            'success' => true,
-            'message' => 'Project updated successfully',
-            'data' => $project
-        ]);
+            'success' => false,
+            'message' => 'Project not found'
+        ], 404);
     }
+
+    $validator = Validator::make($request->all(), [
+        'name' => 'sometimes|required|string|max:255',
+        'location' => 'nullable|string|max:255',
+        'type' => 'sometimes|required|in:home,apartment',
+        'status' => 'sometimes|required|in:completed,in-progress',
+        'description' => 'nullable|string',
+        'budget' => 'nullable|numeric|min:0',
+        'duration' => 'nullable|string|max:255',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+    ]);
+
+    if ($validator->fails()) {
+        return response()->json([
+            'success' => false,
+            'errors' => $validator->errors()
+        ], 422);
+    }
+
+    $projectData = $request->except('image');
+
+    // Handle new image upload
+    if ($request->hasFile('image')) {
+        // Delete old image if exists
+        if ($project->image) {
+            Storage::disk('public')->delete($project->image);
+        }
+
+        $path = $request->file('image')->store('projects', 'public');
+        $projectData['image'] = $path;
+    }
+
+    $project->update($projectData);
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Project updated successfully',
+        'data' => $project
+    ]);
+}
+
 
     /**
      * Remove the specified project (Admin only)
@@ -177,11 +165,9 @@ class ProjectController extends Controller
         }
 
         // Delete associated images
-        if ($project->images) {
-            foreach ($project->images as $image) {
-                Storage::disk('public')->delete($image);
-            }
-        }
+        if ($project->image) {
+    Storage::disk('public')->delete($project->image);
+}
 
         $project->delete();
 

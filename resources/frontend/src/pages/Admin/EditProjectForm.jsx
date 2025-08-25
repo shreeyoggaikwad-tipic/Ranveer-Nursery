@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import host from '../../utils/host'
+import { ArrowLeft } from "lucide-react";
 
 
 export default function EditProjectPage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
+
+  const [preview, setPreview] = useState(null);
+  const [removeExistingPhoto, setRemoveExistingPhoto] = useState(false);
 
   const [project, setProject] = useState(null);
   const [formData, setFormData] = useState({
@@ -18,9 +22,9 @@ export default function EditProjectPage() {
     description: '',
     budget: '',
     duration: '',
-    images: [],
+    image: null,
   });
-  const [existingImages, setExistingImages] = useState([]);
+  const [existingImage, setExistingImage] = useState(null);
 
   // Fetch project by ID
   useEffect(() => {
@@ -37,9 +41,9 @@ export default function EditProjectPage() {
           description: data.description || '',
           budget: data.budget || '',
           duration: data.duration || '',
-          images: [],
+          image: null,
         });
-        setExistingImages(data.image_urls || []);
+        setExistingImage(data.image_url || null);
       })
       .catch(err => {
         console.error(err);
@@ -47,14 +51,21 @@ export default function EditProjectPage() {
       });
   }, [id]);
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     const { name, value, files } = e.target;
-    if (files) {
-      setFormData({ ...formData, [name]: files });
+    if (name === 'image' && files.length > 0) {
+      setFormData({ ...formData, image: files[0] });
+      setPreview(URL.createObjectURL(files[0]));
     } else {
       setFormData({ ...formData, [name]: value });
     }
   };
+
+  const handleCancelPhoto = () => {
+    setFormData({ ...formData, image: null });
+    setPreview(null);
+  };
+
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -67,14 +78,9 @@ export default function EditProjectPage() {
     data.append('budget', formData.budget);
     data.append('duration', formData.duration);
 
-    // Existing images as relative paths
-    // const relativeImages = existingImages.map(url => url.replace(`${window.location.origin}/storage/`, ''));
-    // data.append('existing_images', JSON.stringify(relativeImages));
-
-    // // New images
-    // if (formData.images && formData.images.length > 0) {
-    //   Array.from(formData.images).forEach(file => data.append('images[]', file));
-    // }
+    if (formData.image) {
+      data.append('image', formData.image);
+    }
 
     try {
       await axios.post(
@@ -92,15 +98,23 @@ export default function EditProjectPage() {
   };
 
   if (!project) {
-        return (
-            <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-blue-50">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-            </div>
-        );
-    }
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-blue-50">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white rounded-2xl shadow-lg">
+      <div className="mb-8 flex items-center">
+        <Link
+          to="/admin/projects"
+          className="mr-4 p-2 text-gray-600 hover:text-indigo-600 hover:bg-gray-100 rounded-lg transition-colors"
+        >
+          <ArrowLeft className="w-5 h-5" />
+        </Link>
+      </div>
       <h1 className="text-3xl font-bold mb-6 text-gray-800">Edit Project</h1>
       <form onSubmit={handleSubmit} className="space-y-6">
 
@@ -192,46 +206,53 @@ export default function EditProjectPage() {
             onChange={handleChange}
             className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
           >
-            <option value="in_progress">In Progress</option>
+            <option value="in-progress">In Progress</option>
             <option value="completed">Completed</option>
           </select>
         </div>
 
-        {/* Existing Images */}
-        {/* <div>
-          <label className="block text-gray-700 font-semibold mb-2">Existing Images</label>
-          {existingImages.length > 0 ? (
-            <div className="flex flex-wrap gap-3">
-              {existingImages.map((url, idx) => (
-                <div key={idx} className="relative w-32 h-32 border rounded-lg overflow-hidden">
-                  <img src={url} alt="Project" className="w-full h-full object-cover" />
-                  <button
-                    type="button"
-                    onClick={() => setExistingImages(prev => prev.filter((_, i) => i !== idx))}
-                    className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-600"
-                  >
-                    ×
-                  </button>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p className="text-gray-500">No existing images</p>
-          )}
-        </div> */}
-
-        {/* Upload New Images */}
-        {/* <div>
-          <label className="block text-gray-700 font-semibold mb-2">Upload New Images</label>
+        {/* Photo Upload */}
+        <div>
+          <label className="block text-gray-700 font-semibold mb-2">Upload Photo</label>
           <input
             type="file"
-            name="images"
-            onChange={handleChange}
-            multiple
+            id="image"
+            name="image"
             accept="image/*"
+            onChange={handleChange}
             className="w-full text-gray-700"
           />
-        </div> */}
+        </div>
+
+        {/* Preview / Existing Photo */}
+        <div className="mb-4">
+          <p className="text-gray-700 font-semibold mb-2">Image Preview:</p>
+          {preview ? (
+            <div className="relative w-32 h-32">
+              <img
+                src={preview}
+                alt="New Preview"
+                className="w-32 h-32 object-cover rounded-lg border"
+              />
+              <button
+                type="button"
+                onClick={handleCancelPhoto}
+                className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-600"
+              >
+                ×
+              </button>
+            </div>
+          ) : existingImage ? (
+            <img
+              src={existingImage}
+              alt="Current Project"
+              className="w-32 h-32 object-cover rounded-lg border"
+            />
+          ) : (
+            <p className="text-gray-500">No image uploaded yet</p>
+          )}
+        </div>
+
 
         {/* Buttons */}
         <div className="flex gap-4">

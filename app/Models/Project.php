@@ -14,26 +14,15 @@ class Project extends Model
         'type',
         'status',
         'description',
-        'images',
+        'image',
         'budget',
         'duration',
     ];
 
-    protected $casts = [
-        'images' => 'array',
-    ];
+    protected $appends = ['image_url'];
 
-    // 👇 This will add "image_urls" field automatically
-    protected $appends = ['image_urls'];
-
-    public function getImageUrlsAttribute()
+    public function getImageUrlAttribute()
     {
-        if (!$this->images) {
-            return [];
-        }
-
-        return collect($this->images)->map(function ($path) {
-            return asset('storage/' . $path);
-        })->toArray();
+        return $this->image ? asset('storage/' . $this->image) : null;
     }
 }

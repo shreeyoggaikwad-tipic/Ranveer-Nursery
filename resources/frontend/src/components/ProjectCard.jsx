@@ -4,7 +4,7 @@ import axios from 'axios';
 import host from '../utils/host'
 
 
-function ProjectCard({ project, index, onDelete, onEdit }) {
+function ProjectCard({ project, index, onDelete }) {
     const token = localStorage.getItem("token"); // 👈 check admin auth
     const isAdmin = !!token;
 
@@ -37,17 +37,16 @@ function ProjectCard({ project, index, onDelete, onEdit }) {
         >
             <div className="relative overflow-hidden">
                 <img
-                    src={project.image_urls[0]}
+                    src={project.image_url}
                     alt={project.name}
                     className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-700"
                 />
                 <div className="absolute top-4 right-4">
                     <span
-                        className={`px-3 py-1 rounded-full text-sm font-semibold ${
-                            project.status === 'completed'
+                        className={`px-3 py-1 rounded-full text-sm font-semibold ${project.status === 'completed'
                                 ? 'bg-green-100 text-green-800'
                                 : 'bg-yellow-100 text-yellow-800'
-                        }`}
+                            }`}
                     >
                         {project.status === 'completed' ? 'Completed' : 'In Progress'}
                     </span>

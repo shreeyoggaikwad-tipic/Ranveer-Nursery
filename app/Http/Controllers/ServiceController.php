@@ -11,12 +11,12 @@ use Illuminate\Support\Facades\Validator;
 class ServiceController extends Controller
 {
     /**
-     * Display a listing of services (Public + Admin)
+     * Display all services
      */
     public function index(): JsonResponse
     {
         $services = Service::latest()->get();
-        
+
         return response()->json([
             'success' => true,
             'data' => $services
@@ -24,7 +24,7 @@ class ServiceController extends Controller
     }
 
     /**
-     * Store a newly created service (Admin only)
+     * Store a new service
      */
     public function store(Request $request): JsonResponse
     {
@@ -32,9 +32,7 @@ class ServiceController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'benefits' => 'nullable|string',
-            'photos' => 'nullable',
-            'photos.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'icon' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'photos' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
         if ($validator->fails()) {
@@ -46,13 +44,9 @@ class ServiceController extends Controller
 
         $serviceData = $request->except(['photos']);
 
-        // Handle photos upload (multiple)
+        // Handle single photos upload
         if ($request->hasFile('photos')) {
-            $photoPaths = [];
-            foreach ($request->file('photos') as $photo) {
-                $photoPaths[] = $photo->store('services/photos', 'public');
-            }
-            $serviceData['photos'] = json_encode($photoPaths);
+            $serviceData['photos'] = $request->file('photos')->store('services', 'public');
         }
 
         $service = Service::create($serviceData);
@@ -65,12 +59,12 @@ class ServiceController extends Controller
     }
 
     /**
-     * Display the specified service (Public + Admin)
+     * Show a specific service
      */
     public function show(string $id): JsonResponse
     {
         $service = Service::find($id);
-        
+
         if (!$service) {
             return response()->json([
                 'success' => false,
@@ -85,12 +79,12 @@ class ServiceController extends Controller
     }
 
     /**
-     * Update the specified service (Admin only)
+     * Update a service
      */
     public function update(Request $request, string $id): JsonResponse
     {
         $service = Service::find($id);
-        
+
         if (!$service) {
             return response()->json([
                 'success' => false,
@@ -102,9 +96,7 @@ class ServiceController extends Controller
             'title' => 'sometimes|required|string|max:255',
             'description' => 'nullable|string',
             'benefits' => 'nullable|string',
-            'photos' => 'nullable|array',
-            'photos.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'icon' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'photos' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
         if ($validator->fails()) {
@@ -116,20 +108,12 @@ class ServiceController extends Controller
 
         $serviceData = $request->except(['photos']);
 
-        // Handle new photos upload
+        // Replace old photos if new one uploaded
         if ($request->hasFile('photos')) {
-            // Delete old photos
             if ($service->photos) {
-                foreach (json_decode($service->photos, true) as $oldPhoto) {
-                    Storage::disk('public')->delete($oldPhoto);
-                }
+                Storage::disk('public')->delete($service->photos);
             }
-
-            $photoPaths = [];
-            foreach ($request->file('photos') as $photo) {
-                $photoPaths[] = $photo->store('services/photos', 'public');
-            }
-            $serviceData['photos'] = json_encode($photoPaths);
+            $serviceData['photos'] = $request->file('photos')->store('services', 'public');
         }
 
         $service->update($serviceData);
@@ -142,37 +126,29 @@ class ServiceController extends Controller
     }
 
     /**
-     * Remove the specified service (Admin only)
+     * Delete a service
      */
     public function destroy(string $id): JsonResponse
-{
-    $service = Service::find($id);
-    
-    if (!$service) {
-        return response()->json([
-            'success' => false,
-            'message' => 'Service not found'
-        ], 404);
-    }
+    {
+        $service = Service::find($id);
 
-    // Delete associated icon
-    if ($service->icon) {
-        Storage::disk('public')->delete($service->icon);
-    }
-
-    // Delete associated photos
-    if ($service->photos && is_array($service->photos)) {
-        foreach ($service->photos as $photo) {
-            Storage::disk('public')->delete($photo);
+        if (!$service) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Service not found'
+            ], 404);
         }
+
+        // Delete associated photos
+        if ($service->photos) {
+            Storage::disk('public')->delete($service->photos);
+        }
+
+        $service->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Service deleted successfully'
+        ]);
     }
-
-    $service->delete();
-
-    return response()->json([
-        'success' => true,
-        'message' => 'Service deleted successfully'
-    ]);
-}
-
 }

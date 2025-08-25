@@ -37,7 +37,7 @@ export default function AddProjectForm({ onSubmit, onCancel }) {
 
   const [formData, setFormData] = useState({
     name: "",
-    images: [],
+    image: null,
     location: "",
     type: "home",
     status: "in-progress",
@@ -46,50 +46,17 @@ export default function AddProjectForm({ onSubmit, onCancel }) {
     duration: "",
   });
 
-  const [dragActive, setDragActive] = useState(false);
-  const [selectedFiles, setSelectedFiles] = useState([]);
+  const [selectedFile, setSelectedFile] = useState(null);
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-    if (name === "images") {
-      const fileArray = Array.from(files);
-      setFormData({ ...formData, images: files });
-      setSelectedFiles(fileArray);
+    if (name === "image") {
+      const file = files[0];
+      setFormData({ ...formData, image: file });
+      setSelectedFile(file);
     } else {
       setFormData({ ...formData, [name]: value });
     }
-  };
-
-  const handleDrag = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (e.type === "dragenter" || e.type === "dragover") {
-      setDragActive(true);
-    } else if (e.type === "dragleave") {
-      setDragActive(false);
-    }
-  };
-
-  const handleDrop = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setDragActive(false);
-
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      const files = e.dataTransfer.files;
-      const fileArray = Array.from(files);
-      setFormData({ ...formData, images: files });
-      setSelectedFiles(fileArray);
-    }
-  };
-
-  const removeFile = (indexToRemove) => {
-    const newFiles = selectedFiles.filter((_, index) => index !== indexToRemove);
-    setSelectedFiles(newFiles);
-
-    const dt = new DataTransfer();
-    newFiles.forEach(file => dt.items.add(file));
-    setFormData({ ...formData, images: dt.files });
   };
 
 
@@ -105,10 +72,8 @@ export default function AddProjectForm({ onSubmit, onCancel }) {
     data.append("budget", formData.budget);
     data.append("duration", formData.duration);
 
-    if (formData.images.length > 0) {
-      Array.from(formData.images).forEach((file) => {
-        data.append("images[]", file);
-      });
+    if (formData.image) {
+      data.append("image", formData.image);
     }
 
     handleAddProject(data);
@@ -277,80 +242,56 @@ export default function AddProjectForm({ onSubmit, onCancel }) {
           {/* Images Upload Section */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
             <div className="px-6 py-5 border-b border-gray-200">
-              <h3 className="text-lg font-semibold text-gray-900">Project Images</h3>
-              <p className="text-sm text-gray-600 mt-1">Upload images to showcase your project</p>
+              <h3 className="text-lg font-semibold text-gray-900">Project Image</h3>
+              <p className="text-sm text-gray-600 mt-1">Upload an image for your project</p>
             </div>
 
             <div className="px-6 py-6">
               {/* Drag and Drop Area */}
               <div
-                className={`relative border-2 border-dashed rounded-lg p-8 text-center transition-colors ${dragActive
-                    ? "border-indigo-500 bg-indigo-50"
-                    : "border-gray-300 hover:border-gray-400"
-                  }`}
-                onDragEnter={handleDrag}
-                onDragLeave={handleDrag}
-                onDragOver={handleDrag}
-                onDrop={handleDrop}
+                className={`relative border-2 border-dashed rounded-lg p-8 text-center transition-colors`}
               >
                 <input
                   type="file"
-                  name="images"
+                  name="image"
                   onChange={handleChange}
                   className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                  multiple
                   accept="image/*"
                 />
 
                 <Upload className="mx-auto h-12 w-12 text-gray-400 mb-4" />
                 <p className="text-lg font-medium text-gray-900 mb-2">
-                  Drop your images here, or{" "}
+                  Drop your image here, or{" "}
                   <span className="text-indigo-600">browse</span>
                 </p>
                 <p className="text-sm text-gray-500">
-                  PNG, JPG, GIF up to 10MB each
+                  PNG, JPG, GIF up to 2MB
                 </p>
               </div>
 
-              {/* Selected Files Preview */}
-              {selectedFiles.length > 0 && (
-                <div className="mt-6">
-                  <h4 className="text-sm font-medium text-gray-900 mb-3">
-                    Selected Files ({selectedFiles.length})
-                  </h4>
-                  <div className="space-y-2">
-                    {selectedFiles.map((file, index) => (
-                      <div
-                        key={index}
-                        className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
-                      >
-                        <div className="flex items-center">
-                          <div className="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center mr-3">
-                            <span className="text-indigo-600 text-sm">📷</span>
-                          </div>
-                          <div>
-                            <p className="text-sm font-medium text-gray-900">
-                              {file.name}
-                            </p>
-                            <p className="text-xs text-gray-500">
-                              {(file.size / 1024 / 1024).toFixed(2)} MB
-                            </p>
-                          </div>
-                        </div>
-                        <button
-                          type="button"
-                          onClick={() => removeFile(index)}
-                          className="p-1 text-gray-400 hover:text-red-500 transition-colors"
-                        >
-                          <X className="w-4 h-4" />
-                        </button>
-                      </div>
-                    ))}
-                  </div>
+              {/* ✅ Preview Section */}
+              {selectedFile && (
+                <div className="mt-6 relative w-40">
+                  <img
+                    src={URL.createObjectURL(selectedFile)}
+                    alt="Preview"
+                    className="w-40 h-40 object-cover rounded-lg border"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSelectedFile(null);
+                      setFormData({ ...formData, image: null });
+                    }}
+                    className="absolute top-2 right-2 bg-white p-1 rounded-full shadow-md hover:bg-gray-100"
+                  >
+                    <X className="w-5 h-5 text-red-500" />
+                  </button>
                 </div>
               )}
             </div>
           </div>
+
 
           {/* Action Buttons */}
           <div className="flex justify-end space-x-4 pt-6">

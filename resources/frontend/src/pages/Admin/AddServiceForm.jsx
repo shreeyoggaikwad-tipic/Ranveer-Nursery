@@ -1,108 +1,68 @@
 // components/AddServiceForm.jsx
 import React, { useState } from "react";
-import axios from 'axios';
-import { Upload, X, Plus, ArrowLeft, Settings } from "lucide-react";
-import { Link , useNavigate} from "react-router-dom";
-import host from '../../utils/host'
-
+import axios from "axios";
+import { Upload, X, ArrowLeft } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import host from "../../utils/host";
 
 export default function AddServiceForm({ onSubmit, onCancel }) {
   const navigate = useNavigate();
-
-  const handleAddService = async (formData) => {
-    try {
-      const token = localStorage.getItem("token");
-
-      const response = await axios.post(
-        `${host}/api/services`,
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-
-      console.log("Service saved:", response.data);
-      alert("✅ Service saved successfully!");
-      navigate("/admin/services");
-    } catch (error) {
-      console.error("❌ Error saving service:", error.response || error);
-      alert("Failed to save service. Check console for details.");
-    }
-  };
-  
   const [formData, setFormData] = useState({
     name: "",
     description: "",
     benefits: "",
-    images: [],
+    photos: null, // single image
   });
+  const [preview, setPreview] = useState(null); // image preview
+  const [loading, setLoading] = useState(false);
 
-  const [dragActive, setDragActive] = useState(false);
-  const [selectedFiles, setSelectedFiles] = useState([]);
+  // ✅ Upload Service
+  const handleAddService = async (formData) => {
+    try {
+      setLoading(true);
+      const token = localStorage.getItem("token");
 
+      await axios.post(`${host}/api/services`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      alert("✅ Service saved successfully!");
+      navigate("/admin/services");
+    } catch (error) {
+      console.error("❌ Error saving service:", error.response || error);
+      alert("Failed to save service.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // ✅ Handle input change
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-    if (name === "images") {
-      const fileArray = Array.from(files);
-      setFormData({ ...formData, images: files });
-      setSelectedFiles(fileArray);
+    if (name === "photos" && files && files[0]) {
+      setFormData({ ...formData, photos: files[0] });
+      setPreview(URL.createObjectURL(files[0]));
     } else {
       setFormData({ ...formData, [name]: value });
     }
   };
 
-  const handleDrag = (e) => {
+  // ✅ Handle submit
+  const handleSubmit = (e) => {
     e.preventDefault();
-    e.stopPropagation();
-    if (e.type === "dragenter" || e.type === "dragover") {
-      setDragActive(true);
-    } else if (e.type === "dragleave") {
-      setDragActive(false);
+    const data = new FormData();
+    data.append("title", formData.name);
+    data.append("description", formData.description);
+    data.append("benefits", formData.benefits);
+    if (formData.photos) {
+      data.append("photos", formData.photos);
     }
+    handleAddService(data);
+    if (onSubmit) onSubmit(data);
   };
-
-  const handleDrop = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setDragActive(false);
-    
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      const files = e.dataTransfer.files;
-      const fileArray = Array.from(files);
-      setFormData({ ...formData, images: files });
-      setSelectedFiles(fileArray);
-    }
-  };
-
-  const removeFile = (indexToRemove) => {
-    const newFiles = selectedFiles.filter((_, index) => index !== indexToRemove);
-    setSelectedFiles(newFiles);
-    
-    const dt = new DataTransfer();
-    newFiles.forEach(file => dt.items.add(file));
-    setFormData({ ...formData, images: dt.files });
-  };
-
- const handleSubmit = (e) => {
-  e.preventDefault();
-
-  const data = new FormData();
-  data.append("title", formData.name);
-  data.append("description", formData.description);
-  data.append("benefits", formData.benefits);
-
-  if (formData.images && formData.images.length > 0) {
-    for (let i = 0; i < formData.images.length; i++) {
-      data.append("photos[]", formData.images[i]); // Laravel expects "photos[]" for multiple files
-    }
-  }
-
-  handleAddService(data);
-  if (onSubmit) onSubmit(data);
-};
 
   return (
     <div className="min-h-screen bg-gray-50 py-6">
@@ -111,15 +71,17 @@ export default function AddServiceForm({ onSubmit, onCancel }) {
         <div className="mb-8">
           <div className="flex items-center justify-between">
             <div className="flex items-center">
-                <Link to="/admin/services"
-                  onClick={onCancel}
-                  className="mr-4 p-2 text-gray-600 hover:text-indigo-600 hover:bg-gray-100 rounded-lg transition-colors"
-                >
-                  <ArrowLeft className="w-5 h-5" />
-                </Link>
-          
+              <Link
+                to="/admin/services"
+                onClick={onCancel}
+                className="mr-4 p-2 text-gray-600 hover:text-indigo-600 hover:bg-gray-100 rounded-lg transition-colors"
+              >
+                <ArrowLeft className="w-5 h-5" />
+              </Link>
               <div>
-                <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Add New Service</h1>
+                <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
+                  Add New Service
+                </h1>
                 <p className="text-gray-600 mt-1 text-sm sm:text-base">
                   Create a new service offering for your business
                 </p>
@@ -132,8 +94,12 @@ export default function AddServiceForm({ onSubmit, onCancel }) {
         <form onSubmit={handleSubmit} className="space-y-8">
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
             <div className="px-6 py-5 border-b border-gray-200">
-              <h3 className="text-lg font-semibold text-gray-900">Service Information</h3>
-              <p className="text-sm text-gray-600 mt-1">Basic details about your service offering</p>
+              <h3 className="text-lg font-semibold text-gray-900">
+                Service Information
+              </h3>
+              <p className="text-sm text-gray-600 mt-1">
+                Basic details about your service offering
+              </p>
             </div>
 
             <div className="px-6 py-6 space-y-6">
@@ -149,10 +115,9 @@ export default function AddServiceForm({ onSubmit, onCancel }) {
                   value={formData.name}
                   onChange={handleChange}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
-                  placeholder="e.g., Interior Design, Home Renovation, Construction"
+                  placeholder="e.g., Interior Design, Home Renovation"
                   required
                 />
-                <p className="text-xs text-gray-500 mt-1">Enter a clear and descriptive service name</p>
               </div>
 
               {/* Service Description */}
@@ -168,9 +133,6 @@ export default function AddServiceForm({ onSubmit, onCancel }) {
                   rows="4"
                   placeholder="Describe your service in detail."
                 />
-                <p className="text-xs text-gray-500 mt-1">
-                  Provide a comprehensive overview of what this service includes
-                </p>
               </div>
 
               {/* Service Benefits */}
@@ -184,98 +146,72 @@ export default function AddServiceForm({ onSubmit, onCancel }) {
                   onChange={handleChange}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors resize-none"
                   rows="5"
-                  placeholder="List the key benefits and features of this service."
+                  placeholder="List the key benefits of this service."
                 />
-                <p className="text-xs text-gray-500 mt-1">
-                  Highlight what clients will gain from choosing this service. Use bullet points for better readability.
-                </p>
               </div>
             </div>
           </div>
 
-          {/* Service Images Section */}
+          {/* Service Image Upload */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
             <div className="px-6 py-5 border-b border-gray-200">
-              <h3 className="text-lg font-semibold text-gray-900">Service Images</h3>
-              <p className="text-sm text-gray-600 mt-1">Upload images that showcase this service</p>
+              <h3 className="text-lg font-semibold text-gray-900">
+                Service Image
+              </h3>
+              <p className="text-sm text-gray-600 mt-1">
+                Upload one image for this service
+              </p>
             </div>
 
             <div className="px-6 py-6">
-              {/* Drag and Drop Area */}
-              <div
-                className={`relative border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
-                  dragActive
-                    ? "border-indigo-500 bg-indigo-50"
-                    : "border-gray-300 hover:border-gray-400"
-                }`}
-                onDragEnter={handleDrag}
-                onDragLeave={handleDrag}
-                onDragOver={handleDrag}
-                onDrop={handleDrop}
-              >
+              {/* Upload Area */}
+              <div className="relative border-2 border-dashed rounded-lg p-8 text-center transition-colors border-gray-300 hover:border-gray-400">
                 <input
                   type="file"
-                  name="images"
+                  name="photos"
                   onChange={handleChange}
                   className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                  multiple
                   accept="image/*"
                 />
-                
                 <Upload className="mx-auto h-12 w-12 text-gray-400 mb-4" />
                 <p className="text-lg font-medium text-gray-900 mb-2">
-                  Drop service images here, or{" "}
+                  Drop an image here, or{" "}
                   <span className="text-indigo-600">browse</span>
                 </p>
                 <p className="text-sm text-gray-500 mb-2">
-                  PNG, JPG, GIF up to 10MB each
-                </p>
-                <p className="text-xs text-gray-400">
-                  Upload before/after photos, process images, or finished work examples
+                  PNG, JPG, GIF up to 10MB
                 </p>
               </div>
 
-              {/* Selected Files Preview */}
-              {selectedFiles.length > 0 && (
+              {/* Image Preview */} 
+              {preview && (
                 <div className="mt-6">
                   <h4 className="text-sm font-medium text-gray-900 mb-3">
-                    Selected Images ({selectedFiles.length})
+                    Selected Image
                   </h4>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    {selectedFiles.map((file, index) => (
-                      <div
-                        key={index}
-                        className="flex items-center justify-between p-4 bg-gray-50 rounded-lg border hover:bg-gray-100 transition-colors"
-                      >
-                        <div className="flex items-center flex-1">
-                          <div className="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mr-3 flex-shrink-0">
-                            <span className="text-indigo-600 text-lg">🖼️</span>
-                          </div>
-                          <div className="min-w-0 flex-1">
-                            <p className="text-sm font-medium text-gray-900 truncate">
-                              {file.name}
-                            </p>
-                            <p className="text-xs text-gray-500">
-                              {(file.size / 1024 / 1024).toFixed(2)} MB
-                            </p>
-                          </div>
-                        </div>
-                        <button
-                          type="button"
-                          onClick={() => removeFile(index)}
-                          className="ml-3 p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
-                        >
-                          <X className="w-4 h-4" />
-                        </button>
-                      </div>
-                    ))}
+                  <div className="relative w-40 h-40">
+                    <img
+                      src={preview}
+                      alt="Selected"
+                      className="w-full h-full object-cover rounded-lg border"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setFormData({ ...formData, photos: null });
+                        setPreview(null);
+                      }}
+                      className="absolute top-2 right-2 p-1.5 bg-white rounded-full shadow hover:bg-red-50 hover:text-red-500"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
                   </div>
                 </div>
               )}
             </div>
           </div>
 
-          {/* Action Buttons */}
+          {/* Buttons */}
           <div className="flex justify-end space-x-4 pt-6">
             {onCancel && (
               <button
@@ -287,14 +223,25 @@ export default function AddServiceForm({ onSubmit, onCancel }) {
               </button>
             )}
             <button
-              onClick={handleSubmit}
-              className="px-8 py-3 bg-indigo-600 text-white font-medium rounded-lg shadow-sm hover:bg-indigo-700 hover:shadow-md transition-all duration-200 flex items-center"
+              type="submit"
+              disabled={loading}
+              className={`px-8 py-3 bg-indigo-600 text-white font-medium rounded-lg shadow-sm hover:bg-indigo-700 hover:shadow-md transition-all duration-200 flex items-center justify-center ${loading ? "opacity-70 cursor-not-allowed" : ""}`}
             >
-              Save Service
+              {loading ? (
+                <>
+                  <svg className="animate-spin h-5 w-5 text-white mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                  </svg>
+                  Saving...
+                </>
+              ) : (
+                "Save Service"
+              )}
             </button>
-
-            <Link to="/admin/services"
-              className="px-8 py-3 bg-red-600 text-white font-medium rounded-lg shadow-sm hover:bg-red-700 hover:shadow-md transition-all duration-200 flex items-center"
+            <Link
+              to="/admin/services"
+              className="px-8 py-3 bg-red-600 text-white font-medium rounded-lg shadow-sm hover:bg-red-700 transition-all duration-200 flex items-center"
             >
               Discard
             </Link>

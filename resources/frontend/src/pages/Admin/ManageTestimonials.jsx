@@ -3,6 +3,8 @@ import TestimonialCard from '../../components/TestimonialCard';
 import axios from 'axios';
 import AdminNav from '../../components/AdminNav';
 import host from '../../utils/host'
+import { Link } from 'react-router-dom';
+import { Plus } from 'lucide-react';
 
 
 function ManageTestimonials() {
@@ -28,6 +30,10 @@ function ManageTestimonials() {
       .finally(() => setLoading(false));
   }, []);
 
+  const handleDeleteTestimonial = (deletedId) => {
+    setTestimonials(prev => prev.filter(testimonial => testimonial.id !== deletedId));
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-blue-50">
@@ -44,7 +50,7 @@ function ManageTestimonials() {
       {/* Hero Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto text-center">
-          <div className="animate-fade-in">
+          <div className="animate-fade-in flex flex-col justify-center items-center">
             <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
               Client <span className="text-blue-600">Testimonials</span>
             </h1>
@@ -54,6 +60,13 @@ function ManageTestimonials() {
                 <span className="font-semibold">{averageRating}/5 Average Rating</span>
               </div>
             )}
+            {/* Add Testimonial Button */}
+            <Link to="/admin/addTestimonial"
+              className="mt-10 flex items-center gap-2 px-6 py-3 rounded-xl bg-blue-600 text-white font-semibold shadow hover:bg-blue-700 transition"
+            >
+              <Plus className="w-5 h-5" />
+              Add Testimonial
+            </Link>
           </div>
         </div>
       </section>
@@ -64,7 +77,7 @@ function ManageTestimonials() {
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {testimonials.map((testimonial, index) => (
-              <TestimonialCard key={testimonial.id} testimonial={testimonial} index={index} />
+              <TestimonialCard key={testimonial.id} testimonial={testimonial} index={index} onDelete={handleDeleteTestimonial} />
             ))}
           </div>
         </div>

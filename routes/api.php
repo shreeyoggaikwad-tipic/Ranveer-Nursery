@@ -21,6 +21,7 @@ Route::get('/projects/{id}', [ProjectController::class, 'show']);
 Route::get('/services', [ServiceController::class, 'index']);
 Route::get('/services/{id}', [ServiceController::class, 'show']);
 Route::get('/testimonials', [TestimonialController::class, 'index']);
+Route::get('/testimonials/{id}', [TestimonialController::class, 'show']);
 
 // Contact/Inquiry submission (public)
 Route::post('/inquiries', [InquiryController::class, 'store']);

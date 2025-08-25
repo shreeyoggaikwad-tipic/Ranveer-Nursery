@@ -16,15 +16,17 @@ import AdminProfile from './pages/Admin/AdminProfile';
 import ForgotPasswordPage from './pages/Admin/ForgotPasswordPage';
 import ResetPasswordPage from './pages/Admin/ResetPasswordPage';
 
-import AdminDashboard from './pages/admin/AdminDashboard';
-import ManageProjects from './pages/admin/ManageProjects';
+import AdminDashboard from './pages/Admin/AdminDashboard';
+import ManageProjects from './pages/Admin/ManageProjects';
 import ManageServices from './pages/Admin/ManageServices';
-import ManageTestimonials from './pages/admin/ManageTestimonials';
+import ManageTestimonials from './pages/Admin/ManageTestimonials';
 import ManageInquiries from './pages/Admin/ManageInquiries';
 import AddProjectForm from './pages/Admin/AddProjectForm';
 import AddServiceForm from './pages/Admin/AddServiceForm';
+import AddTestimonialForm from './pages/Admin/AddTestimonialForm';
 import EditServiceForm from './pages/Admin/EditServiceForm';
 import EditProjectForm from './pages/Admin/EditProjectForm';
+import EditTestimonialForm from './pages/Admin/EditTestimonialForm';
 
 // 🔒 Simple Private Route Wrapper
 function PrivateRoute({ children }) {
@@ -101,11 +103,17 @@ function App() {
         <Route path="/admin/addService" element={
           <PrivateRoute><AddServiceForm /></PrivateRoute>
         } />
+        <Route path="/admin/addTestimonial" element={
+          <PrivateRoute><AddTestimonialForm /></PrivateRoute>
+        } />
         <Route path="/admin/editService/:id" element={
           <PrivateRoute><EditServiceForm /></PrivateRoute>
         } />
         <Route path="/admin/editProject/:id" element={
           <PrivateRoute><EditProjectForm /></PrivateRoute>
+        } />
+        <Route path="/admin/editTestimonial/:id" element={
+          <PrivateRoute><EditTestimonialForm /></PrivateRoute>
         } />
         <Route path="/admin/profile" element={
           <PrivateRoute><AdminProfile /></PrivateRoute>

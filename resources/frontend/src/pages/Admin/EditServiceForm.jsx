@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
-import host from '../../utils/host'
-
+import host from '../../utils/host';
+import { ArrowLeft } from "lucide-react";
 
 export default function EditServicePage() {
   const { id } = useParams();
@@ -14,11 +14,10 @@ export default function EditServicePage() {
     title: '',
     description: '',
     benefits: '',
-    photos: [],
-    icon: null,
+    photos: null,
   });
-  const [existingPhotos, setExistingPhotos] = useState([]);
-  const [existingIcon, setExistingIcon] = useState(null);
+
+  const [preview, setPreview] = useState(null);
 
   // Fetch service by ID
   useEffect(() => {
@@ -30,11 +29,8 @@ export default function EditServicePage() {
           title: res.data.data.title,
           description: res.data.data.description,
           benefits: res.data.data.benefits,
-          photos: [],
-          icon: null,
+          photos: res.data.data.photos,
         });
-        setExistingPhotos(res.data.data.photos_urls || []);
-        setExistingIcon(res.data.data.icon ? `${window.location.origin}/storage/${res.data.data.icon}` : null);
       })
       .catch(err => {
         console.error(err);
@@ -42,13 +38,22 @@ export default function EditServicePage() {
       });
   }, [id]);
 
-  const handleChange = e => {
+  // Handle input changes
+  const handleChange = (e) => {
     const { name, value, files } = e.target;
-    if (files) {
-      setFormData({ ...formData, [name]: files });
+    if (files && files[0]) {
+      setFormData({ ...formData, [name]: files[0] });
+      setPreview(URL.createObjectURL(files[0])); // Preview for new image
     } else {
       setFormData({ ...formData, [name]: value });
     }
+  };
+
+  // Cancel selected photo
+  const handleCancelPhoto = () => {
+    setFormData({ ...formData, photos: service.photos }); // revert to old photo
+    setPreview(null);
+    document.getElementById('photo-input').value = ''; // Reset file input
   };
 
   const handleSubmit = async (e) => {
@@ -58,17 +63,9 @@ export default function EditServicePage() {
     data.append('description', formData.description);
     data.append('benefits', formData.benefits);
 
-    // Existing photos as relative paths
-    const relativePhotos = existingPhotos.map(url => url.replace(`${window.location.origin}/storage/`, ''));
-    data.append('existing_photos', JSON.stringify(relativePhotos));
-
-    // New uploaded photos
-    if (formData.photos && formData.photos.length > 0) {
-      Array.from(formData.photos).forEach(file => data.append('photos[]', file));
+    if (formData.photos && formData.photos !== service.photos) {
+      data.append('photos', formData.photos);
     }
-
-    // Icon
-    if (formData.icon) data.append('icon', formData.icon);
 
     try {
       await axios.post(
@@ -85,15 +82,23 @@ export default function EditServicePage() {
   };
 
   if (!service) {
-        return (
-            <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-blue-50">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-            </div>
-        );
-    }
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-blue-50">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white rounded-2xl shadow-lg">
+      <div className="mb-8 flex items-center">
+        <Link
+          to="/admin/services"
+          className="mr-4 p-2 text-gray-600 hover:text-indigo-600 hover:bg-gray-100 rounded-lg transition-colors"
+        >
+          <ArrowLeft className="w-5 h-5" />
+        </Link>
+      </div>
       <h1 className="text-3xl font-bold mb-6 text-gray-800">Edit Service</h1>
       <form onSubmit={handleSubmit} className="space-y-6">
 
@@ -138,48 +143,47 @@ export default function EditServicePage() {
           />
         </div>
 
-        {/* Existing Photos */}
-        {/* <div>
-          <label className="block text-gray-700 font-semibold mb-2">Existing Photos</label>
-          {existingPhotos.length > 0 ? (
-            <div className="flex flex-wrap gap-3">
-              {existingPhotos.map((url, index) => (
-                <div key={index} className="relative w-32 h-32 border rounded-lg overflow-hidden">
-                  <img
-                    src={url}
-                    alt="Service"
-                    className="w-full h-full object-cover"
-                  />
-                  <button
-                    type="button"
-                    onClick={() =>
-                      setExistingPhotos(prev => prev.filter((_, i) => i !== index))
-                    }
-                    className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-600"
-                  >
-                    ×
-                  </button>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p className="text-gray-500">No existing photos</p>
-          )}
-        </div> */}
-
-        {/* Upload New Photos */}
-        {/* <div>
-          <label className="block text-gray-700 font-semibold mb-2">Upload New Photos</label>
+        {/* Photo Upload */}
+        <div>
+          <label className="block text-gray-700 font-semibold mb-2">Upload Photo</label>
           <input
             type="file"
+            id="photo-input"
             name="photos"
-            onChange={handleChange}
-            multiple
             accept="image/*"
+            onChange={handleChange}
             className="w-full text-gray-700"
           />
-        </div> */}
+        </div>
 
+        {/* Preview Section */}
+        <div className="mb-4">
+          <p className="text-gray-700 font-semibold mb-2">Photo Preview:</p>
+          {preview ? (
+            <div className="relative w-32 h-32">
+              <img
+                src={preview}
+                alt="New Preview"
+                className="w-32 h-32 object-cover rounded-lg border"
+              />
+              <button
+                type="button"
+                onClick={handleCancelPhoto}
+                className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-600"
+              >
+                ×
+              </button>
+            </div>
+          ) : service.photos ? (
+            <img
+              src={`${host}/storage/${service.photos}`}
+              alt="Current Service"
+              className="w-32 h-32 object-cover rounded-lg border"
+            />
+          ) : (
+            <p className="text-gray-500">No photo uploaded yet</p>
+          )}
+        </div>
 
         {/* Buttons */}
         <div className="flex gap-4">

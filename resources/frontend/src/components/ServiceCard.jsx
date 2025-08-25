@@ -1,19 +1,16 @@
 import React from 'react';
-import { Link , useNavigate} from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import host from '../utils/host'
 
 
 function ServiceCard({ service, index, onDelete, onEdit }) {
-    const token = localStorage.getItem("token"); 
+    const token = localStorage.getItem("token");
     const isAdmin = !!token; // if token exists, assume admin is logged in
 
     const navigate = useNavigate();
 
-    // Parse photos if stored as JSON array
-    const photos = service.photos_urls;
-
-     const handleDelete = async () => {
+    const handleDelete = async () => {
         const confirmed = window.confirm("Are you sure you want to delete this service?");
         if (!confirmed) return;
 
@@ -37,13 +34,13 @@ function ServiceCard({ service, index, onDelete, onEdit }) {
             style={{ animationDelay: `${index * 0.15}s` }}
         >
             {/* Service Image */}
-            {photos && photos.length > 0 && (
-                <img
-                    src={photos[0]}
-                    alt={service.title}
-                    className="w-full h-48 object-cover rounded-2xl mb-6"
-                />
-            )}
+
+            <img
+                src={`${host}/storage/${service.photos}`}
+                alt={service.title}
+                className="w-full h-48 object-cover rounded-2xl mb-6"
+            />
+
 
             <h4 className="text-xl font-bold text-gray-900 mb-4">{service.title}</h4>
             <p className="text-gray-600 leading-relaxed">{service.description}</p>
