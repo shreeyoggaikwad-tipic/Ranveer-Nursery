@@ -154,22 +154,29 @@ function WhatsAppButton() {
     }, []);
 
     const handleWhatsAppClick = () => {
-        if (!user.number) return; // wait for user to load
+        if (!user.number) return;
 
-        const message = encodeURIComponent(
-            "Hello! I'm interested in your construction services. Could we discuss my project requirements?"
-        );
+        // Default message
+        const message = "Hello! I'm interested in your construction services. Could we discuss my project requirements?";
 
-        // Remove all non-digits
+        // Remove all non-digit characters
         let phoneNumber = user.number.replace(/\D/g, '');
 
-        // If number length is 10, assume it's local and prepend country code
+        // Add country code if local (India example)
         if (phoneNumber.length === 10) {
             phoneNumber = '91' + phoneNumber;
         }
 
-        window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
+        // Encode message properly
+        const encodedMessage = encodeURIComponent(message);
+
+        // Use the API link for unsaved numbers
+        const url = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodedMessage}`;
+
+        window.open(url, '_blank');
     };
+
+
 
     return (
         <div className="fixed bottom-6 right-6 z-50">
@@ -188,7 +195,7 @@ function WhatsAppButton() {
 
 // Main Contact Page
 function ContactPage() {
-    
+
     return (
         <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
             <Navbar />

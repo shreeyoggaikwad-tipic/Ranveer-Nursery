@@ -3,6 +3,7 @@ import { User, Mail, Phone, MapPin, Clock, Users, ArrowLeft, Edit3, Save, X, Bri
 import axios from 'axios';
 import host from '../../utils/host';
 import { Link } from 'react-router-dom';
+import Logo from '../../assets/logo.png';
 
 export default function AdminProfile() {
     const [isEditing, setIsEditing] = useState(false);
@@ -111,12 +112,12 @@ export default function AdminProfile() {
                 ) : (
                     <>
                         {/* Header */}
-                        <div className="bg-blue-600 rounded-t-2xl p-8 text-white relative overflow-hidden">
+                        <div className="bg-orange-500 rounded-t-2xl p-8 text-white relative overflow-hidden">
                             <div className="absolute inset-0 bg-black/5"></div>
                             <div className="relative z-10">
                                 <div className="flex justify-between items-start mb-6">
                                     <Link to="/admin/dashboard"
-                                        className="mr-4 p-2 text-gray-600 hover:text-indigo-600 hover:bg-gray-100 rounded-lg transition-colors"
+                                        className="mr-4 p-2 text-gray-600 hover:text-orange-600 hover:bg-gray-100 rounded-lg transition-colors"
                                     >
                                         <ArrowLeft className="w-5 h-5" />
                                     </Link>
@@ -138,8 +139,8 @@ export default function AdminProfile() {
                                 <div className="flex justify-between items-start">
                                     <div className="flex items-center space-x-6">
 
-                                        <div className="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center text-white text-2xl font-bold shadow-lg">
-                                            {adminData.name.charAt(0)}
+                                        <div className="w-20 h-20 rounded-full flex items-center justify-center text-white text-2xl font-bold shadow-lg">
+                                            <img src={Logo} alt="Logo" />
                                         </div>
                                         <div>
                                             <h2 className="text-2xl font-bold text-gray-900 mb-1">{adminData.name}</h2>
@@ -150,7 +151,7 @@ export default function AdminProfile() {
                                     {!isEditing ? (
                                         <button
                                             onClick={handleEdit}
-                                            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg flex items-center space-x-2 transition-colors duration-200 shadow-md hover:shadow-lg"
+                                            className="bg-orange-500 hover:bg-orange-500 text-white px-6 py-3 rounded-lg flex items-center space-x-2 transition-colors duration-200 shadow-md hover:shadow-lg"
                                         >
                                             <Edit3 className="w-4 h-4" />
                                             <span>Edit Profile</span>
@@ -199,7 +200,7 @@ export default function AdminProfile() {
                                         {/* Name */}
                                         <div className="space-y-2">
                                             <label className="flex items-center text-sm font-medium text-gray-700">
-                                                <User className="w-4 h-4 mr-2 text-blue-600" />
+                                                <User className="w-4 h-4 mr-2 text-orange-500" />
                                                 Full Name
                                             </label>
                                             {isEditing ? (
@@ -217,7 +218,7 @@ export default function AdminProfile() {
                                         {/* Email */}
                                         <div className="space-y-2">
                                             <label className="flex items-center text-sm font-medium text-gray-700">
-                                                <Mail className="w-4 h-4 mr-2 text-blue-600" />
+                                                <Mail className="w-4 h-4 mr-2 text-orange-500" />
                                                 Email Address
                                             </label>
                                             {isEditing ? (
@@ -235,7 +236,7 @@ export default function AdminProfile() {
                                         {/* Phone */}
                                         <div className="space-y-2">
                                             <label className="flex items-center text-sm font-medium text-gray-700">
-                                                <Phone className="w-4 h-4 mr-2 text-blue-600" />
+                                                <Phone className="w-4 h-4 mr-2 text-orange-500" />
                                                 Phone Number
                                             </label>
                                             {isEditing ? (
@@ -253,7 +254,7 @@ export default function AdminProfile() {
                                         {/* Location */}
                                         <div className="space-y-2">
                                             <label className="flex items-center text-sm font-medium text-gray-700">
-                                                <MapPin className="w-4 h-4 mr-2 text-blue-600" />
+                                                <MapPin className="w-4 h-4 mr-2 text-orange-500" />
                                                 Location
                                             </label>
                                             {isEditing ? (
@@ -278,7 +279,7 @@ export default function AdminProfile() {
                                         {/* Experience */}
                                         <div className="space-y-2">
                                             <label className="flex items-center text-sm font-medium text-gray-700">
-                                                <Briefcase className="w-4 h-4 mr-2 text-blue-600" />
+                                                <Briefcase className="w-4 h-4 mr-2 text-orange-500" />
                                                 Years of Experience
                                             </label>
                                             {isEditing ? (
@@ -296,7 +297,7 @@ export default function AdminProfile() {
                                         {/* Business Hours */}
                                         <div className="space-y-2">
                                             <label className="flex items-center text-sm font-medium text-gray-700">
-                                                <Clock className="w-4 h-4 mr-2 text-blue-600" />
+                                                <Clock className="w-4 h-4 mr-2 text-orange-500" />
                                                 Business Hours
                                             </label>
                                             {isEditing ? (
@@ -314,7 +315,7 @@ export default function AdminProfile() {
                                         {/* Happy Clients */}
                                         <div className="space-y-2">
                                             <label className="flex items-center text-sm font-medium text-gray-700">
-                                                <Users className="w-4 h-4 mr-2 text-blue-600" />
+                                                <Users className="w-4 h-4 mr-2 text-orange-500" />
                                                 Happy Clients
                                             </label>
                                             {isEditing ? (
