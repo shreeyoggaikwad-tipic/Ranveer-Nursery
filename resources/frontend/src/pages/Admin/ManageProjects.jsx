@@ -53,7 +53,7 @@ function ManageProjects() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-blue-50">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-600"></div>
       </div>
     );
   }
@@ -65,11 +65,11 @@ function ManageProjects() {
 
       <div className="bg-white py-10 flex flex-col items-center animate-fade-in">
         <h1 className="text-6xl font-bold text-center">
-          Manage <span className="text-blue-600">Projects</span>
+          Manage <span className="bg-gradient-to-r from-orange-600 to-orange-300 bg-clip-text text-transparent">Projects</span>
         </h1>
         {/* Add Project Button */}
         <Link to="/admin/addProject"
-          className="mt-10 flex items-center gap-2 px-6 py-3 rounded-xl bg-blue-600 text-white font-semibold shadow hover:bg-blue-700 transition"
+          className="mt-10 flex items-center gap-2 px-6 py-3 rounded-xl bg-orange-500 text-white font-semibold shadow hover:bg-orange-600 transition"
         >
           <Plus className="w-5 h-5" />
           Add Project
@@ -89,7 +89,7 @@ function ManageProjects() {
                   key={option.key}
                   onClick={() => setActiveFilter(option.key)}
                   className={`px-4 py-3 rounded-xl font-medium transition-all duration-300 flex items-center space-x-2 ${activeFilter === option.key
-                    ? 'bg-blue-600 text-white shadow-lg scale-105'
+                    ? 'bg-orange-600 text-white shadow-lg scale-105'
                     : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                     }`}
                 >

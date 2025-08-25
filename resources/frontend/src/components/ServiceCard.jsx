@@ -64,7 +64,7 @@ function ServiceCard({ service, index, onDelete, onEdit }) {
                 ) : (
                     <Link
                         to={`/services/${service.id}`}
-                        className="text-blue-600 font-semibold hover:text-blue-800 transition-colors"
+                        className="text-orange-400 font-semibold hover:text-orange-600 transition-colors"
                     >
                         View Details →
                     </Link>

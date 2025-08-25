@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Menu, X, ChevronDown } from "lucide-react";
 import { NavLink, Link, useNavigate } from 'react-router-dom';
+import Logo from '../assets/logo.png'; 
 
 function AdminNav() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -16,8 +17,8 @@ function AdminNav() {
         navigate("/admin/profile");
     };
 
-    const activeClass = "text-indigo-600 font-semibold";
-    const normalClass = "text-gray-700 hover:text-indigo-600 transition-colors";
+    const activeClass = "text-orange-500 font-semibold";
+    const normalClass = "text-gray-700 hover:text-orange-600 transition-colors";
 
     return (
         <nav className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
@@ -25,8 +26,9 @@ function AdminNav() {
                 <div className="flex justify-between items-center h-16">
                     {/* Logo and Brand */}
                     <div className="flex items-center">
-                        <Link to="/admin/dashboard" className="w-10 h-10 bg-indigo-600 rounded-lg flex items-center justify-center">
-                            <span className="text-white font-bold text-xl">R</span>
+                        <Link to="/admin/dashboard" className="w-20 h-20 flex items-center justify-center">
+                            {/* <span className="text-white font-bold text-xl">R</span> */}
+                            <img src={Logo} alt="Logo" />
                         </Link>
                         <div className="ml-3 hidden sm:block">
                             <p className="text-xl font-bold text-black">Rachnakar Enterprises</p>
@@ -58,7 +60,7 @@ function AdminNav() {
                             onClick={() => setDropdownOpen(!dropdownOpen)}
                             className="flex items-center px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
                         >
-                            <div className="w-8 h-8 bg-indigo-600 rounded-full flex items-center justify-center mr-2">
+                            <div className="w-8 h-8 bg-orange-600 rounded-full flex items-center justify-center mr-2">
                                 <span className="text-white text-sm font-medium">A</span>
                             </div>
                             <span className="hidden lg:block">Admin User</span>
@@ -142,7 +144,7 @@ function AdminNav() {
                     {/* Mobile User Profile */}
                     <div className="pt-4 pb-3 border-t border-gray-200">
                         <div className="px-3 flex items-center">
-                            <div className="w-10 h-10 bg-indigo-600 rounded-full flex items-center justify-center">
+                            <div className="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center">
                                 <span className="text-white font-medium">A</span>
                             </div>
                             <div className="ml-3">
@@ -151,10 +153,10 @@ function AdminNav() {
                             </div>
                         </div>
                         <div className="mt-3 px-2 space-y-1">
-                            <button onClick={handleProfile} className="w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-indigo-600 hover:bg-gray-50">
+                            <button onClick={handleProfile} className="w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-orange-600 hover:bg-gray-50">
                                Profile
                            </button>
-                            <button onClick={handleLogout} className="w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-indigo-600 hover:bg-gray-50">
+                            <button onClick={handleLogout} className="w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-orange-600 hover:bg-gray-50">
                                 Logout
                             </button>
                            

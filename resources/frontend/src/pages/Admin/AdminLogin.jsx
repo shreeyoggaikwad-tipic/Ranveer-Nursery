@@ -3,6 +3,7 @@ import axios from "axios";
 import { ArrowLeft } from "lucide-react";
 import { Link } from 'react-router-dom';
 import host from '../../utils/host'
+import Logo from '../../assets/logo.png'
 
 
 function AdminLogin() {
@@ -75,15 +76,15 @@ function AdminLogin() {
                     <div className="mb-8 flex items-center">
                         <Link
                             to="/"
-                            className="mr-4 p-2 text-gray-600 hover:text-indigo-600 hover:bg-gray-100 rounded-lg transition-colors"
+                            className="mr-4 p-2 text-gray-600 hover:text-orange-600 hover:bg-gray-100 rounded-lg transition-colors"
                         >
                             <ArrowLeft className="w-5 h-5" />
                         </Link>
                     </div>
                     {/* Header */}
                     <div className="text-center mb-8">
-                        <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                            <span className="text-white font-bold text-2xl">R</span>
+                        <div className="w-28 h-28 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <img src={Logo} alt="Logo" className="w-28 h-28" />
                         </div>
                         <h1 className="text-2xl font-bold text-gray-900 mb-2">Admin Login</h1>
                         <p className="text-gray-600">Rachnakar Enterprises</p>
@@ -176,7 +177,7 @@ function AdminLogin() {
                         <button
                             onClick={handleSubmit}
                             disabled={isLoading}
-                            className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3 rounded-xl font-semibold hover:from-blue-700 hover:to-indigo-700 transform hover:scale-105 transition-all duration-300 shadow-lg disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none"
+                            className="w-full bg-gradient-to-r from-orange-400 to-orange-400 text-white py-3 rounded-xl font-semibold hover:from-orange-600 hover:to-orange-600 transform hover:scale-105 transition-all duration-300 shadow-lg disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none"
                         >
                             {isLoading ? (
                                 <div className="flex items-center justify-center">

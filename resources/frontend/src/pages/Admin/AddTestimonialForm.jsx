@@ -79,7 +79,7 @@ export default function AddTestimonialForm({ onSubmit, onCancel }) {
                         <div className="flex items-center">
                             <Link to="/admin/testimonials"
                                 onClick={onCancel}
-                                className="mr-4 p-2 text-gray-600 hover:text-indigo-600 hover:bg-gray-100 rounded-lg transition-colors"
+                                className="mr-4 p-2 text-gray-600 hover:text-orange-600 hover:bg-gray-100 rounded-lg transition-colors"
                             >
                                 <ArrowLeft className="w-5 h-5" />
                             </Link>
@@ -168,7 +168,7 @@ export default function AddTestimonialForm({ onSubmit, onCancel }) {
                                 </label>
 
                                 {!formData.photo ? (
-                                    <div className="relative border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-indigo-500 transition-colors">
+                                    <div className="relative border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-orange-500 transition-colors">
                                         <input
                                             type="file"
                                             name="photo"
@@ -216,7 +216,7 @@ export default function AddTestimonialForm({ onSubmit, onCancel }) {
                         <button
                             type="submit"
                             disabled={loading}
-                            className={`px-8 py-3 bg-indigo-600 text-white font-medium rounded-lg shadow-sm hover:bg-indigo-700 hover:shadow-md transition-all duration-200 flex items-center justify-center ${loading ? "opacity-70 cursor-not-allowed" : ""}`}
+                            className={`px-8 py-3 bg-orange-500 text-white font-medium rounded-lg shadow-sm hover:bg-orange-600 hover:shadow-md transition-all duration-200 flex items-center justify-center ${loading ? "opacity-70 cursor-not-allowed" : ""}`}
                         >
                             {loading ? (
                                 <>
@@ -233,7 +233,7 @@ export default function AddTestimonialForm({ onSubmit, onCancel }) {
 
 
                         <Link to="/admin/testimonials"
-                            className="px-8 py-3 bg-red-600 text-white font-medium rounded-lg shadow-sm hover:bg-red-700 hover:shadow-md transition-all duration-200 flex items-center"
+                            className="px-8 py-3 bg-gray-600 text-white font-medium rounded-lg shadow-sm hover:bg-gray-700 hover:shadow-md transition-all duration-200 flex items-center"
                         >
                             Discard
                         </Link>

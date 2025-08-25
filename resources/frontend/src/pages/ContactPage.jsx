@@ -102,7 +102,7 @@ function ContactForm() {
                 <button
                     onClick={handleSubmit}
                     disabled={isSubmitting}
-                    className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-4 rounded-xl font-semibold hover:from-blue-700 hover:to-indigo-700 transform hover:scale-105 transition-all duration-300 shadow-lg disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none"
+                    className="w-full bg-gradient-to-r from-orange-500 to-orange-500 text-white py-4 rounded-xl font-semibold hover:from-orange-600 hover:to-orange-600 transform hover:scale-105 transition-all duration-300 shadow-lg disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none"
                 >
                     {isSubmitting ? (
                         <div className="flex items-center justify-center">
@@ -256,8 +256,8 @@ function MapAndBusinessHours() {
                     <div className="flex justify-between"><span className="text-gray-600 font-bold">{user.businessHours}</span></div>
                     <div className="flex justify-between"><span className="text-gray-600 font-bold">Saturday-Sunday (Closed)</span></div>
                 </div>
-                <div className="mt-6 p-4 bg-blue-50 rounded-xl">
-                    <p className="text-blue-800 text-sm"><strong>Emergency Contact:</strong> Available 24/7 for urgent construction issues.</p>
+                <div className="mt-6 p-4 bg-orange-50 rounded-xl">
+                    <p className="text-orange-600 text-sm"><strong>Emergency Contact:</strong> Available 24/7 for urgent construction issues.</p>
                 </div>
             </div>
         </>

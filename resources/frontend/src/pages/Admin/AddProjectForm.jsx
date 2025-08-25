@@ -90,7 +90,7 @@ export default function AddProjectForm({ onSubmit, onCancel }) {
               <Link
                 to="/admin/projects"
                 onClick={onCancel}
-                className="mr-4 p-2 text-gray-600 hover:text-indigo-600 hover:bg-gray-100 rounded-lg transition-colors"
+                className="mr-4 p-2 text-gray-600 hover:text-orange-600 hover:bg-gray-100 rounded-lg transition-colors"
               >
                 <ArrowLeft className="w-5 h-5" />
               </Link>
@@ -262,7 +262,7 @@ export default function AddProjectForm({ onSubmit, onCancel }) {
                 <Upload className="mx-auto h-12 w-12 text-gray-400 mb-4" />
                 <p className="text-lg font-medium text-gray-900 mb-2">
                   Drop your image here, or{" "}
-                  <span className="text-indigo-600">browse</span>
+                  <span className="text-orange-600">browse</span>
                 </p>
                 <p className="text-sm text-gray-500">
                   PNG, JPG, GIF up to 2MB
@@ -306,13 +306,13 @@ export default function AddProjectForm({ onSubmit, onCancel }) {
             )}
             <button
               type="submit"
-              className="px-8 py-3 bg-indigo-600 text-white font-medium rounded-lg shadow-sm hover:bg-indigo-700 hover:shadow-md transition-all duration-200 flex items-center"
+              className="px-8 py-3 bg-orange-500 text-white font-medium rounded-lg shadow-sm hover:bg-orange-600 hover:shadow-md transition-all duration-200 flex items-center"
             >
               Save Project
             </button>
 
             <Link to="/admin/projects"
-              className="px-8 py-3 bg-red-600 text-white font-medium rounded-lg shadow-sm hover:bg-red-700 hover:shadow-md transition-all duration-200 flex items-center"
+              className="px-8 py-3 bg-gray-600 text-white font-medium rounded-lg shadow-sm hover:bg-gray-700 hover:shadow-md transition-all duration-200 flex items-center"
             >
               Discard
             </Link>

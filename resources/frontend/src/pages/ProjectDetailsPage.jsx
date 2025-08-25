@@ -68,7 +68,7 @@ function ProjectDetailsPage() {
           <p className="text-gray-600 mb-4">{error}</p>
           <Link
             to="/projects"
-            className="inline-flex items-center px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+            className="inline-flex items-center px-4 py-2 bg-orange-400 text-white rounded-lg hover:bg-orange-600 transition-colors"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Projects
@@ -87,7 +87,7 @@ function ProjectDetailsPage() {
             <div className="flex items-center">
               <Link
                 to="/projects"
-                className="mr-4 p-2 text-gray-600 hover:text-indigo-600 hover:bg-gray-100 rounded-lg transition-colors"
+                className="mr-4 p-2 text-gray-600 hover:text-orange-600 hover:bg-gray-100 rounded-lg transition-colors"
               >
                 <ArrowLeft className="w-5 h-5" />
               </Link>
@@ -163,7 +163,7 @@ function ProjectDetailsPage() {
                 {/* Project Type */}
                 <div className="flex items-center justify-between py-3 border-b border-gray-100">
                   <span className="text-sm font-medium text-gray-600">Type</span>
-                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-600">
                     {project.type === 'home' ? '🏠 Home' : '🏢 Apartment'}
                   </span>
                 </div>
@@ -211,12 +211,12 @@ function ProjectDetailsPage() {
 
 
             {/* Quick Stats */}
-            <div className="bg-gradient-to-br from-indigo-50 to-blue-50 rounded-xl border border-indigo-100 p-6">
+            <div className="bg-orange-50 rounded-xl border border-orange-200 p-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-4">Project Stats</h3>
 
               <div className="grid grid-cols-1 gap-4">
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-indigo-600 mb-1">
+                  <div className="text-2xl font-bold text-orange-500 mb-1">
                     {project.status === 'completed' ? '100' : '75'}%
                   </div>
                   <div className="text-xs text-gray-600">Complete</div>

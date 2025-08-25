@@ -31,7 +31,7 @@ function ServicesPage() {
     if (loading) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-blue-50">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-600"></div>
             </div>
         );
     }
@@ -45,7 +45,7 @@ function ServicesPage() {
                 <div className="max-w-7xl mx-auto text-center">
                     <div className="animate-fade-in">
                         <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-                            Our <span className="text-blue-600">Services</span>
+                            Our <span className="bg-gradient-to-r from-orange-600 to-orange-400 bg-clip-text text-transparent">Services</span>
                         </h1>
                         <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
                             Comprehensive construction and design solutions tailored to bring your vision to life.
@@ -67,7 +67,7 @@ function ServicesPage() {
             </section>
 
             {/* CTA Section */}
-            <section className="py-20 bg-gradient-to-r from-blue-600 to-indigo-600 mx-4 sm:mx-6 lg:mx-8 rounded-3xl mb-16">
+            <section className="py-20 bg-gradient-to-r from-orange-600 to-orange-300 mx-4 sm:mx-6 lg:mx-8 rounded-3xl mb-16">
                 <div className="max-w-4xl mx-auto text-center px-4">
                     <h2 className="text-3xl md:text-4xl font-bold text-white mb-6 animate-fade-in">
                         Ready to Start Your Project?
@@ -77,10 +77,10 @@ function ServicesPage() {
                         Quality construction with affordable pricing in Pune.
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in">
-                        <Link to="/contact" className="bg-white text-blue-600 px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transform hover:scale-105 transition-all duration-300 shadow-lg">
+                        <Link to="/contact" className="bg-white text-orange-500 px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transform hover:scale-105 transition-all duration-300 shadow-lg">
                             Book Free Consultation
                         </Link>
-                        <Link to="/projects" className="border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-blue-600 transform hover:scale-105 transition-all duration-300">
+                        <Link to="/projects" className="border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-orange-500 transform hover:scale-105 transition-all duration-300">
                             View Our Projects
                         </Link>
                     </div>

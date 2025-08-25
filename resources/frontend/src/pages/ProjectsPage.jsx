@@ -55,7 +55,7 @@ export default function ProjectsPage() {
     if (loading) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-blue-50">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-600"></div>
             </div>
         );
     }
@@ -120,7 +120,7 @@ export default function ProjectsPage() {
                         <div className={`${isVisible ? 'animate-slide-in-left' : 'opacity-0'}`}>
                             <h1 className="text-5xl font-bold text-gray-900 mb-6 leading-tight">
                                 Our Featured
-                                <span className="text-blue-600 block">Projects</span>
+                                <span className="bg-gradient-to-r from-orange-600 to-orange-300 bg-clip-text text-transparent block">Projects</span>
                                 in Pune
                             </h1>
                             <p className="text-xl text-gray-600 mb-8 leading-relaxed">
@@ -166,7 +166,7 @@ export default function ProjectsPage() {
                                     key={option.key}
                                     onClick={() => setActiveFilter(option.key)}
                                     className={`px-4 py-3 rounded-xl font-medium transition-all duration-300 flex items-center space-x-2 ${activeFilter === option.key
-                                        ? 'bg-blue-600 text-white shadow-lg scale-105'
+                                        ? 'bg-orange-600 text-white shadow-lg scale-105'
                                         : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                                         }`}
                                 >
@@ -220,16 +220,16 @@ export default function ProjectsPage() {
                 <div className="max-w-4xl mx-auto text-center px-6 animate-fade-in-up" style={{ animationDelay: '1.2s' }}>
                     <h2 className="text-4xl font-bold text-gray-900 mb-4">
                         Ready to Start Your
-                        <span className="text-blue-600"> Dream Project</span>?
+                        <span className="bg-gradient-to-r from-orange-600 to-orange-300 bg-clip-text text-transparent"> Dream Project</span>?
                     </h2>
                     <p className="text-xl text-gray-600 mb-10 leading-relaxed max-w-2xl mx-auto">
                         Let's discuss your vision and bring it to life with our expert civil engineering solutions in Pune.
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        <Link to="/contact" className="bg-white text-blue-600 px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transform hover:scale-105 transition-all duration-300 shadow-lg">
+                        <Link to="/contact" className="bg-white text-orange-500 px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transform hover:scale-105 transition-all duration-300 shadow-lg">
                             Book Free Consultation
                         </Link>
-                        <Link to="/projects" className="border-2 border-blue-600 text-blue-600 px-8 py-4 rounded-full font-semibold hover:bg-blue-600 hover:text-white transform hover:scale-105 transition-all duration-300">
+                        <Link to="/projects" className="border-2 border-orange-500 text-orange-500 px-8 py-4 rounded-full font-semibold hover:bg-orange-600 hover:text-white transform hover:scale-105 transition-all duration-300">
                             View Our Projects
                         </Link>
                     </div>

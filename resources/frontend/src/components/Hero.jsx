@@ -10,7 +10,7 @@ function Hero() {
                     <div className="animate-fade-in-up">
                         <h2 className="text-4xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
                             Custom Homes &{' '}
-                            <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                            <span className="bg-gradient-to-r from-orange-600 to-orange-300 bg-clip-text text-transparent">
                                 Apartments
                             </span>{' '}
                             Designed for You
@@ -19,10 +19,10 @@ function Hero() {
                             Quality construction with affordable pricing in Pune. We transform your vision into reality with expert craftsmanship and innovative designs.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4">
-                            <Link to="/contact" className="px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-300">
+                            <Link to="/contact" className="px-8 py-4 bg-orange-500 text-white rounded-full font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-300">
                                 Book Free Consultation
                             </Link>
-                            <Link to="/projects" className="px-8 py-4 border-2 border-blue-600 text-blue-600 rounded-full font-semibold hover:bg-blue-600 hover:text-white transition-all duration-300">
+                            <Link to="/projects" className="px-8 py-4 border-2 border-orange-500 text-orange-500 rounded-full font-semibold hover:bg-orange-500 hover:text-white transition-all duration-300">
                                 View Our Projects
                             </Link>
                         </div>

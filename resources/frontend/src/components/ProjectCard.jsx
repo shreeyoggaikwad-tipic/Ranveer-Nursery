@@ -56,7 +56,7 @@ function ProjectCard({ project, index, onDelete }) {
                 <h4 className="text-xl font-bold text-gray-900 mb-2">{project.name}</h4>
                 <p className="text-gray-600 mb-3">{project.location}</p>
                 <div className="flex justify-between items-center">
-                    <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
+                    <span className="px-3 py-1 bg-orange-100 text-orange-500 rounded-full text-sm font-medium">
                         {project.type === 'home' ? 'Home' : 'Apartment'}
                     </span>
 
@@ -78,7 +78,7 @@ function ProjectCard({ project, index, onDelete }) {
                     ) : (
                         <Link
                             to={`/projects/${project.id}`}
-                            className="text-blue-600 font-semibold hover:text-blue-800 transition-colors"
+                            className="text-orange-400 font-semibold hover:text-orange-600 transition-colors"
                         >
                             View Details →
                         </Link>

@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import host from '../utils/host';
+import Logo from '../assets/logo.png';
 
 function Footer() {
 
@@ -34,15 +35,16 @@ function Footer() {
                 <div className="grid md:grid-cols-4 gap-8">
                     <div>
                         <div className="flex items-center space-x-3 mb-2">
-                            <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center">
-                                <span className="text-white font-bold text-lg">R</span>
+                            <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center">
+                                {/* <span className="text-white font-bold text-lg">R</span> */}
+                                <img src={Logo} alt="Logo" className="w-10 h-10" />
                             </div>
                             <h4 className="text-xl font-bold">Rachnakar Enterprises</h4>
                         </div>
                         <p className="text-gray-400">Building dreams with quality and trust in Pune.</p>
-                        <Link to="/admin/login" className="inline-block mt-4 px-6 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 
+                        <Link to="/admin/login" className="inline-block mt-4 px-6 py-2 bg-gradient-to-r from-orange-500 to-red-500 
              text-white rounded-full font-semibold shadow-md 
-             hover:from-indigo-600 hover:to-blue-600 transition-all duration-300">
+             hover:from-orange-400 hover:to-orange-500 transition-all duration-500">
                             Admin Login
                         </Link>
                     </div>

@@ -49,7 +49,7 @@ function ServiceDetailsPage() {
           <p className="text-red-600 mb-2">❌ {error}</p>
           <Link
             to="/services"
-            className="inline-flex items-center px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+            className="inline-flex items-center px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Services
@@ -67,7 +67,7 @@ function ServiceDetailsPage() {
         <div className="mb-8 flex items-center">
           <Link
             to="/services"
-            className="mr-4 p-2 text-gray-600 hover:text-indigo-600 hover:bg-gray-100 rounded-lg transition-colors"
+            className="mr-4 p-2 text-gray-600 hover:text-orange-600 hover:bg-gray-100 rounded-lg transition-colors"
           >
             <ArrowLeft className="w-5 h-5" />
           </Link>

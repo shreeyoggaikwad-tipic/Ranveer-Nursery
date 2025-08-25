@@ -84,7 +84,7 @@ export default function EditServicePage() {
   if (!service) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-blue-50">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-600"></div>
       </div>
     );
   }
@@ -94,7 +94,7 @@ export default function EditServicePage() {
       <div className="mb-8 flex items-center">
         <Link
           to="/admin/services"
-          className="mr-4 p-2 text-gray-600 hover:text-indigo-600 hover:bg-gray-100 rounded-lg transition-colors"
+          className="mr-4 p-2 text-gray-600 hover:text-orange-600 hover:bg-gray-100 rounded-lg transition-colors"
         >
           <ArrowLeft className="w-5 h-5" />
         </Link>
@@ -189,7 +189,7 @@ export default function EditServicePage() {
         <div className="flex gap-4">
           <button
             type="submit"
-            className="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition"
+            className="px-6 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition"
           >
             Update Service
           </button>

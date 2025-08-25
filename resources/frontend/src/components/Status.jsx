@@ -45,7 +45,7 @@ function Status() {
                             className="text-center animate-fade-in-up"
                             style={{ animationDelay: `${index * 0.1}s` }}
                         >
-                            <div className="text-4xl lg:text-5xl font-bold text-blue-600 mb-2">
+                            <div className="text-4xl lg:text-5xl font-bold text-orange-400 mb-2">
                                 {stat.number}
                             </div>
                             <div className="text-gray-600 font-medium">

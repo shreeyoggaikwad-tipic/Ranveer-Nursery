@@ -50,7 +50,7 @@ const AdminDashboard = () => {
   if (loading) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-blue-50">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-600"></div>
             </div>
         );
     }
@@ -98,7 +98,7 @@ const AdminDashboard = () => {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             <Link 
               to="/admin/addProject"
-              className="p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-indigo-600 hover:bg-indigo-50 transition-colors group"
+              className="p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-orange-600 hover:bg-indigo-50 transition-colors group"
             >
               <div className="text-center">
                 <span className="text-2xl block mb-2">➕</span>
@@ -110,7 +110,7 @@ const AdminDashboard = () => {
 
             <Link 
               to="/admin/addService"
-              className="p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-indigo-600 hover:bg-indigo-50 transition-colors group"
+              className="p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-orange-600 hover:bg-indigo-50 transition-colors group"
             >
               <div className="text-center">
                 <span className="text-2xl block mb-2">🔧</span>
@@ -122,7 +122,7 @@ const AdminDashboard = () => {
 
             <Link 
               to="/admin/testimonials"
-              className="p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-indigo-600 hover:bg-indigo-50 transition-colors group"
+              className="p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-orange-600 hover:bg-indigo-50 transition-colors group"
             >
               <div className="text-center">
                 <span className="text-2xl block mb-2">✍️</span>
@@ -134,7 +134,7 @@ const AdminDashboard = () => {
 
             <Link 
               to="/admin/inquiries"
-              className="p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-indigo-600 hover:bg-indigo-50 transition-colors group"
+              className="p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-orange-600 hover:bg-indigo-50 transition-colors group"
             >
               <div className="text-center">
                 <span className="text-2xl block mb-2">📊</span>

@@ -81,21 +81,21 @@ function ManageInquiries() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-blue-50">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-600"></div>
       </div>
     );
   }
 
 
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
       <AdminNav />
-
+      <div className="flex flex-col justify-center items-center">
       {/* Hero Section */}
       <section className="py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto flex flex-col items-center text-center animate-fade-in">
           <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-            Client <span className="text-blue-600">Inquiries</span>
+            Client <span className="bg-gradient-to-r from-orange-600 to-orange-300 bg-clip-text text-transparent">Inquiries</span>
           </h1>
           <p className="text-gray-600">
             View and manage all the inquiries received from your website.
@@ -103,19 +103,19 @@ function ManageInquiries() {
 
           <button
             onClick={downloadCSV}
-            className="mt-10 flex items-center gap-2 px-6 py-3 rounded-xl bg-blue-600 text-white font-semibold shadow hover:bg-blue-700 transition"
+            className="mt-10 flex items-center gap-2 px-6 py-3 rounded-xl bg-orange-500 text-white font-semibold shadow hover:bg-orange-600 transition"
           >
             Export to CSV
           </button>
         </div>
       </section>
 
-      <div className="w-[80%] mb-20">
+      <div className="w-[80%] mb-20  ">
         {/* Table Section */}
         <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
           {loading ? (
             <div className="flex justify-center items-center p-8">
-              <Loader2 className="w-6 h-6 text-blue-600 animate-spin" />
+              <Loader2 className="w-6 h-6 text-orange-600 animate-spin" />
               <span className="ml-2 text-gray-600">Loading inquiries...</span>
             </div>
           ) : inquiries.length > 0 ? (
@@ -174,6 +174,7 @@ function ManageInquiries() {
               No inquiries found.
             </div>
           )}
+        </div>
         </div>
       </div>
 

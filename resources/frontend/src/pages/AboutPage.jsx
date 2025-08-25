@@ -124,7 +124,7 @@ const AboutPage = () => {
           <div className="text-center mb-16">
             <h2 className="text-4xl lg:text-6xl font-bold text-gray-900 mb-6 animate-fade-in-up">
               Building Dreams,{' '}
-              <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-orange-600 to-orange-300 bg-clip-text text-transparent">
                 Creating Homes
               </span>
             </h2>
@@ -233,8 +233,8 @@ const AboutPage = () => {
                   key={tab}
                   onClick={() => setActiveTab(tab)}
                   className={`px-8 py-3 rounded-full font-semibold transition-all duration-300 ${activeTab === tab
-                    ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg'
-                    : 'text-gray-600 hover:text-blue-600'
+                    ? 'bg-gradient-to-r from-orange-600 to-orange-600 text-white shadow-lg'
+                    : 'text-gray-600 hover:text-orange-600'
                     }`}
                 >
                   {tab.charAt(0).toUpperCase() + tab.slice(1)}
@@ -248,7 +248,7 @@ const AboutPage = () => {
             }`}>
             {activeTab === 'vision' && (
               <div className="text-center p-8 bg-white rounded-2xl shadow-lg">
-                <div className="w-20 h-20 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                <div className="w-20 h-20 bg-orange-200 rounded-full flex items-center justify-center mx-auto mb-6">
                   <span className="text-3xl text-white">🎯</span>
                 </div>
                 <h4 className="text-2xl font-bold text-gray-900 mb-4">Our Vision</h4>
@@ -262,7 +262,7 @@ const AboutPage = () => {
 
             {activeTab === 'mission' && (
               <div className="text-center p-8 bg-white rounded-2xl shadow-lg">
-                <div className="w-20 h-20 bg-gradient-to-r from-green-500 to-teal-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                <div className="w-20 h-20 bg-orange-200 rounded-full flex items-center justify-center mx-auto mb-6">
                   <span className="text-3xl text-white">🚀</span>
                 </div>
                 <h4 className="text-2xl font-bold text-gray-900 mb-4">Our Mission</h4>
@@ -278,7 +278,7 @@ const AboutPage = () => {
               <div className="grid md:grid-cols-2 gap-6">
                 {values.map((value, index) => (
                   <div key={index} className="p-6 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
-                    <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-2xl flex items-center justify-center mb-4">
+                    <div className="w-16 h-16 bg-orange-200 rounded-2xl flex items-center justify-center mb-4">
                       <span className="text-2xl">{value.icon}</span>
                     </div>
                     <h5 className="text-xl font-bold text-gray-900 mb-3">{value.title}</h5>
@@ -349,7 +349,7 @@ const AboutPage = () => {
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 <div className="text-4xl mb-4">{number.icon}</div>
-                <div className="text-4xl lg:text-5xl font-bold text-blue-600 mb-2">{number.number}</div>
+                <div className="text-4xl lg:text-5xl font-bold text-orange-400 mb-2">{number.number}</div>
                 <div className="text-gray-600 font-medium">{number.label}</div>
               </div>
             ))}

@@ -61,7 +61,7 @@ const HomePage = () => {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-blue-50">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-600"></div>
       </div>
     );
   }
@@ -89,7 +89,7 @@ const HomePage = () => {
               <ProjectCard key={project.id} project={project} index={index} />
             ))}
             <div className="col-span-full text-center">
-              <Link to="/projects" className="px-8 py-4 border-2 border-blue-600 text-blue-600 rounded-full font-semibold hover:bg-blue-600 hover:text-white transition-all duration-300">
+              <Link to="/projects" className="px-8 py-4 border-2 border-orange-500 text-orange-500 rounded-full font-semibold hover:bg-orange-500 hover:text-white transition-all duration-300">
                 View All Projects
               </Link>
             </div>
@@ -114,7 +114,7 @@ const HomePage = () => {
               <ServiceCard key={service.id} service={service} index={index} />
             ))}
             <div className="col-span-full text-center">
-              <Link to="/services" className="px-8 py-4 border-2 border-blue-600 text-blue-600 rounded-full font-semibold hover:bg-blue-600 hover:text-white transition-all duration-300">
+              <Link to="/services" className="px-8 py-4 border-2 border-orange-500 text-orange-500 rounded-full font-semibold hover:bg-orange-500 hover:text-white transition-all duration-300">
                 View Our Services
               </Link>
             </div>

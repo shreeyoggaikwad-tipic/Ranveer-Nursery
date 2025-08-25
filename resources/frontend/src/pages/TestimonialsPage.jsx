@@ -35,7 +35,7 @@ function TestimonialsPage() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-blue-50">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-600"></div>
       </div>
     );
   }
@@ -50,13 +50,13 @@ function TestimonialsPage() {
         <div className="max-w-7xl mx-auto text-center">
           <div className="animate-fade-in">
             <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-              Client <span className="text-blue-600">Testimonials</span>
+              Client <span className="bg-gradient-to-r from-orange-600 to-orange-400 bg-clip-text text-transparent">Testimonials</span>
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed mb-8">
               Don't just take our word for it. Hear what our satisfied clients have to say about their experience working with Rachnakar Enterprises.
             </p>
             {testimonials.length > 0 && (
-              <div className="inline-flex items-center bg-blue-100 text-blue-800 px-4 py-2 rounded-full">
+              <div className="inline-flex items-center bg-blue-100 text-orange-600 px-4 py-2 rounded-full">
                 <span className="text-yellow-400 mr-2">⭐</span>
                 <span className="font-semibold">{averageRating}/5 Average Rating</span>
               </div>
@@ -78,7 +78,7 @@ function TestimonialsPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-blue-600 to-indigo-600 mx-4 sm:mx-6 lg:mx-8 rounded-3xl my-16">
+      <section className="py-20 bg-gradient-to-r from-orange-600 to-orange-400 mx-4 sm:mx-6 lg:mx-8 rounded-3xl my-16">
         <div className="max-w-4xl mx-auto text-center px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6 animate-fade-in">
             Ready to Join Our Happy Clients?
@@ -88,10 +88,10 @@ function TestimonialsPage() {
             Let's start building your dream project today.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in">
-            <Link to="/contact" className="bg-white text-blue-600 px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transform hover:scale-105 transition-all duration-300 shadow-lg">
+            <Link to="/contact" className="bg-white text-orange-500 px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transform hover:scale-105 transition-all duration-300 shadow-lg">
               Book Free Consultation
             </Link>
-            <Link to="/projects" className="border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-blue-600 transform hover:scale-105 transition-all duration-300">
+            <Link to="/projects" className="border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-orange-500 transform hover:scale-105 transition-all duration-300">
               View Our Projects
             </Link>
           </div>
