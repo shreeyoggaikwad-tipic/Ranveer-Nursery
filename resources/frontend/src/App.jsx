@@ -1,13 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, Navigate } from "react-router-dom";
-import Logo from './assets/logo.png';
+import ScrollToTop from './components/ScrollToTop';
+import Logo from './assets/Logo.png';
+import Loader from "./components/Loader"
 import HomePage from './pages/HomePage'
 import AboutPage from './pages/AboutPage'
+import PlantsPage from './pages/PlantsPage';
+import ToolsPage from "./pages/ToolsPage"
+import ContactPage from './pages/ContactPage';
+import ReviewsPage from "./pages/ReviewsPage"
+
+
 import ProjectsPage from './pages/ProjectsPage'
 import ServicesPage from './pages/ServicesPage';
 import TestimonialsPage from './pages/TestimonialsPage';
-import ContactPage from './pages/ContactPage';
-import ScrollToTop from './components/ScrollToTop';
 import ProjectDetailsPage from './pages/ProjectDetailsPage';
 import ServiceDetailsPage from './pages/ServiceDetailsPage';
 
@@ -51,17 +57,8 @@ function App() {
 
   if (loading) {
     return (
-      <div className="flex flex-col items-center justify-center h-screen w-screen">
-        <div className="w-40 h-40 flex items-center justify-center
-                      animate-bounce-slow">
-          {/* <span className="text-white font-bold text-3xl">R</span> */}
-          <img src={Logo} alt="Logo" className="w-40 h-40" />
-        </div>
-        <h1 className="mt-5 text-2xl font-bold text-gray-900 animate-pulse">
-          Rachnakar Enterprises
-        </h1>
-      </div>
-    ); // Show loading logo
+      <Loader Logo={Logo}/>
+    ); 
   }
 
 
@@ -72,11 +69,9 @@ function App() {
         {/* Public routes */}
         <Route path="/" element={<HomePage />} />
         <Route path="/about" element={<AboutPage />} />
-        <Route path="/projects" element={<ProjectsPage />} />
-        <Route path="/projects/:id" element={<ProjectDetailsPage />} />
-        <Route path="/services" element={<ServicesPage />} />
-        <Route path="/services/:id" element={<ServiceDetailsPage />} />
-        <Route path="/testimonials" element={<TestimonialsPage />} />
+        <Route path="/plants" element={<PlantsPage />} />
+        <Route path="/tools" element={<ToolsPage />} />
+        <Route path="/reviews" element={<ReviewsPage />} />
         <Route path="/contact" element={<ContactPage />} />
 
         {/* Admin routes */}

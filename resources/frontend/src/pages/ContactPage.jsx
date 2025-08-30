@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import axios from 'axios';
-import host from '../utils/host'
+import host from '../utils/host';
+import { SocialLinks } from '../components/SocialLinks';
 
 // Contact Form Component
 function ContactForm() {
-
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -25,16 +25,13 @@ function ContactForm() {
         if (!formData.name) {
             alert('Please fill in your name');
             return;
-        }
-        else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+        } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
             alert('Please enter a valid email address');
             return;
-        }
-        else if (!/^[987]\d{9}$/.test(formData.phone)) {
+        } else if (!/^[987]\d{9}$/.test(formData.phone)) {
             alert('Please enter a valid 10-digit phone number.');
             return;
-        }
-        else if (!/^[\s\S]{10,500}$/.test(formData.message)) {
+        } else if (!/^[\s\S]{10,500}$/.test(formData.message)) {
             alert('Message must be between 10 and 500 characters');
             return;
         }
@@ -46,11 +43,7 @@ function ContactForm() {
             const response = await axios.post(`${host}/api/inquiries`, formData);
             if (response.status >= 200 && response.status < 300) {
                 setSubmitted(true);
-
-                // ✅ Reset form data immediately after alert
                 setFormData({ name: '', email: '', phone: '', message: '' });
-
-                // Optional: hide success state after some time
                 setTimeout(() => {
                     setSubmitted(false);
                 }, 3000);
@@ -65,19 +58,20 @@ function ContactForm() {
 
     if (submitted) {
         return (
-            <div className="bg-white p-8 rounded-2xl shadow-lg text-center animate-fade-in">
+            <div className="bg-white p-10 rounded-3xl shadow-xl text-center animate-fade-in">
                 <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-green-600 text-2xl">✓</span>
+                    <span className="text-green-600 text-3xl">✓</span>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">Thank You!</h3>
-                <p className="text-gray-600">We'll get back to you shortly</p>
+                <h3 className="text-2xl font-bold text-green-800 mb-2">Thank You!</h3>
+                <p className="text-gray-600">Your message has been received. We’ll get back to you soon!</p>
             </div>
         );
     }
 
     return (
-        <div className="bg-white p-8 rounded-2xl shadow-lg animate-fade-in">
-            <h3 className="text-2xl font-bold text-gray-900 mb-6">Send Us a Message</h3>
+        <div className="bg-white p-10 rounded-3xl shadow-xl border border-green-100 animate-fade-in">
+            <h3 className="text-3xl font-bold text-green-800 mb-6">🌱 Send Us a Message</h3>
+            <p className="text-gray-500 mb-6">We’d love to hear from you! Fill out the form below and we’ll respond as quickly as possible.</p>
 
             <div className="space-y-6">
                 {errorMessage && <p className="text-red-600 font-medium">{errorMessage}</p>}
@@ -87,14 +81,14 @@ function ContactForm() {
                 <InputField label="Phone Number *" name="phone" value={formData.phone} onChange={handleChange} placeholder="Enter your phone number" type="tel" required />
 
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Message *</label>
+                    <label className="block text-sm font-semibold text-green-700 mb-2">Message *</label>
                     <textarea
                         name="message"
                         value={formData.message}
                         onChange={handleChange}
                         required
                         rows="5"
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 resize-none"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-300 resize-none"
                         placeholder="Tell us about your project requirements..."
                     ></textarea>
                 </div>
@@ -102,7 +96,7 @@ function ContactForm() {
                 <button
                     onClick={handleSubmit}
                     disabled={isSubmitting}
-                    className="w-full bg-gradient-to-r from-orange-500 to-orange-500 text-white py-4 rounded-xl font-semibold hover:from-orange-600 hover:to-orange-600 transform hover:scale-105 transition-all duration-300 shadow-lg disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none"
+                    className="w-full bg-green-600 text-white py-4 rounded-xl font-semibold hover:bg-green-700 transform hover:scale-105 transition-all duration-300 shadow-lg disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none"
                 >
                     {isSubmitting ? (
                         <div className="flex items-center justify-center">
@@ -118,28 +112,26 @@ function ContactForm() {
     );
 }
 
-// Reusable input field
 function InputField({ label, name, value, onChange, placeholder, type = 'text' }) {
     return (
         <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">{label}</label>
+            <label className="block text-sm font-semibold text-green-700 mb-2">{label}</label>
             <input
                 type={type}
                 name={name}
                 value={value}
                 onChange={onChange}
                 required
-                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-300"
                 placeholder={placeholder}
             />
         </div>
     );
 }
 
-// WhatsApp Floating Button Component
+// WhatsApp Button (same as before)
 function WhatsAppButton() {
     const [user, setUser] = useState({});
-
     useEffect(() => {
         const fetchUser = async () => {
             try {
@@ -155,28 +147,15 @@ function WhatsAppButton() {
 
     const handleWhatsAppClick = () => {
         if (!user.number) return;
-
-        // Default message
-        const message = "Hello! I'm interested in your construction services. Could we discuss my project requirements?";
-
-        // Remove all non-digit characters
+        const message = "Hello! I'm interested in your nursery plants. Could we discuss my requirements?";
         let phoneNumber = user.number.replace(/\D/g, '');
-
-        // Add country code if local (India example)
         if (phoneNumber.length === 10) {
             phoneNumber = '91' + phoneNumber;
         }
-
-        // Encode message properly
         const encodedMessage = encodeURIComponent(message);
-
-        // Use the API link for unsaved numbers
         const url = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodedMessage}`;
-
         window.open(url, '_blank');
     };
-
-
 
     return (
         <div className="fixed bottom-6 right-6 z-50">
@@ -193,38 +172,30 @@ function WhatsAppButton() {
     );
 }
 
-// Main Contact Page
 function ContactPage() {
-
     return (
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+        <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-green-100">
             <Navbar />
-
-            {/* Main Content - Form and Map */}
-            <section className="py-8 px-4 sm:px-6 lg:px-8">
+            <section className="py-12 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-7xl mx-auto">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
                         <div className="animate-fade-in-up" style={{ animationDelay: "0.3s" }}>
                             <ContactForm />
                         </div>
                         <div className="space-y-8">
-                            {/* Map & Business Hours */}
                             <MapAndBusinessHours />
                         </div>
                     </div>
                 </div>
             </section>
-
             <Footer />
             <WhatsAppButton />
         </div>
     );
 }
 
-// Map & Business Hours component
 function MapAndBusinessHours() {
     const [user, setUser] = useState({});
-
     useEffect(() => {
         const fetchUser = async () => {
             try {
@@ -237,36 +208,39 @@ function MapAndBusinessHours() {
         };
         fetchUser();
     }, []);
+
     return (
         <>
-            <div className="bg-white rounded-2xl shadow-lg overflow-hidden animate-fade-in-up" style={{ animationDelay: "0.4s" }}>
+            <div className="bg-white rounded-3xl shadow-xl overflow-hidden border border-green-100 animate-fade-in-up" style={{ animationDelay: "0.4s" }}>
                 <div className="p-6">
-                    <h3 className="text-xl font-bold text-gray-900 mb-4">Our Location</h3>
+                    <h3 className="text-2xl font-bold text-green-800 mb-4">📍 Our Location</h3>
                 </div>
                 <div className="h-80">
                     <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15130.834447713653!2d73.7694!3d18.5596!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2bf2e67461101%3A0x828d43bf9d9ee343!2sBaner%2C%20Pune%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1634567890123!5m2!1sen!2sin"
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d484332.1208722391!2d73.53456773731209!3d18.490692692537447!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2e7002542780f%3A0xe5189f3ee199f455!2sKoregaon%20mul%20inamdarvasti!5e0!3m2!1sen!2sin!4v1756545917023!5m2!1sen!2sin"
                         width="100%"
                         height="100%"
                         style={{ border: 0 }}
                         allowFullScreen=""
                         loading="lazy"
                         referrerPolicy="no-referrer-when-downgrade"
-                        title="Rachnakar Enterprises Location"
+                        title="Nursery Location"
                     ></iframe>
                 </div>
             </div>
 
-            <div className="bg-white p-6 rounded-2xl shadow-lg animate-fade-in-up" style={{ animationDelay: "0.5s" }}>
-                <h3 className="text-xl font-bold text-gray-900 mb-4">Business Hours</h3>
-                <div className="space-y-3">
-                    <div className="flex justify-between"><span className="text-gray-600 font-bold">{user.businessHours}</span></div>
-                    <div className="flex justify-between"><span className="text-gray-600 font-bold">Saturday-Sunday (Closed)</span></div>
+            <div className="bg-white p-8 rounded-3xl shadow-xl border border-green-100 animate-fade-in-up" style={{ animationDelay: "0.5s" }}>
+                <h3 className="text-2xl font-bold text-green-800 mb-6">🕒 Business Hours</h3>
+                <div className="space-y-3 text-gray-700 font-medium">
+                    <div>Monday-Saturday: <span className="text-red-500">8AM - 6PM</span></div>
+                    <div>Sunday: <span className="text-red-500">Closed</span></div>
                 </div>
-                <div className="mt-6 p-4 bg-orange-50 rounded-xl">
-                    <p className="text-orange-600 text-sm"><strong>Emergency Contact:</strong> Available 24/7 for urgent construction issues.</p>
+                <div className="mt-6 p-4 bg-green-50 rounded-xl">
+                    <p className="text-green-700 text-sm"><strong>Contact:</strong> Available 24/7 for any issues or help.</p>
                 </div>
             </div>
+
+            <SocialLinks/>
         </>
     );
 }
