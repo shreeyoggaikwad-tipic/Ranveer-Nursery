@@ -126,17 +126,17 @@ function Navbar() {
             </div>
 
             <NavLink
-              to="/tools"
+              to="/services"
               className={({ isActive }) => `px-4 py-2 rounded-md ${isActive ? activeClass : normalClass}`}
             >
-              🛠️ Tools
+              🛠️ Services
             </NavLink>
-            <NavLink
+            {/* <NavLink
               to="/reviews"
               className={({ isActive }) => `px-4 py-2 rounded-md ${isActive ? activeClass : normalClass}`}
             >
               💬 Reviews
-            </NavLink>
+            </NavLink> */}
             <NavLink
               to="/contact"
               className={({ isActive }) => `px-4 py-2 rounded-md bg-green-600 text-white hover:bg-green-700 shadow-md hover:shadow-lg transition-all duration-300 ${isActive ? 'bg-green-700' : ''}`}
@@ -214,19 +214,19 @@ function Navbar() {
             </div>
 
             <NavLink
-              to="/tools"
+              to="/services"
               className={({ isActive }) => `px-4 py-3 rounded-lg flex items-center space-x-3 ${isActive ? 'bg-green-100 text-green-700 font-semibold' : 'text-gray-700 hover:bg-green-50 hover:text-green-600'} transition-all duration-300`}
               onClick={() => setIsOpen(false)}
             >
-              <span>🛠️</span><span>Tools</span>
+              <span>🛠️</span><span>Services</span>
             </NavLink>
-            <NavLink
+            {/* <NavLink
               to="/reviews"
               className={({ isActive }) => `px-4 py-3 rounded-lg flex items-center space-x-3 ${isActive ? 'bg-green-100 text-green-700 font-semibold' : 'text-gray-700 hover:bg-green-50 hover:text-green-600'} transition-all duration-300`}
               onClick={() => setIsOpen(false)}
             >
               <span>💬</span><span>Reviews</span>
-            </NavLink>
+            </NavLink> */}
             <NavLink
               to="/contact"
               className="px-4 py-3 rounded-lg flex items-center space-x-3 bg-green-600 text-white hover:bg-green-700 transition-all duration-300 mt-2"

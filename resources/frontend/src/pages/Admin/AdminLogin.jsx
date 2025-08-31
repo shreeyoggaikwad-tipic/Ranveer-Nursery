@@ -49,7 +49,7 @@ function AdminLogin() {
             localStorage.setItem("token", response.data.token);
 
             // Redirect to admin dashboard
-            window.location.href = "/admin/dashboard";
+            window.location.href = "/admin/inquiries";
         } catch (err) {
             if (err.response && err.response.data && err.response.data.message) {
                 setError(err.response.data.message);
@@ -76,7 +76,7 @@ function AdminLogin() {
                     <div className="mb-8 flex items-center">
                         <Link
                             to="/"
-                            className="mr-4 p-2 text-gray-600 hover:text-orange-600 hover:bg-gray-100 rounded-lg transition-colors"
+                            className="mr-4 p-2 text-gray-600 hover:text-green-600 hover:bg-gray-100 rounded-lg transition-colors"
                         >
                             <ArrowLeft className="w-5 h-5" />
                         </Link>
@@ -87,7 +87,7 @@ function AdminLogin() {
                             <img src={Logo} alt="Logo" className="w-28 h-28" />
                         </div>
                         <h1 className="text-2xl font-bold text-gray-900 mb-2">Admin Login</h1>
-                        <p className="text-gray-600">Rachnakar Enterprises</p>
+                        <p className="text-gray-600">Ranveer Rose Nursery</p>
                     </div>
 
                     {/* Error Message */}
@@ -177,7 +177,7 @@ function AdminLogin() {
                         <button
                             onClick={handleSubmit}
                             disabled={isLoading}
-                            className="w-full bg-gradient-to-r from-orange-400 to-orange-400 text-white py-3 rounded-xl font-semibold hover:from-orange-600 hover:to-orange-600 transform hover:scale-105 transition-all duration-300 shadow-lg disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none"
+                            className="w-full bg-gradient-to-r from-green-500 to-green-500 text-white py-3 rounded-xl font-semibold hover:from-green-600 hover:to-green-600 transform hover:scale-105 transition-all duration-300 shadow-lg disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none"
                         >
                             {isLoading ? (
                                 <div className="flex items-center justify-center">

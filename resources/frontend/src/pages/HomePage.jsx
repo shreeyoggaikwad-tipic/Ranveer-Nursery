@@ -5,12 +5,37 @@ import PlantCard from "../components/PlantCard";
 import Rose from "../assets/Rose.jpg"
 import SunflowerSeeds from "../assets/SunflowerSeeds.jpg"
 import { Link } from "react-router-dom";
+import host from "../utils/host"
+import axios from 'axios';
+
 
 const NurseryHomepage = () => {
+
+  const [user, setUser] = useState();
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+
+        // Fetch user (assuming 1st user = admin)
+        const userRes = await axios.get(`${host}/api/users/1`);
+        const user = userRes.data.data;
+
+        setUser(user);
+        setHappyCustomers(user?.happy_clients)
+        setYearsExperience(user?.years_of_experience)
+      } catch (error) {
+        console.error("Error fetching stats:", error);
+      }
+    }
+    fetchStats();
+  }, []);
+
+
   // Animated numbers
-  const [plantVarieties, setPlantVarieties] = useState(400);
-  const [happyCustomers, setHappyCustomers] = useState(800);
-  const [yearsExperience, setYearsExperience] = useState(10);
+  const [plantVarieties, setPlantVarieties] = useState(500);
+  const [happyCustomers, setHappyCustomers] = useState();
+  const [yearsExperience, setYearsExperience] = useState();
   const [isScrolled, setIsScrolled] = useState(false);
 
   // Sample plant data
@@ -59,13 +84,6 @@ const NurseryHomepage = () => {
       }, 16);
     };
 
-    // Animate counters
-    const timer = setTimeout(() => {
-      animateValue(setPlantVarieties, 400, 500);
-      animateValue(setHappyCustomers, 800, 1200);
-      animateValue(setYearsExperience, 10, 15);
-    }, 1000);
-
     // Handle scroll for navbar
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 100);
@@ -74,7 +92,6 @@ const NurseryHomepage = () => {
     window.addEventListener('scroll', handleScroll);
 
     return () => {
-      clearTimeout(timer);
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
@@ -91,12 +108,12 @@ const NurseryHomepage = () => {
       <Navbar />
 
       {/* Hero Section */}
-      <section id="home" className="flex items-center bg-green-50 px-6 py-0">
+      <section id="home" className="flex items-center bg-green-50 px-6 pt-4">
         <div className="max-w-6xl mx-auto w-full">
-          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
+          <div className="flex flex-col lg:flex-row items-center lg:gap-12 xl:gap-16">
             {/* Left Side Content */}
-            <div className="flex-1 max-w-lg animate-fade-in-left">
-              <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-6">
+            <div className="flex-1 max-w-xl animate-fade-in-left items-center justify-center">
+              <h1 className="text-5xl lg:text-6xl font-bold leading-tight mb-6">
                 Crafting{" "}
                 <span className="text-green-600 relative">
                   Botanical Dreams
@@ -115,14 +132,14 @@ const NurseryHomepage = () => {
 
             {/* Right Side Image */}
             <div className="flex-1 relative animate-fade-in-right">
-              <div className="relative">
+              <div className=" ">
                 {/* Decorative circles */}
                 <div className="absolute -top-10 -right-10 w-32 h-32 bg-green-200/30 rounded-full animate-pulse"></div>
-                <div className="absolute -bottom-10 -left-10 w-24 h-24 bg-green-300/40 rounded-full animate-pulse delay-1000"></div>
+                {/* <div className="absolute -bottom-10 -left-10 w-24 h-24 bg-green-300/40 rounded-full animate-pulse delay-1000"></div> */}
 
                 {/* Main image container */}
                 <div className="relative ">
-                  <div className="aspect-[4/3] p-8 flex flex-col items-center justify-center">
+                  <div className="flex flex-col items-center justify-center py-6">
                     {/* Tags */}
                     <div className="flex flex-wrap gap-3 mb-8">
                       <span className="px-4 py-2 bg-white/80 backdrop-blur-sm rounded-full text-sm font-medium text-gray-700 shadow-sm hover:shadow-md transition-shadow">
@@ -194,7 +211,7 @@ const NurseryHomepage = () => {
       </section>
 
       {/* Features Section */}
-      <section id="plants" className="py-20 bg-white">
+      <section id="plants" className="pb-10 pt-6 bg-white">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-gray-800 mb-4">

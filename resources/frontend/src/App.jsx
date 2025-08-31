@@ -7,12 +7,12 @@ import HomePage from './pages/HomePage'
 import AboutPage from './pages/AboutPage'
 import PlantsPage from './pages/PlantsPage';
 import ToolsPage from "./pages/ToolsPage"
+import ServicesPage from './pages/ServicesPage';
 import ContactPage from './pages/ContactPage';
 import ReviewsPage from "./pages/ReviewsPage"
 
 
 import ProjectsPage from './pages/ProjectsPage'
-import ServicesPage from './pages/ServicesPage';
 import TestimonialsPage from './pages/TestimonialsPage';
 import ProjectDetailsPage from './pages/ProjectDetailsPage';
 import ServiceDetailsPage from './pages/ServiceDetailsPage';
@@ -70,8 +70,8 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/plants" element={<PlantsPage />} />
-        <Route path="/tools" element={<ToolsPage />} />
-        <Route path="/reviews" element={<ReviewsPage />} />
+        <Route path="/services" element={<ServicesPage />} />
+        {/* <Route path="/reviews" element={<ReviewsPage />} /> */}
         <Route path="/contact" element={<ContactPage />} />
 
         {/* Admin routes */}

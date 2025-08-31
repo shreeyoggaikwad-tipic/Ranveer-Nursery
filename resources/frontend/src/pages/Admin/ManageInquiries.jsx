@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Mail, Phone, User, MessageSquare } from "lucide-react";
 import AdminNav from "../../components/AdminNav";
-import host from '../../utils/host'
-
+import host from "../../utils/host";
+import { Loader2, FileDown } from "lucide-react";
 
 function ManageInquiries() {
   const [inquiries, setInquiries] = useState([]);
@@ -15,7 +14,7 @@ function ManageInquiries() {
     axios
       .get(`${host}/api/inquiries`, {
         headers: {
-          Authorization: `Bearer ${token}`, // 🔑 Send Sanctum token
+          Authorization: `Bearer ${token}`,
           Accept: "application/json",
         },
       })
@@ -31,17 +30,23 @@ function ManageInquiries() {
   const toggleRequestServed = async (id) => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.patch(`${host}/api/inquiries/${id}/toggle-served`, {}, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await axios.patch(
+        `${host}/api/inquiries/${id}/toggle-served`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       setInquiries((prev) => {
         const updated = prev.map((inq) =>
-          inq.id === id ? { ...inq, request_served: res.data.request_served } : inq
+          inq.id === id
+            ? { ...inq, request_served: res.data.request_served }
+            : inq
         );
-        // Sort updated list
+        // Sort by pending first
         return updated.sort((a, b) => {
           return a.request_served === b.request_served ? 0 : a.request_served ? 1 : -1;
         });
@@ -51,133 +56,133 @@ function ManageInquiries() {
     }
   };
 
-
-
   const downloadCSV = async () => {
     try {
       const token = localStorage.getItem("token");
-
       const response = await axios.get(`${host}/api/inquiries/export`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-        responseType: "blob", // very important!
+        responseType: "blob",
       });
 
-      // Create a download link
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
       link.href = url;
-      link.setAttribute("download", "inquiries.csv"); // default filename
+      link.setAttribute("download", "inquiries.csv");
       document.body.appendChild(link);
       link.click();
       link.remove();
     } catch (error) {
       console.error("CSV download failed:", error);
-      alert("Failed to export inquiries. Check your token or backend.");
+      alert("Failed to export inquiries. Please try again.");
     }
   };
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-blue-50">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-600"></div>
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-green-100">
+        <div className="flex flex-col items-center space-y-4">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-orange-500"></div>
+          <p className="text-green-700 font-medium">Loading inquiries...</p>
+        </div>
       </div>
     );
   }
 
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-green-100">
       <AdminNav />
       <div className="flex flex-col justify-center items-center">
-      {/* Hero Section */}
-      <section className="py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto flex flex-col items-center text-center animate-fade-in">
-          <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-            Client <span className="bg-gradient-to-r from-orange-600 to-orange-300 bg-clip-text text-transparent">Inquiries</span>
-          </h1>
-          <p className="text-gray-600">
-            View and manage all the inquiries received from your website.
-          </p>
+        {/* Hero Section */}
+        <section className="py-12 px-4 sm:px-6 lg:px-8 w-full">
+          <div className="max-w-7xl mx-auto flex flex-col items-center text-center animate-fade-in">
+            <h1 className="text-4xl md:text-6xl font-bold text-green-600 mb-4">
+              Client <span className="bg-black bg-clip-text text-transparent">Inquiries</span>
+            </h1>
+            <p className="text-green-700 max-w-xl">
+              Manage and track all customer inquiries in one place.
+            </p>
 
-          <button
-            onClick={downloadCSV}
-            className="mt-10 flex items-center gap-2 px-6 py-3 rounded-xl bg-orange-500 text-white font-semibold shadow hover:bg-orange-600 transition"
-          >
-            Export to CSV
-          </button>
-        </div>
-      </section>
+            <button
+              onClick={downloadCSV}
+              className="mt-8 flex items-center gap-2 px-6 py-3 rounded-xl bg-green-500 text-white font-semibold shadow-lg hover:bg-green-600 transition-transform transform hover:scale-105"
+            >
+              <FileDown className="w-5 h-5" />
+              Export to CSV
+            </button>
+          </div>
+        </section>
 
-      <div className="w-[80%] mb-20  ">
-        {/* Table Section */}
-        <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
-          {loading ? (
-            <div className="flex justify-center items-center p-8">
-              <Loader2 className="w-6 h-6 text-orange-600 animate-spin" />
-              <span className="ml-2 text-gray-600">Loading inquiries...</span>
-            </div>
-          ) : inquiries.length > 0 ? (
-            <div className="overflow-x-auto">
-              <table className="min-w-full border-collapse">
-                <thead className="bg-gray-100 text-gray-700 text-left text-sm font-semibold">
-                  <tr>
-                    <th className="px-6 py-3 border-b">Sr. No.</th>
-                    <th className="px-6 py-3 border-b">Name</th>
-                    <th className="px-6 py-3 border-b">Email</th>
-                    <th className="px-6 py-3 border-b">Phone</th>
-                    <th className="px-6 py-3 border-b">Message</th>
-                    <th className="px-6 py-3 border-b">Request Served</th>
-                  </tr>
-                </thead>
-                <tbody className="text-sm text-gray-600">
-                  {inquiries.map((inq, index) => (
-                    <tr
-                      key={inq.id}
-                      className="hover:bg-gray-50 transition-colors"
-                    >
-                      <td className="px-6 py-3 border-b">{index + 1}</td>
-                      <td className="px-6 py-3 border-b">{inq.name}</td>
-                      <td className="px-6 py-3 border-b">{inq.email}</td>
-                      <td className="px-6 py-3 border-b">{inq.phone}</td>
-                      <td className="px-6 py-3 border-b">
-                        {inq.message}
-                      </td>
-                      <td className="px-6 py-3 border-b text-center">
-                        <div className="flex items-center justify-center">
-                          <button
-                            onClick={() => toggleRequestServed(inq.id)}
-                            className={`relative inline-flex h-8 w-16 items-center rounded-full transition-colors duration-300 ease-in-out ${inq.request_served ? 'bg-green-500 hover:bg-green-600' : 'bg-gray-300 hover:bg-gray-400'
-                              }`}
-                            role="switch"
-                            aria-checked={inq.request_served}
-                          >
-                            <span
-                              className={`inline-block h-6 w-6 transform rounded-full bg-white shadow-lg transition-transform duration-300 ease-in-out ${inq.request_served ? 'translate-x-9' : 'translate-x-1'
-                                }`}
-                            />
-                          </button>
-                          <span className={`ml-3 text-sm font-medium ${inq.request_served ? 'text-green-600' : 'text-gray-500'
-                            }`}>
-                            {inq.request_served ? "Served" : "Pending"}
-                          </span>
-                        </div>
-                      </td>
+        {/* Inquiries Table */}
+        <div className="w-[90%] lg:w-[80%] mb-20 animate-fade-in-up">
+          <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-green-100">
+            {inquiries.length > 0 ? (
+              <div className="overflow-x-auto">
+                <table className="min-w-full border-collapse">
+                  <thead className="bg-green-100 text-green-800 text-left text-sm font-semibold uppercase tracking-wide">
+                    <tr>
+                      <th className="px-6 py-4 border-b">#</th>
+                      <th className="px-6 py-4 border-b">Name</th>
+                      <th className="px-6 py-4 border-b">Email</th>
+                      <th className="px-6 py-4 border-b">Phone</th>
+                      <th className="px-6 py-4 border-b">Message</th>
+                      <th className="px-6 py-4 border-b text-center">Status</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          ) : (
-            <div className="p-8 text-center text-gray-500">
-              No inquiries found.
-            </div>
-          )}
-        </div>
+                  </thead>
+                  <tbody className="text-sm text-gray-600">
+                    {inquiries.map((inq, index) => (
+                      <tr
+                        key={inq.id}
+                        className="hover:bg-green-50 transition-colors"
+                      >
+                        <td className="px-6 py-4 border-b">{index + 1}</td>
+                        <td className="px-6 py-4 border-b">{inq.name}</td>
+                        <td className="px-6 py-4 border-b">{inq.email}</td>
+                        <td className="px-6 py-4 border-b">{inq.phone}</td>
+                        <td className="px-6 py-4 border-b">{inq.message}</td>
+                        <td className="px-6 py-4 border-b text-center">
+                          <div className="flex items-center justify-center">
+                            <button
+                              onClick={() => toggleRequestServed(inq.id)}
+                              className={`relative inline-flex h-8 w-16 items-center rounded-full transition-colors duration-300 ease-in-out ${
+                                inq.request_served
+                                  ? "bg-green-500 hover:bg-green-600"
+                                  : "bg-gray-300 hover:bg-gray-400"
+                              }`}
+                              role="switch"
+                              aria-checked={inq.request_served}
+                            >
+                              <span
+                                className={`inline-block h-6 w-6 transform rounded-full bg-white shadow-lg transition-transform duration-300 ease-in-out ${
+                                  inq.request_served ? "translate-x-9" : "translate-x-1"
+                                }`}
+                              />
+                            </button>
+                            <span
+                              className={`ml-3 text-sm font-semibold ${
+                                inq.request_served ? "text-green-600" : "text-gray-500"
+                              }`}
+                            >
+                              {inq.request_served ? "Served" : "Pending"}
+                            </span>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              <div className="p-8 text-center text-gray-500">
+                No inquiries found.
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
+      {/* Animations */}
       <style>{`
         @keyframes fade-in {
           from { opacity: 0; transform: translateY(20px); }
@@ -194,7 +199,7 @@ function ManageInquiries() {
         }
 
         .animate-fade-in-up {
-          animation: fade-in-up 0.6s ease-out;
+          animation: fade-in-up 0.8s ease-out;
         }
       `}</style>
     </div>
