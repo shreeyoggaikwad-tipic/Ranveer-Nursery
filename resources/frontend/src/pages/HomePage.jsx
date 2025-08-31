@@ -273,7 +273,7 @@ const NurseryHomepage = () => {
       </section>
 
       {/* Gallery Section */}
-      <section id="gallery" className="py-10 bg-green-50 relative overflow-hidden">
+      <section id="gallery" className="py-10 bg-green-50 ">
         {/* Decorative floating elements */}
         <div className="absolute top-10 left-10 text-2xl animate-float opacity-20">🍃</div>
         <div className="absolute bottom-16 right-16 text-xl animate-float delay-1000 opacity-20">🌱</div>

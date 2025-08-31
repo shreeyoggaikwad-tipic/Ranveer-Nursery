@@ -195,19 +195,6 @@ function ContactPage() {
 }
 
 function MapAndBusinessHours() {
-    const [user, setUser] = useState({});
-    useEffect(() => {
-        const fetchUser = async () => {
-            try {
-                const res = await axios.get("http://127.0.0.1:8000/api/users/1");
-                const userData = res.data.data;
-                setUser({ businessHours: userData.business_hours });
-            } catch (error) {
-                console.error("Error fetching user:", error);
-            }
-        };
-        fetchUser();
-    }, []);
 
     return (
         <>

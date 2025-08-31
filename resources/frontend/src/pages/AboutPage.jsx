@@ -35,7 +35,7 @@ const AboutPage = () => {
       <Navbar/>
 
       {/* Hero Section */}
-      <section className="pt-20 pb-12 bg-green-50 relative overflow-hidden">
+      <section className="pt-10 pb-12 bg-green-50 relative overflow-hidden">
         {/* Floating accents */}
         <div className="absolute top-10 left-10 text-3xl opacity-10 animate-float">🍃</div>
         <div className="absolute bottom-10 right-10 text-3xl opacity-10 animate-float delay-500">🌱</div>
@@ -52,7 +52,7 @@ const AboutPage = () => {
       </section>
 
       {/* Story Section */}
-      <section id="section-story" className={`py-16 bg-white transition-all duration-1000 ${isVisible['section-story'] ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
+      <section id="section-story" className={`py-10 bg-white transition-all duration-1000 ${isVisible['section-story'] ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
         <div className="max-w-6xl mx-auto px-4 grid lg:grid-cols-2 gap-12 items-center">
           <div>
             <h2 className="text-3xl font-bold text-gray-800 mb-6">
@@ -79,7 +79,7 @@ const AboutPage = () => {
       </section>
 
       {/* Values Section */}
-      <section id="section-values" className={`py-16 px-10 bg-green-50 transition-all duration-1000 ${isVisible['section-values'] ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
+      <section id="section-values" className={`py-10 px-10 bg-green-50 transition-all duration-1000 ${isVisible['section-values'] ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
         <div className="max-w-6xl mx-auto px-4 text-center mb-12">
           <h2 className="text-3xl font-bold text-gray-800 mb-4">
             Our <span className="text-green-600">Values</span>
@@ -100,7 +100,7 @@ const AboutPage = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-12 bg-green-100 text-center">
+      <section className="py-10 bg-green-100 text-center">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold text-gray-800 mb-4">Ready to Start Your Green Journey?</h2>
           <p className="text-lg text-gray-600 mb-6">

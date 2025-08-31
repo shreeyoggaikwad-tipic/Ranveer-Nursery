@@ -83,7 +83,7 @@ function ManageInquiries() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-green-100">
         <div className="flex flex-col items-center space-y-4">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-orange-500"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-green-500"></div>
           <p className="text-green-700 font-medium">Loading inquiries...</p>
         </div>
       </div>

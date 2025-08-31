@@ -21,6 +21,8 @@ export default function AdminProfile() {
         happy_clients: 0
     });
     const [editData, setEditData] = useState({ ...adminData });
+    const [errors, setErrors] = useState({});
+
 
     const token = localStorage.getItem("token");
 
@@ -57,8 +59,23 @@ export default function AdminProfile() {
     };
 
     const handleSave = async () => {
+        // Clear previous errors
+        setErrors({});
+
+        // ✅ Client-side validation for phone number
+        const newErrors = {};
+        if (!editData.number || !/^\d{10}$/.test(editData.number)) {
+            newErrors.number = ["Phone number must be 10 digits long."];
+        }
+
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors);
+            return; // Stop saving
+        }
+
         try {
             setSaving(true);
+
             const response = await axios.put(`${host}/api/profile`, editData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -75,11 +92,16 @@ export default function AdminProfile() {
             }
         } catch (error) {
             console.error(error);
-            alert("Error updating profile.");
+            if (error.response && error.response.data && error.response.data.errors) {
+                setErrors(error.response.data.errors);
+            } else {
+                setErrors({ general: "An unexpected error occurred." });
+            }
         } finally {
             setSaving(false);
         }
     };
+
 
     const handleInputChange = (field, value) => {
         setEditData(prev => ({ ...prev, [field]: value }));
@@ -154,7 +176,21 @@ export default function AdminProfile() {
                                         </button>
                                     </div>
                                 )}
+
                             </div>
+                            {/* Error Messages */}
+                            {Object.keys(errors).length > 0 && (
+                                <div className="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
+                                    <h4 className="font-bold mb-2">Please fix the following:</h4>
+                                    <ul className="list-disc list-inside text-sm">
+                                        {Object.entries(errors).map(([field, messages]) => (
+                                            <li key={field}>
+                                                <strong>{field}:</strong> {Array.isArray(messages) ? messages.join(", ") : messages}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
 
                             {/* Details Grid */}
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
