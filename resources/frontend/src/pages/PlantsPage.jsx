@@ -7,6 +7,12 @@ import Footer from '../components/Footer';
 import PlantCard from '../components/PlantCard';
 import Rose from "../assets/Rose.jpg"
 import SunflowerSeeds from "../assets/SunflowerSeeds.jpg"
+import MangoSampling from "../assets/MangoSampling.webp"
+import MoneyPlant from "../assets/MoneyPlant.jpg"
+import Jasmine from "../assets/Jasmine.webp"
+import LeamonTree from "../assets/LeamonTree.jpg"
+import SnakePlant from "../assets/SnakePlant.avif"
+import TomatoSeeds from "../assets/TomatoSeeds.jpg"
 
 const NurseryPlantsPage = () => {
     const [activeFilter, setActiveFilter] = useState('all');
@@ -48,7 +54,7 @@ const NurseryPlantsPage = () => {
             id: 2,
             name: "Mango Sapling",
             category: "Fruit Plant",
-            image: null,
+            image: MangoSampling,
             description: "High-quality mango tree sapling"
         },
         {
@@ -62,35 +68,35 @@ const NurseryPlantsPage = () => {
             id: 4,
             name: "Money Plant",
             category: "Other",
-            image: null,
+            image: MoneyPlant,
             description: "Easy to grow indoor plant"
         },
         {
             id: 5,
             name: "Jasmine Plant",
             category: "Flowering Plant",
-            image: null,
+            image: Jasmine,
             description: "Fragrant white jasmine flowers"
         },
         {
             id: 6,
             name: "Lemon Tree",
             category: "Fruit Plant",
-            image: null,
+            image: LeamonTree,
             description: "Fresh lemon tree for home garden"
         },
         {
             id: 7,
             name: "Tomato Seeds",
             category: "Seeds",
-            image: null,
+            image: TomatoSeeds,
             description: "Organic tomato seeds"
         },
         {
             id: 8,
             name: "Snake Plant",
             category: "Other",
-            image: null,
+            image: SnakePlant,
             description: "Low maintenance air purifying plant"
         }
     ];

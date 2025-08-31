@@ -3,6 +3,8 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import PlantCard from "../components/PlantCard";
 import Rose from "../assets/Rose.jpg"
+import MangoSampling from "../assets/MangoSampling.webp"
+import MoneyPlant from "../assets/MoneyPlant.jpg"
 import SunflowerSeeds from "../assets/SunflowerSeeds.jpg"
 import { Link } from "react-router-dom";
 import host from "../utils/host"
@@ -51,7 +53,7 @@ const NurseryHomepage = () => {
       id: 2,
       name: "Mango Sapling",
       category: "Fruit Plant",
-      image: null,
+      image: MangoSampling,
       description: "High-quality mango tree sapling"
     },
     {
@@ -65,7 +67,7 @@ const NurseryHomepage = () => {
       id: 4,
       name: "Money Plant",
       category: "Other",
-      image: null,
+      image: MoneyPlant,
       description: "Easy to grow indoor plant"
     },
   ];
