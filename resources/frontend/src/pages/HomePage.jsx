@@ -3,12 +3,13 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import PlantCard from "../components/PlantCard";
 import Rose from "../assets/Rose.jpg"
-import MangoSampling from "../assets/MangoSampling.webp"
+import MangoSampling from "../assets/Mango.webp"
 import MoneyPlant from "../assets/MoneyPlant.jpg"
 import SunflowerSeeds from "../assets/SunflowerSeeds.jpg"
 import { Link } from "react-router-dom";
 import host from "../utils/host"
 import axios from 'axios';
+import Plants from "../utils/Plants";
 
 
 const NurseryHomepage = () => {
@@ -39,38 +40,6 @@ const NurseryHomepage = () => {
   const [happyCustomers, setHappyCustomers] = useState();
   const [yearsExperience, setYearsExperience] = useState();
   const [isScrolled, setIsScrolled] = useState(false);
-
-  // Sample plant data
-  const plants = [
-    {
-      id: 1,
-      name: "Premium Red Rose",
-      category: "Flowering Plant",
-      image: Rose,
-      description: "Beautiful red roses perfect for gardens"
-    },
-    {
-      id: 2,
-      name: "Mango Sapling",
-      category: "Fruit Plant",
-      image: MangoSampling,
-      description: "High-quality mango tree sapling"
-    },
-    {
-      id: 3,
-      name: "Sunflower Seeds",
-      category: "Seeds",
-      image: SunflowerSeeds,
-      description: "Premium sunflower seeds for plantation"
-    },
-    {
-      id: 4,
-      name: "Money Plant",
-      category: "Other",
-      image: MoneyPlant,
-      description: "Easy to grow indoor plant"
-    },
-  ];
 
   useEffect(() => {
     const animateValue = (setter, start, target, duration = 2000) => {
@@ -291,19 +260,24 @@ const NurseryHomepage = () => {
             </p>
           </div>
 
+          {/* Show only 4 random plants */}
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {plants.map((plant) => (
-              <PlantCard
-                key={plant.id}
-                image={plant.image}
-                name={plant.name}
-                description={plant.description}
-                category={plant.category}
-              />
-            ))}
+            {Plants
+              .sort(() => 0.5 - Math.random()) // shuffle
+              .slice(0, 4) // pick 4
+              .map((plant) => (
+                <PlantCard
+                  key={plant.id}
+                  image={plant.image}
+                  name={plant.name}
+                  description={plant.description}
+                  category={plant.category}
+                />
+              ))}
           </div>
         </div>
       </section>
+
 
 
       {/* Contact Section */}
