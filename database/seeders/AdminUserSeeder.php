@@ -15,7 +15,7 @@ class AdminUserSeeder extends Seeder
             'email' => 'ranveerrosenursery8644@gmail.com',
             'number' => '9764203636',
             'years_of_experience' => 10,
-            'location' => 'Pimpri, Pune',
+            'location' => 'A/p.Koregaon Mul, Inamdarvasti, Tal.Haveli, Dist.Pune - 412202',
             'about' => 'This is the Ranveer Rose Nursery Administrator account.',
             'business_hours' => 'Mon-Fri 8am-6pm',
             'happy_clients' => 100,

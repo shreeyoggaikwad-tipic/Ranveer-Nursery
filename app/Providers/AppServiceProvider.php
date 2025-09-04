@@ -4,8 +4,9 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Auth\Notifications\ResetPassword;
-    use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Facades\Schema;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -33,6 +34,7 @@ class AppServiceProvider extends ServiceProvider
         RateLimiter::for('password-reset', function ($request) {
         return Limit::perMinute(5)->by($request->email);
     });
+    Schema::defaultStringLength(191);
     }
 
     

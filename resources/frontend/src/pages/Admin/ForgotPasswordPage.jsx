@@ -22,9 +22,13 @@ export default function ForgotPasswordPage() {
             const response = await axios.post(`${host}/api/auth/forgot-password`, { email });
             setMessage('Password reset link has been sent to your email.');
         } catch (err) {
-            setError('Failed to send reset link. Please try again.');
+            if (err.response && err.response.data && err.response.data.message) {
+                setError(err.response.data.message);
+            } else {
+                setError('Failed to send reset link. Please try again.');
+            }
         }
-        finally{
+        finally {
             setIsLoading(false);
         }
     };
@@ -42,8 +46,8 @@ export default function ForgotPasswordPage() {
                 <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
                     {/* Header */}
                     <div className="text-center mb-8">
-                        <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <Mail className="w-8 h-8 text-orange-600" />
+                        <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <Mail className="w-8 h-8 text-green-600" />
                         </div>
                         <h2 className="text-2xl font-bold text-gray-800 mb-2">Forgot Password?</h2>
                         <p className="text-gray-600 text-sm">
@@ -73,7 +77,7 @@ export default function ForgotPasswordPage() {
                         <button
                             onClick={handleForgotPassword}
                             disabled={isLoading || !email}
-                            className="w-full bg-orange-500 hover:bg-orange-600 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center"
+                            className="w-full bg-green-500 hover:bg-green-600 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center"
                         >
                             {isLoading ? (
                                 <div className="flex items-center">
@@ -111,7 +115,7 @@ export default function ForgotPasswordPage() {
                     <div className="mt-8 text-center">
                         <p className="text-gray-600 text-sm">
                             Remember your password?{' '}
-                            <Link to="/admin/login" className="text-orange-500 hover:text-orange-600 font-medium transition-colors duration-200">
+                            <Link to="/admin/login" className="text-green-500 hover:text-green-600 font-medium transition-colors duration-200">
                                 Sign in
                             </Link>
                         </p>
@@ -121,7 +125,7 @@ export default function ForgotPasswordPage() {
                 {/* Additional Info */}
                 <div className="mt-6 text-center">
                     <p className="text-gray-500 text-xs">
-                        If you don't receive an email within a few minutes, please check your spam folder.
+                        If you dont receive an email within a few minutes, please check your spam folder.
                     </p>
                 </div>
             </div>

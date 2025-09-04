@@ -16,6 +16,8 @@ export default function ResetPassword() {
     const token = queryParams.get('token');
     const email = queryParams.get('email');
 
+    console.log(token, email);
+
     const handleResetPassword = async (e) => {
         e.preventDefault();
 
@@ -55,8 +57,8 @@ export default function ResetPassword() {
             <div className="max-w-md w-full space-y-8">
                 <div className="bg-white rounded-xl shadow-lg p-8">
                     <div className="text-center mb-8">
-                        <div className="mx-auto h-12 w-12 bg-orange-100 rounded-full flex items-center justify-center mb-4">
-                            <svg className="h-6 w-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div className="mx-auto h-12 w-12 bg-green-100 rounded-full flex items-center justify-center mb-4">
+                            <svg className="h-6 w-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                             </svg>
                         </div>
@@ -102,7 +104,7 @@ export default function ResetPassword() {
                         <button
                             onClick={handleResetPassword}
                             disabled={loading}
-                            className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-orange-500 hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed transition duration-200"
+                            className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed transition duration-200"
                         >
                             {loading ? (
                                 <>
