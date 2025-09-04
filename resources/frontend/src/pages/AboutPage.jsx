@@ -2,6 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import Nur1 from "../assets/Nur1.jfif"
+import Nur2 from "../assets/Nur2.jpg"
+import Nur3 from "../assets/Nur3.jpg"
+import Nur4 from "../assets/Nur4.jpg"
 
 const AboutPage = () => {
   const [isVisible, setIsVisible] = useState({});
@@ -45,10 +49,10 @@ const AboutPage = () => {
   ];
 
   const nurseryImages = [
-    { src: "/api/placeholder/300/200", alt: "Polyhouse facility", caption: "Modern polyhouse infrastructure" },
-    { src: "/api/placeholder/300/200", alt: "Plant varieties", caption: "Wide variety of healthy plants" },
-    { src: "/api/placeholder/300/200", alt: "Growing areas", caption: "Spacious growing areas" },
-    { src: "/api/placeholder/300/200", alt: "Expert team", caption: "Our dedicated team at work" }
+    { src: Nur1, alt: "Polyhouse facility", caption: "Modern polyhouse infrastructure" },
+    { src: Nur2, alt: "Plant varieties", caption: "Wide variety of healthy plants" },
+    { src: Nur3, alt: "Growing areas", caption: "Spacious growing areas" },
+    { src: Nur4, alt: "Expert team", caption: "Our dedicated team at work" }
   ];
 
   return (
