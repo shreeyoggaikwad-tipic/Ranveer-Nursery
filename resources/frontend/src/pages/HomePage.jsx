@@ -329,7 +329,7 @@ const NurseryHomepage = () => {
               {
                 icon: "📞",
                 title: "Call Us",
-                content: "+91 97642 03636\nMon-Sat 8AM-6PM"
+                content: "+91 91586 23636\n+91 98235 87600\nMon-Sat 8AM-6PM"
               },
               {
                 icon: "✉️",

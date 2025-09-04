@@ -47,10 +47,10 @@ export default function NurseryServicesPage() {
         {
             id: 5,
             icon: <Scissors className="w-8 h-8" />,
-            title: "Plant Maintenance",
-            description: "Professional care services to keep your plants healthy and thriving",
-            features: ["Pruning & Trimming", "Pest Control", "Fertilization", "Seasonal Care"],
-            price: "₹800 per visit",
+            title: "Lawn Services",
+            description: "Comprehensive lawn care solutions to keep your outdoor spaces green and well-maintained",
+            features: ["Grass Cutting", "Weeding", "Aeration", "Fertilization", "Seasonal Maintenance"],
+            price: "₹1,200 per visit",
             color: "from-orange-500 to-yellow-500"
         },
         {
@@ -82,7 +82,7 @@ export default function NurseryServicesPage() {
             </section>
 
             {/* Services Grid */}
-            <section className=" px-10">
+            <section className=" px-10 pb-10">
                 <div className="max-w-7xl mx-auto">
                     <h2 className="text-4xl font-bold text-center mb-12">Our <span className="text-green-600">Services</span></h2>
 
@@ -120,7 +120,7 @@ export default function NurseryServicesPage() {
             </section>
 
             {/* Process Section */}
-            <section className="py-16 px-4 bg-white">
+            <section className="py-10 px-4 bg-white">
                 <div className="max-w-6xl mx-auto">
                     <h2 className="text-4xl font-bold text-center mb-12">How We <span className="text-green-600">Work</span></h2>
 
@@ -172,7 +172,7 @@ export default function NurseryServicesPage() {
                             Visit Our Nursery
                         </Link>
                         <Link to="/plants" className="border border-green-600 text-green-600 px-6 py-3 rounded-full font-semibold hover:bg-green-50 transition-all">
-                            Browse Plants Online
+                            Browse Plants
                         </Link>
                     </div>
                 </div>

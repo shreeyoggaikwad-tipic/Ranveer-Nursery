@@ -32,7 +32,7 @@ const AboutPage = () => {
 
   return (
     <div className="min-h-screen bg-green-50">
-      <Navbar/>
+      <Navbar />
 
       {/* Hero Section */}
       <section className="pt-10 pb-12 bg-green-50 relative overflow-hidden">
@@ -45,7 +45,7 @@ const AboutPage = () => {
             About <span className="text-green-600">Ranveer Rose nursery</span>
           </h1>
           <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            For over 15 years, we've been nurturing dreams and growing communities through our passion for plants. 
+            For over 12+ years, we've been nurturing dreams and growing communities through our passion for plants.
             From humble beginnings to becoming your trusted green partner, our story is rooted in love for nature.
           </p>
         </div>
@@ -59,13 +59,13 @@ const AboutPage = () => {
               Our <span className="text-green-600">Story</span>
             </h2>
             <p className="text-gray-600 leading-relaxed mb-4">
-              Ranveer Rose Nursery began in 2010 when our founder, Sarah Johnson, transformed her backyard greenhouse into a community hub for plant lovers. 
+              Founded in 2013 by Mrs. Chaitali Bhise, Ranveer Rose Nursery has been dedicated to nurturing greenery and inspiring communities through the beauty of plants. From our humble beginnings, we have grown into a trusted partner for plant enthusiasts and landscapers alike.
             </p>
             <p className="text-gray-600 leading-relaxed mb-4">
-              Today, we're proud to offer everything from rare exotic plants to complete landscape transformations.
+              Spread across 25 acres of lush land, our nursery is equipped with polyhouses, shade nets, and advanced production houses, enabling us to cultivate a wide variety of high-quality plants in a sustainable and controlled environment.
             </p>
             <p className="text-gray-600 leading-relaxed">
-              Whether you're a seasoned gardener or just starting your green journey, we're here to guide you every step of the way.
+              Rooted in a deep love for nature, our mission goes beyond growing plants we strive to foster lasting relationships and create greener, healthier spaces for generations to come.
             </p>
           </div>
           <div className="relative">
@@ -117,7 +117,7 @@ const AboutPage = () => {
         </div>
       </section>
 
-      <Footer/>
+      <Footer />
     </div>
   );
 };

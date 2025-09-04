@@ -4,6 +4,8 @@ import { ArrowLeft } from "lucide-react";
 import { Link } from 'react-router-dom';
 import host from '../../utils/host'
 import Logo from '../../assets/logo.png'
+import { useNavigate } from "react-router-dom";
+
 
 
 function AdminLogin() {
@@ -15,8 +17,7 @@ function AdminLogin() {
     const [error, setError] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [rememberMe, setRememberMe] = useState(false);
-
-
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -49,7 +50,8 @@ function AdminLogin() {
             localStorage.setItem("token", response.data.token);
 
             // Redirect to admin dashboard
-            window.location.href = "/admin/inquiries";
+            navigate("/admin/inquiries");
+
         } catch (err) {
             if (err.response && err.response.data && err.response.data.message) {
                 setError(err.response.data.message);
