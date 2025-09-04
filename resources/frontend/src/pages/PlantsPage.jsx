@@ -1,18 +1,11 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { Filter, Flower, Apple, Sparkles, TreePine, Search, Grid, List } from 'lucide-react';
+import { Filter, Flower, Apple, Sparkles, TreePine, Search, Home, Sun, Sprout, Trees } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import PlantCard from '../components/PlantCard';
-import Rose from "../assets/Rose.jpg"
-import SunflowerSeeds from "../assets/SunflowerSeeds.jpg"
-import MangoSampling from "../assets/MangoSampling.webp"
-import MoneyPlant from "../assets/MoneyPlant.jpg"
-import Jasmine from "../assets/Jasmine.webp"
-import LeamonTree from "../assets/LeamonTree.jpg"
-import SnakePlant from "../assets/SnakePlant.avif"
-import TomatoSeeds from "../assets/TomatoSeeds.jpg"
+import Plants from '../utils/Plants';
 
 const NurseryPlantsPage = () => {
     const [activeFilter, setActiveFilter] = useState('all');
@@ -23,17 +16,26 @@ const NurseryPlantsPage = () => {
     useEffect(() => {
         if (location.state?.category) {
             switch (location.state.category) {
-                case 'Flowering Plants':
-                    setActiveFilter('flowering');
+                case 'Indoor Plants':
+                    setActiveFilter('indoor');
+                    break;
+                case 'Outdoor Plants':
+                    setActiveFilter('outdoor');
                     break;
                 case 'Fruit Plants':
                     setActiveFilter('fruit');
                     break;
-                case 'Seeds':
-                    setActiveFilter('seeds');
+                case 'Forest Plants':
+                    setActiveFilter('forest');
                     break;
-                case 'Other Plants':
-                    setActiveFilter('other');
+                case 'Micro Plants':
+                    setActiveFilter('micro');
+                    break;
+                case 'Landscaping Plants':
+                    setActiveFilter('landscape');
+                    break;
+                case 'Flowering Plants':
+                    setActiveFilter('flowering');
                     break;
                 default:
                     setActiveFilter('all');
@@ -41,116 +43,39 @@ const NurseryPlantsPage = () => {
         }
     }, [location.state]);
 
-    // Sample plant data
-    const plants = [
-        {
-            id: 1,
-            name: "Premium Red Rose",
-            category: "Flowering Plant",
-            image: Rose,
-            description: "Beautiful red roses perfect for gardens"
-        },
-        {
-            id: 2,
-            name: "Mango Sapling",
-            category: "Fruit Plant",
-            image: MangoSampling,
-            description: "High-quality mango tree sapling"
-        },
-        {
-            id: 3,
-            name: "Sunflower Seeds",
-            category: "Seeds",
-            image: SunflowerSeeds,
-            description: "Premium sunflower seeds for plantation"
-        },
-        {
-            id: 4,
-            name: "Money Plant",
-            category: "Other",
-            image: MoneyPlant,
-            description: "Easy to grow indoor plant"
-        },
-        {
-            id: 5,
-            name: "Jasmine Plant",
-            category: "Flowering Plant",
-            image: Jasmine,
-            description: "Fragrant white jasmine flowers"
-        },
-        {
-            id: 6,
-            name: "Lemon Tree",
-            category: "Fruit Plant",
-            image: LeamonTree,
-            description: "Fresh lemon tree for home garden"
-        },
-        {
-            id: 7,
-            name: "Tomato Seeds",
-            category: "Seeds",
-            image: TomatoSeeds,
-            description: "Organic tomato seeds"
-        },
-        {
-            id: 8,
-            name: "Snake Plant",
-            category: "Other",
-            image: SnakePlant,
-            description: "Low maintenance air purifying plant"
-        }
-    ];
-
     const filterOptions = [
         { id: 'all', label: 'All Plants', icon: Filter, color: 'green' },
-        { id: 'flowering', label: 'Flowering Plants', icon: Flower, color: 'green' },
+        { id: 'indoor', label: 'Indoor Plants', icon: Home, color: 'green' },
+        { id: 'outdoor', label: 'Outdoor Plants', icon: Sun, color: 'green' },
         { id: 'fruit', label: 'Fruit Plants', icon: Apple, color: 'green' },
-        { id: 'seeds', label: 'Seeds', icon: Sparkles, color: 'green' },
-        { id: 'other', label: 'Other Plants', icon: TreePine, color: 'green' }
+        { id: 'forest', label: 'Forest Plants', icon: TreePine, color: 'green' },
+        { id: 'micro', label: 'Micro Plants', icon: Sprout, color: 'green' },
+        { id: 'landscape', label: 'Landscaping Plants', icon: Trees, color: 'green' },
+        { id: 'flowering', label: 'Flowering Plants', icon: Flower, color: 'green' },
     ];
 
-    const filteredPlants = plants.filter(plant => {
+
+    const filteredPlants = Plants.filter(plant => {
         const categoryMap = {
-            flowering: 'Flowering Plant',
+            indoor: 'Indoor Plant',
+            outdoor: 'Outdoor Plant',
             fruit: 'Fruit Plant',
-            seeds: 'Seeds',
-            other: 'Other'
+            forest: 'Forest Plant',
+            micro: 'Micro Plant',
+            landscape: 'Landscaping Plant',
+            flowering: 'Flowering Plant'
         };
-        const matchesFilter = activeFilter === 'all' || plant.category === categoryMap[activeFilter];
-        const matchesSearch = plant.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+
+        const matchesFilter =
+            activeFilter === 'all' ||
+            plant.category === categoryMap[activeFilter];
+
+        const matchesSearch =
+            plant.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
             plant.description.toLowerCase().includes(searchTerm.toLowerCase());
 
         return matchesFilter && matchesSearch;
     });
-
-    const PlantIcon = ({ category }) => {
-        switch (category) {
-            case 'flowering':
-                return (
-                    <div className="w-16 h-16 bg-gradient-to-br from-pink-400 to-pink-600 rounded-lg flex items-center justify-center shadow-lg">
-                        <Flower className="w-8 h-8 text-white" />
-                    </div>
-                );
-            case 'fruit':
-                return (
-                    <div className="w-16 h-16 bg-gradient-to-br from-green-400 to-green-600 rounded-lg flex items-center justify-center shadow-lg">
-                        <Apple className="w-8 h-8 text-white" />
-                    </div>
-                );
-            case 'seeds':
-                return (
-                    <div className="w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-lg flex items-center justify-center shadow-lg">
-                        <Sparkles className="w-8 h-8 text-white" />
-                    </div>
-                );
-            default:
-                return (
-                    <div className="w-16 h-16 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-lg flex items-center justify-center shadow-lg">
-                        <TreePine className="w-8 h-8 text-white" />
-                    </div>
-                );
-        }
-    };
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-gray-50 via-green-50 to-emerald-50">
@@ -202,7 +127,7 @@ const NurseryPlantsPage = () => {
                         {activeFilter === 'all' ? 'All Plants' : filterOptions.find(f => f.id === activeFilter)?.label}
                     </h2>
                     <p className="text-gray-600">
-                        Showing {filteredPlants.length} of {plants.length} plants
+                        Showing {filteredPlants.length} of {Plants.length} plants
                         {searchTerm && ` matching "${searchTerm}"`}
                     </p>
                 </div>

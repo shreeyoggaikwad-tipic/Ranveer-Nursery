@@ -47,11 +47,15 @@ function Navbar() {
   }, []);
 
   const plantCategories = [
-    { name: 'Flowering Plants', path: '/plants', emoji: '🌺' },
-    { name: 'Fruit Plants', path: '/plants', emoji: '🍎' },
-    { name: 'Seeds', path: '/plants', emoji: '🌱' },
-    { name: 'Other Plants', path: '/plants', emoji: '🌿' },
+    { name: 'Indoor Plants', path: '/plants', emoji: '🏡' },       // house plant
+    { name: 'Outdoor Plants', path: '/plants', emoji: '🌳' },      // tree outdoors
+    { name: 'Fruit Plants', path: '/plants', emoji: '🍎' },        // apple
+    { name: 'Forest Plants', path: '/plants', emoji: '🌲' },       // evergreen tree
+    { name: 'Micro Plants', path: '/plants', emoji: '🌱' },        // potted plant
+    { name: 'Landscaping Plants', path: '/plants', emoji: '🌿' },  // leaf / greenery
+    { name: 'Flowering Plants', path: '/plants', emoji: '🌸' },    // flower blossom
   ];
+
 
   return (
     <header className="bg-gradient-to-r from-green-50 to-amber-50 backdrop-blur-md shadow-md sticky top-0 z-50 transition-all duration-300 border-b border-green-100">
