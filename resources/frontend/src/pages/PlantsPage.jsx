@@ -98,8 +98,8 @@ const NurseryPlantsPage = () => {
                 </div>
 
                 {/* Filter Tabs */}
-                <div className="mb-8">
-                    <div className="flex flex-wrap gap-3 p-2 bg-white rounded-2xl shadow-lg border border-gray-100">
+                <div className="mb-4">
+                    <div className="flex flex-wrap gap-1 p-1 bg-white rounded-lg shadow border border-gray-100">
                         {filterOptions.map((filter) => {
                             const IconComponent = filter.icon;
                             const isActive = activeFilter === filter.id;
@@ -108,18 +108,21 @@ const NurseryPlantsPage = () => {
                                 <button
                                     key={filter.id}
                                     onClick={() => setActiveFilter(filter.id)}
-                                    className={`flex items-center space-x-2 px-6 py-3 rounded-xl font-medium transition-all duration-200 ${isActive
-                                        ? `bg-${filter.color}-500 text-white shadow-lg transform scale-105`
-                                        : 'text-gray-600 hover:bg-gray-50'
+                                    className={`flex items-center space-x-1 px-2 py-1 rounded-md text-xs sm:text-sm font-medium transition-all duration-200 min-w-max
+            ${isActive
+                                            ? `bg-${filter.color}-500 text-white shadow`
+                                            : 'text-gray-600 hover:bg-gray-50'
                                         }`}
                                 >
-                                    <IconComponent className="w-5 h-5" />
+                                    <IconComponent className="w-3 h-3 sm:w-4 sm:h-4" />
                                     <span className="hidden sm:inline">{filter.label}</span>
                                 </button>
                             );
                         })}
                     </div>
                 </div>
+
+
 
                 {/* Results Summary */}
                 <div className="mb-6">

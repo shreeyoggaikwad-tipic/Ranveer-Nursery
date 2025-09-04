@@ -1,18 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
 const EnhancedLoadingScreen = ({ Logo }) => {
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    // Simulate a loading delay (e.g., fetching initial data)
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 2000); // Adjust time if needed
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  if (loading) {
     return (
       <>
         <style>
@@ -196,13 +184,5 @@ const EnhancedLoadingScreen = ({ Logo }) => {
       </>
     );
   }
-
-  // Return your main content when loading is false
-  return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-      <h1 className="text-2xl font-bold text-gray-800">Welcome to Ranveer Rose Nursery!</h1>
-    </div>
-  );
-};
 
 export default EnhancedLoadingScreen;

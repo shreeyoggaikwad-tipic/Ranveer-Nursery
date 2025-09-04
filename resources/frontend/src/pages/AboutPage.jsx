@@ -30,6 +30,27 @@ const AboutPage = () => {
     { title: "Customer Joy", description: "We believe in creating lasting relationships and bringing joy through plants.", icon: "❤️", color: "from-pink-400 to-pink-500" }
   ];
 
+  const whyChooseUs = [
+    { title: "12+ Years Experience", description: "Over a decade of expertise in nurturing plants and serving customers.", icon: "📅" },
+    { title: "25 Acres Facility", description: "Spacious nursery with polyhouses and advanced growing infrastructure.", icon: "🏞️" },
+    { title: "Expert Guidance", description: "Professional horticulturists provide personalized plant care advice.", icon: "👨‍🌾" },
+    { title: "Quality Assurance", description: "Every plant is carefully inspected before delivery to ensure health.", icon: "🔍" }
+  ];
+
+  const clients = [
+    { name: "Green Valley Resort", type: "Hospitality", testimonial: "Transformed our landscape beautifully!" },
+    { name: "Pune Municipal Corp", type: "Government", testimonial: "Reliable partner for city beautification projects." },
+    { name: "Skyline Apartments", type: "Residential", testimonial: "Enhanced our community gardens perfectly." },
+    { name: "Tech Park Pvt Ltd", type: "Corporate", testimonial: "Created a refreshing office environment." }
+  ];
+
+  const nurseryImages = [
+    { src: "/api/placeholder/300/200", alt: "Polyhouse facility", caption: "Modern polyhouse infrastructure" },
+    { src: "/api/placeholder/300/200", alt: "Plant varieties", caption: "Wide variety of healthy plants" },
+    { src: "/api/placeholder/300/200", alt: "Growing areas", caption: "Spacious growing areas" },
+    { src: "/api/placeholder/300/200", alt: "Expert team", caption: "Our dedicated team at work" }
+  ];
+
   return (
     <div className="min-h-screen bg-green-50">
       <Navbar />
@@ -78,6 +99,27 @@ const AboutPage = () => {
         </div>
       </section>
 
+      {/* Why Choose Us Section */}
+      <section id="section-why-choose" className={`py-10 bg-gray-50 transition-all duration-1000 ${isVisible['section-why-choose'] ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-800 mb-4">
+              Why <span className="text-green-600">Choose Us?</span>
+            </h2>
+            <div className="w-20 h-1 bg-green-600 mx-auto rounded-full"></div>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {whyChooseUs.map((item, index) => (
+              <div key={index} className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow text-center">
+                <div className="text-4xl mb-4">{item.icon}</div>
+                <h3 className="font-semibold text-gray-800 mb-2">{item.title}</h3>
+                <p className="text-gray-600 text-sm">{item.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Values Section */}
       <section id="section-values" className={`py-10 px-10 bg-green-50 transition-all duration-1000 ${isVisible['section-values'] ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
         <div className="max-w-6xl mx-auto px-4 text-center mb-12">
@@ -96,6 +138,60 @@ const AboutPage = () => {
               <p className="text-gray-600">{value.description}</p>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* Our Clients Section */}
+      <section id="section-clients" className={`py-10 bg-white transition-all duration-1000 ${isVisible['section-clients'] ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-800 mb-4">
+              Our <span className="text-green-600">Clients</span>
+            </h2>
+            <div className="w-20 h-1 bg-green-600 mx-auto rounded-full"></div>
+            <p className="text-gray-600 mt-4">Trusted by businesses and communities across Pune</p>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {clients.map((client, index) => (
+              <div key={index} className="bg-green-50 p-6 rounded-xl text-center hover:bg-green-100 transition-colors">
+                <div className="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center text-white text-xl font-bold mb-4 mx-auto">
+                  {client.name.charAt(0)}
+                </div>
+                <h3 className="font-semibold text-gray-800 mb-1">{client.name}</h3>
+                <p className="text-green-600 text-sm font-medium mb-2">{client.type}</p>
+                <p className="text-gray-600 text-sm italic">"{client.testimonial}"</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Nursery Pics Section */}
+      <section id="section-nursery-pics" className={`py-10 bg-gray-50 transition-all duration-1000 ${isVisible['section-nursery-pics'] ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-800 mb-4">
+              Nursery <span className="text-green-600">Gallery</span>
+            </h2>
+            <div className="w-20 h-1 bg-green-600 mx-auto rounded-full"></div>
+            <p className="text-gray-600 mt-4">Take a glimpse into our 25-acre facility</p>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {nurseryImages.map((image, index) => (
+              <div key={index} className="group relative overflow-hidden rounded-xl shadow-md hover:shadow-lg transition-all">
+                <img 
+                  src={image.src} 
+                  alt={image.alt} 
+                  className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                  <div className="absolute bottom-4 left-4 text-white">
+                    <p className="font-medium">{image.caption}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 

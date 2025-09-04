@@ -164,7 +164,7 @@ const NurseryHomepage = () => {
                       </Link>
                       <Link to="/plants"
                         onClick={() => scrollToSection('plants')}
-                        className="border-2 border-green-600 text-green-700 hover:bg-green-600 hover:text-white px-8 py-4 rounded-full font-semibold transition-all hover:scale-105"
+                        className="flex justify-center items-center border-2 border-green-600 text-green-700 hover:bg-green-600 hover:text-white px-8 py-4 rounded-full font-semibold transition-all hover:scale-105"
                       >
                         See Plants
                       </Link>
@@ -356,7 +356,7 @@ const NurseryHomepage = () => {
 
       <Footer />
 
-      <style jsx>{`
+      <style>{`
                 @keyframes bounce {
                     0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
                     40% { transform: translateY(-10px); }

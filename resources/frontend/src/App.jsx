@@ -10,6 +10,7 @@ import ToolsPage from "./pages/ToolsPage"
 import ServicesPage from './pages/ServicesPage';
 import ContactPage from './pages/ContactPage';
 import ReviewsPage from "./pages/ReviewsPage"
+import WatsappButton from './components/WatsappButton';
 
 // Admin pages
 import AdminLogin from "./pages/Admin/AdminLogin";
@@ -64,10 +65,11 @@ function App() {
         <Route path="/admin/inquiries" element={
           <PrivateRoute><ManageInquiries /></PrivateRoute>
         } />
-        <Route path="/admin/profile" element={
+        <Route path="/admin/profile" element={ 
           <PrivateRoute><AdminProfile /></PrivateRoute>
         } />
       </Routes>
+      <WatsappButton/>
     </>
   )
 }
