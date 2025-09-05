@@ -1,12 +1,13 @@
 import axios from 'axios';
 import React, {useState, useEffect} from 'react'
+import host from "../utils/host"
 
 function WatsappButton() {
     const [user, setUser] = useState({});
     useEffect(() => {
         const fetchUser = async () => {
             try {
-                const res = await axios.get("http://127.0.0.1:8000/api/users/1");
+                const res = await axios.get(`${host}/api/users/1`);
                 const userData = res.data.data;
                 setUser({ number: userData.number });
             } catch (error) {
