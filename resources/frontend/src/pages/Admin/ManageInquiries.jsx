@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import AdminNav from "../../components/AdminNav";
 import host from "../../utils/host";
-import { Loader2, FileDown } from "lucide-react";
+import { Loader2, FileDown, Trash2 } from "lucide-react"; // add Trash icon
 
 function ManageInquiries() {
   const [inquiries, setInquiries] = useState([]);
@@ -46,13 +46,31 @@ function ManageInquiries() {
             ? { ...inq, request_served: res.data.request_served }
             : inq
         );
-        // Sort by pending first
-        return updated.sort((a, b) => {
-          return a.request_served === b.request_served ? 0 : a.request_served ? 1 : -1;
-        });
+        return updated.sort((a, b) =>
+          a.request_served === b.request_served ? 0 : a.request_served ? 1 : -1
+        );
       });
     } catch (err) {
       console.error("Failed to toggle:", err);
+    }
+  };
+
+  // 🆕 Delete inquiry
+  const deleteInquiry = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this inquiry?")) {
+      return;
+    }
+
+    try {
+      const token = localStorage.getItem("token");
+      await axios.delete(`${host}/api/inquiries/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      setInquiries((prev) => prev.filter((inq) => inq.id !== id));
+    } catch (err) {
+      console.error("Delete failed:", err);
+      alert("Failed to delete inquiry. Please try again.");
     }
   };
 
@@ -128,14 +146,12 @@ function ManageInquiries() {
                       <th className="px-6 py-4 border-b">Phone</th>
                       <th className="px-6 py-4 border-b">Message</th>
                       <th className="px-6 py-4 border-b text-center">Status</th>
+                      <th className="px-6 py-4 border-b text-center">Actions</th>
                     </tr>
                   </thead>
                   <tbody className="text-sm text-gray-600">
                     {inquiries.map((inq, index) => (
-                      <tr
-                        key={inq.id}
-                        className="hover:bg-green-50 transition-colors"
-                      >
+                      <tr key={inq.id} className="hover:bg-green-50 transition-colors">
                         <td className="px-6 py-4 border-b">{index + 1}</td>
                         <td className="px-6 py-4 border-b">{inq.name}</td>
                         <td className="px-6 py-4 border-b">{inq.email}</td>
@@ -168,40 +184,26 @@ function ManageInquiries() {
                             </span>
                           </div>
                         </td>
+                        {/* 🆕 Delete Action */}
+                        <td className="px-6 py-4 border-b text-center">
+                          <button
+                            onClick={() => deleteInquiry(inq.id)}
+                            className="text-red-500 hover:text-red-700 transition-colors"
+                          >
+                            <Trash2 className="w-5 h-5" />
+                          </button>
+                        </td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
               </div>
             ) : (
-              <div className="p-8 text-center text-gray-500">
-                No inquiries found.
-              </div>
+              <div className="p-8 text-center text-gray-500">No inquiries found.</div>
             )}
           </div>
         </div>
       </div>
-
-      {/* Animations */}
-      <style>{`
-        @keyframes fade-in {
-          from { opacity: 0; transform: translateY(20px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes fade-in-up {
-          from { opacity: 0; transform: translateY(30px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-
-        .animate-fade-in {
-          animation: fade-in 0.8s ease-out;
-        }
-
-        .animate-fade-in-up {
-          animation: fade-in-up 0.8s ease-out;
-        }
-      `}</style>
     </div>
   );
 }
