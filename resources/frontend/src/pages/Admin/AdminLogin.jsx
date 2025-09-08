@@ -169,11 +169,11 @@ function AdminLogin() {
                         </div>
 
                         {/* Remember Me & Forgot Password */}
-                        <div className="flex items-center justify-end space-x-4">
+                        {/* <div className="flex items-center justify-end space-x-4">
                             <Link to="/admin/forgot-password" className="text-sm text-blue-600 hover:text-blue-800 transition-colors">
                                 Forgot password?
                             </Link>
-                        </div>
+                        </div> */}
 
                         {/* Login Button */}
                         <button
@@ -200,7 +200,7 @@ function AdminLogin() {
                     {/* Footer */}
                     <div className="mt-8 text-center">
                         <p className="text-xs text-gray-500">
-                            Secure admin access for Rachnakar Enterprises
+                            Secure admin access for Ranveer Rose Nursery
                         </p>
                     </div>
                 </div>
