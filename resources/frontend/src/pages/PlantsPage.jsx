@@ -54,8 +54,12 @@ const NurseryPlantsPage = () => {
         { id: 'flowering', label: 'Flowering Plants', icon: Flower, color: 'green' },
     ];
 
+    // Shuffle function
+    const shuffleArray = (array) => {
+        return [...array].sort(() => Math.random() - 0.5);
+    };
 
-    const filteredPlants = Plants.filter(plant => {
+    const filteredPlants = React.useMemo(() => {
         const categoryMap = {
             indoor: 'Indoor Plant',
             outdoor: 'Outdoor Plant',
@@ -66,16 +70,22 @@ const NurseryPlantsPage = () => {
             flowering: 'Flowering Plant'
         };
 
-        const matchesFilter =
-            activeFilter === 'all' ||
-            plant.category === categoryMap[activeFilter];
+        const matchesFilter = (plant) =>
+            activeFilter === 'all' || plant.category === categoryMap[activeFilter];
 
-        const matchesSearch =
+        const matchesSearch = (plant) =>
             plant.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
             plant.description.toLowerCase().includes(searchTerm.toLowerCase());
 
-        return matchesFilter && matchesSearch;
-    });
+        let results = Plants.filter((plant) => matchesFilter(plant) && matchesSearch(plant));
+
+        // Shuffle results if "all" filter is active
+        if (activeFilter === 'all') {
+            results = shuffleArray(results);
+        }
+
+        return results;
+    }, [activeFilter, searchTerm]);
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-gray-50 via-green-50 to-emerald-50">

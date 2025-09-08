@@ -12,7 +12,7 @@ function AdminNav() {
 
     const handleLogout = () => {
         localStorage.removeItem("token");
-        navigate("/");
+        navigate("/admin/login");
     };
 
     const handleProfile = () => {
