@@ -41,12 +41,14 @@ const AboutPage = () => {
     { title: "Quality Assurance", description: "Every plant is carefully inspected before delivery to ensure health.", icon: "🔍" }
   ];
 
-  const clients = [
-    { name: "Green Valley Resort", type: "Hospitality", testimonial: "Transformed our landscape beautifully!" },
-    { name: "Pune Municipal Corp", type: "Government", testimonial: "Reliable partner for city beautification projects." },
-    { name: "Skyline Apartments", type: "Residential", testimonial: "Enhanced our community gardens perfectly." },
-    { name: "Tech Park Pvt Ltd", type: "Corporate", testimonial: "Created a refreshing office environment." }
+  const customers = [
+    { name: "Bharat Biotech", logo: "https://tse4.mm.bing.net/th/id/OIP.EmKVzSbCLrH_M1BXOCftbAHaEF?r=0&rs=1&pid=ImgDetMain&o=7&rm=3" },
+    { name: "Jindal Saw Ltd.", logo: "https://tse1.mm.bing.net/th/id/OIP.FYAugToAYsDceosX5e6URQHaDy?r=0&rs=1&pid=ImgDetMain&o=7&rm=3" },
+    { name: "Dalmia Bharat", logo: "https://attendance.jindalsaw.com/Content/images/JindalLogo.jpg" },
+    { name: "Singhania Buildcon", logo: "https://tse3.mm.bing.net/th/id/OIP.pRo39n415dm_gmDPcqsHgQAAAA?r=0&rs=1&pid=ImgDetMain&o=7&rm=3" },
+    { name: "Mythri Infra", logo: "https://mipec.in/wp-content/uploads/2022/06/MYTHRRI-INFRA-PROJECTS-2024-LOGO-1.png" },
   ];
+
 
   const nurseryImages = [
     { src: Nur1, alt: "Polyhouse facility", caption: "Modern polyhouse infrastructure" },
@@ -84,7 +86,7 @@ const AboutPage = () => {
               Our <span className="text-green-600">Story</span>
             </h2>
             <p className="text-gray-600 leading-relaxed mb-4">
-              Founded in 2013 by Mrs. Chaitali Bhise, Ranveer Rose Nursery has been dedicated to nurturing greenery and inspiring communities through the beauty of plants. From our humble beginnings, we have grown into a trusted partner for plant enthusiasts and landscapers alike.
+              Founded in 2014 by Mrs. Chaitali Mangesh Shitole, Ranveer Rose Nursery has been dedicated to nurturing greenery and inspiring communities through the beauty of plants. From our humble beginnings, we have grown into a trusted partner for plant enthusiasts and landscapers alike.
             </p>
             <p className="text-gray-600 leading-relaxed mb-4">
               Spread across 25 acres of lush land, our nursery is equipped with polyhouses, shade nets, and advanced production houses, enabling us to cultivate a wide variety of high-quality plants in a sustainable and controlled environment.
@@ -155,18 +157,21 @@ const AboutPage = () => {
             <div className="w-20 h-1 bg-green-600 mx-auto rounded-full"></div>
             <p className="text-gray-600 mt-4">Trusted by businesses and communities across Pune</p>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {clients.map((client, index) => (
-              <div key={index} className="bg-green-50 p-6 rounded-xl text-center hover:bg-green-100 transition-colors">
-                <div className="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center text-white text-xl font-bold mb-4 mx-auto">
-                  {client.name.charAt(0)}
-                </div>
-                <h3 className="font-semibold text-gray-800 mb-1">{client.name}</h3>
-                <p className="text-green-600 text-sm font-medium mb-2">{client.type}</p>
-                <p className="text-gray-600 text-sm italic">"{client.testimonial}"</p>
+          <div className="flex flex-wrap justify-center gap-10">
+            {customers.map((customer, index) => (
+              <div
+                key={index}
+                className="bg-white rounded-2xl shadow-md p-6 flex items-center justify-center w-48 h-28 border border-[#014421]/20"
+              >
+                <img
+                  src={customer.logo}
+                  alt={customer.name}
+                  className="max-h-16 object-contain"
+                />
               </div>
             ))}
           </div>
+
         </div>
       </section>
 
@@ -183,9 +188,9 @@ const AboutPage = () => {
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {nurseryImages.map((image, index) => (
               <div key={index} className="group relative overflow-hidden rounded-xl shadow-md hover:shadow-lg transition-all">
-                <img 
-                  src={image.src} 
-                  alt={image.alt} 
+                <img
+                  src={image.src}
+                  alt={image.alt}
                   className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">

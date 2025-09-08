@@ -3,7 +3,6 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import axios from 'axios';
 import host from '../utils/host';
-import { SocialLinks } from '../components/SocialLinks';
 
 // Contact Form Component
 function ContactForm() {
@@ -163,7 +162,7 @@ function MapAndBusinessHours() {
                 </div>
                 <div className="h-80">
                     <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d484332.1208722391!2d73.53456773731209!3d18.490692692537447!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2e7002542780f%3A0xe5189f3ee199f455!2sKoregaon%20mul%20inamdarvasti!5e0!3m2!1sen!2sin!4v1756545917023!5m2!1sen!2sin"
+                        src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d15135.80530187668!2d74.1077792151833!3d18.485863852577438!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sA%2Fp.%20Koregaon%20Mul%2C%20Pune%20Solapur%20Road%2C%20Near%20Uruli%20Kanchan%2C%20tal.%20Haveli%2C%20Pune-412202%20NH9!5e0!3m2!1sen!2sin!4v1757313204232!5m2!1sen!2sin"
                         width="100%"
                         height="100%"
                         style={{ border: 0 }}
@@ -178,15 +177,13 @@ function MapAndBusinessHours() {
             <div className="bg-white p-8 rounded-3xl shadow-xl border border-green-100 animate-fade-in-up" style={{ animationDelay: "0.5s" }}>
                 <h3 className="text-2xl font-bold text-green-800 mb-6">🕒 Business Hours</h3>
                 <div className="space-y-3 text-gray-700 font-medium">
-                    <div>Monday-Saturday: <span className="text-red-500">8AM - 6PM</span></div>
+                    <div>Monday-Saturday: <span className="text-red-500">9AM - 6PM</span></div>
                     <div>Sunday: <span className="text-red-500">Closed</span></div>
                 </div>
                 <div className="mt-6 p-4 bg-green-50 rounded-xl">
                     <p className="text-green-700 text-sm"><strong>Contact:</strong> Available 24/7 for any issues or help.</p>
                 </div>
             </div>
-
-            <SocialLinks />
         </>
     );
 }

@@ -42,34 +42,6 @@ function Footer() {
                             <h4 className="text-xl font-bold">Ranveer Rose Nursery</h4>
                         </div>
                         <p className="text-gray-400">From flowering beauties to fruitful harvests, we make gardening simple and joyful.</p>
-                        <div className='pt-8'>
-                            <div className="flex space-x-4">
-                                <a
-                                    href="#"
-                                    className="bg-green-100/30 hover:bg-green-200/50 p-3 rounded-2xl transition-colors"
-                                >
-                                    <Facebook className="w-6 h-6 text-white" />
-                                </a>
-                                <a
-                                    href="#"
-                                    className="bg-green-100/30 hover:bg-green-200/50 p-3 rounded-2xl transition-colors"
-                                >
-                                    <Twitter className="w-6 h-6 text-white" />
-                                </a>
-                                <a
-                                    href="#"
-                                    className="bg-green-100/30 hover:bg-green-200/50 p-3 rounded-2xl transition-colors"
-                                >
-                                    <Linkedin className="w-6 h-6 text-white" />
-                                </a>
-                                <a
-                                    href="#"
-                                    className="bg-green-100/30 hover:bg-green-200/50 p-3 rounded-2xl transition-colors"
-                                >
-                                    <Instagram className="w-6 h-6 text-white" />
-                                </a>
-                            </div>
-                        </div>
                     </div>
 
                     <div className='flex flex-col '>
@@ -86,11 +58,11 @@ function Footer() {
 
                     <div>
                         <h5 className="font-bold mb-4">Contact Info</h5>
-                        <div className="space-y-2 text-gray-400">
+                        <div className="space-y-2 text-gray-400 text-wrap">
                             {user.map((info, index) => (
                                 <div key={index} className="flex items-center space-x-2">
                                     <span className="text-sm">{info.label}</span>
-                                    <a href={info.a} className="font-semibold">{info.number}</a>
+                                    <a href={info.a} className="font-semibold break-all">{info.number}</a>
                                 </div>
                             ))}
                         </div>

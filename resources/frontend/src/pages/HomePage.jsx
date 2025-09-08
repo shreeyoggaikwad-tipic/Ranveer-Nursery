@@ -105,7 +105,7 @@ const NurseryHomepage = () => {
             <div className="flex-1 relative animate-fade-in-right">
               <div className=" ">
                 {/* Decorative circles */}
-                <div className="absolute -top-10 -right-10 w-32 h-32 bg-green-200/30 rounded-full animate-pulse"></div>
+                <div className="absolute -top-10 -right-6 w-32 h-32 bg-green-200/30 rounded-full animate-pulse"></div>
                 {/* <div className="absolute -bottom-10 -left-10 w-24 h-24 bg-green-300/40 rounded-full animate-pulse delay-1000"></div> */}
 
                 {/* Main image container */}
@@ -298,12 +298,12 @@ const NurseryHomepage = () => {
               {
                 icon: "📍",
                 title: "Visit Us",
-                content: "A/p. Koregaon Mul, Inamdarvasti, Tal.Haveli, Dist.Pune-412202"
+                content: "Ranveer Rose Nursery, A/p. Koregaon Mul, Pune Solapur Road, Near Uruli Kanchan, tal. Haveli, Pune-412202 NH9"
               },
               {
                 icon: "📞",
                 title: "Call Us",
-                content: "+91 91586 23636\n+91 98235 87600\nMon-Sat 8AM-6PM"
+                content: "+91 97641 23636\nMon-Sat 8AM-6PM"
               },
               {
                 icon: "✉️",
