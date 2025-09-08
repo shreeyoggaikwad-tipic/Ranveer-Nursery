@@ -27,7 +27,8 @@ function ContactForm() {
         } else if (!/^[A-Za-z\s]{1,100}$/.test(formData.name)) {
             alert('Name must contain only alphabets and spaces, and be at most 100 characters long');
             return;
-        } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+        } else if (formData.email && !/\S+@\S+\.\S+/.test(formData.email)) {
+            // ✅ Only check if email is not empty
             alert('Please enter a valid email address');
             return;
         } else if (!/^[987]\d{9}$/.test(formData.phone)) {
@@ -58,6 +59,8 @@ function ContactForm() {
         }
     };
 
+
+
     if (submitted) {
         return (
             <div className="bg-white p-10 rounded-3xl shadow-xl text-center animate-fade-in">
@@ -78,9 +81,31 @@ function ContactForm() {
             <div className="space-y-6">
                 {errorMessage && <p className="text-red-600 font-medium">{errorMessage}</p>}
 
-                <InputField label="Full Name *" name="name" value={formData.name} onChange={handleChange} placeholder="Enter your full name" required />
-                <InputField label="Email Address *" name="email" value={formData.email} onChange={handleChange} placeholder="Enter your email address" type="email" required />
-                <InputField label="Phone Number *" name="phone" value={formData.phone} onChange={handleChange} placeholder="Enter your phone number" type="tel" required />
+                <InputField
+                    label="Full Name *"
+                    name="name"
+                    value={formData.name}
+                    onChange={(e) => {
+                        // Allow only alphabets and spaces, max 100 chars
+                        const onlyAlphabets = e.target.value.replace(/[^A-Za-z\s]/g, "").slice(0, 100);
+                        setFormData({ ...formData, name: onlyAlphabets });
+                    }}
+                    placeholder="Enter your full name"
+                    required
+                />
+                <InputField label="Email Address (optional)" name="email" value={formData.email} onChange={handleChange} placeholder="Enter your email address" type="email" />
+                <InputField
+                    label="Phone Number *"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={(e) => {
+                        const onlyDigits = e.target.value.replace(/\D/g, ""); // remove non-digits
+                        setFormData({ ...formData, phone: onlyDigits.slice(0, 10) }); // max 10 digits
+                    }}
+                    placeholder="Enter your phone number"
+                    type="tel"
+                    required
+                />
 
                 <div>
                     <label className="block text-sm font-semibold text-green-700 mb-2">Message *</label>
@@ -154,6 +179,25 @@ function ContactPage() {
 
 function MapAndBusinessHours() {
 
+    const [user, setUser] = useState({});
+
+    useEffect(() => {
+        const fetchStats = async () => {
+            try {
+
+                // Fetch user (assuming 1st user = admin)
+                const userRes = await axios.get(`${host}/api/users/1`);
+                const user = userRes.data.data;
+
+                setUser(user);
+            } catch (error) {
+                console.error("Error fetching stats:", error);
+            }
+        }
+        fetchStats();
+    }, []);
+
+
     return (
         <>
             <div className="bg-white rounded-3xl shadow-xl overflow-hidden border border-green-100 animate-fade-in-up" style={{ animationDelay: "0.4s" }}>
@@ -177,7 +221,7 @@ function MapAndBusinessHours() {
             <div className="bg-white p-8 rounded-3xl shadow-xl border border-green-100 animate-fade-in-up" style={{ animationDelay: "0.5s" }}>
                 <h3 className="text-2xl font-bold text-green-800 mb-6">🕒 Business Hours</h3>
                 <div className="space-y-3 text-gray-700 font-medium">
-                    <div>Monday-Saturday: <span className="text-red-500">9AM - 6PM</span></div>
+                    <div>Monday-Saturday: <span className="text-red-500">{user?.business_hours}</span></div>
                     <div>Sunday: <span className="text-red-500">Closed</span></div>
                 </div>
                 <div className="mt-6 p-4 bg-green-50 rounded-xl">

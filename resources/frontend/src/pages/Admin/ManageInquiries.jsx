@@ -140,7 +140,7 @@ function ManageInquiries() {
                 <table className="min-w-full border-collapse">
                   <thead className="bg-green-100 text-green-800 text-left text-sm font-semibold uppercase tracking-wide">
                     <tr>
-                      <th className="px-6 py-4 border-b">#</th>
+                      <th className="px-6 py-4 border-b">Sr. No.</th>
                       <th className="px-6 py-4 border-b">Name</th>
                       <th className="px-6 py-4 border-b">Email</th>
                       <th className="px-6 py-4 border-b">Phone</th>
@@ -154,31 +154,28 @@ function ManageInquiries() {
                       <tr key={inq.id} className="hover:bg-green-50 transition-colors">
                         <td className="px-6 py-4 border-b">{index + 1}</td>
                         <td className="px-6 py-4 border-b">{inq.name}</td>
-                        <td className="px-6 py-4 border-b">{inq.email}</td>
+                        <td className="px-6 py-4 border-b">{inq.email ? inq.email : "N/A"}</td>
                         <td className="px-6 py-4 border-b">{inq.phone}</td>
                         <td className="px-6 py-4 border-b">{inq.message}</td>
                         <td className="px-6 py-4 border-b text-center">
                           <div className="flex items-center justify-center">
                             <button
                               onClick={() => toggleRequestServed(inq.id)}
-                              className={`relative inline-flex h-8 w-16 items-center rounded-full transition-colors duration-300 ease-in-out ${
-                                inq.request_served
+                              className={`relative inline-flex h-8 w-16 items-center rounded-full transition-colors duration-300 ease-in-out ${inq.request_served
                                   ? "bg-green-500 hover:bg-green-600"
                                   : "bg-gray-300 hover:bg-gray-400"
-                              }`}
+                                }`}
                               role="switch"
                               aria-checked={inq.request_served}
                             >
                               <span
-                                className={`inline-block h-6 w-6 transform rounded-full bg-white shadow-lg transition-transform duration-300 ease-in-out ${
-                                  inq.request_served ? "translate-x-9" : "translate-x-1"
-                                }`}
+                                className={`inline-block h-6 w-6 transform rounded-full bg-white shadow-lg transition-transform duration-300 ease-in-out ${inq.request_served ? "translate-x-9" : "translate-x-1"
+                                  }`}
                               />
                             </button>
                             <span
-                              className={`ml-3 text-sm font-semibold ${
-                                inq.request_served ? "text-green-600" : "text-gray-500"
-                              }`}
+                              className={`ml-3 text-sm font-semibold ${inq.request_served ? "text-green-600" : "text-gray-500"
+                                }`}
                             >
                               {inq.request_served ? "Served" : "Pending"}
                             </span>

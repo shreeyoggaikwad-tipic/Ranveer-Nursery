@@ -103,9 +103,23 @@ export default function AdminProfile() {
     };
 
 
+    // Update handleInputChange to validate number field immediately
     const handleInputChange = (field, value) => {
         setEditData(prev => ({ ...prev, [field]: value }));
+
+        if (field === "number") {
+            if (!/^\d{10}$/.test(value)) {
+                setErrors(prev => ({ ...prev, number: ["Phone number must be 10 digits long."] }));
+            } else {
+                // clear error for number if valid
+                setErrors(prev => {
+                    const { number, ...rest } = prev;
+                    return rest;
+                });
+            }
+        }
     };
+
 
     if (loading) {
         return (
@@ -223,19 +237,32 @@ export default function AdminProfile() {
                                     ) : adminData.email}
                                 />
 
-                                {/* Phone */}
                                 <ProfileField
                                     label="Phone"
                                     icon={<Phone className="w-4 h-4 text-green-500" />}
                                     value={isEditing ? (
-                                        <input
-                                            type="tel"
-                                            value={editData.number}
-                                            onChange={(e) => handleInputChange('number', e.target.value)}
-                                            className="w-full border p-2 rounded"
-                                        />
+                                        <div>
+                                            <input
+                                                type="text"
+                                                value={editData.number}
+                                                onChange={(e) => {
+                                                    // Allow only digits and max 10 characters
+                                                    const value = e.target.value.replace(/\D/g, "").slice(0, 10);
+                                                    handleInputChange("number", value);
+                                                }}
+                                                className="w-full border p-2 rounded"
+                                                maxLength={10}
+                                                inputMode="numeric" // better keypad on mobile
+                                                pattern="\d*"
+                                            />
+                                            {errors.number && (
+                                                <p className="text-red-600 text-sm mt-1">{errors.number[0]}</p>
+                                            )}
+                                        </div>
                                     ) : adminData.number}
                                 />
+
+
 
                                 {/* Location */}
                                 <ProfileField
