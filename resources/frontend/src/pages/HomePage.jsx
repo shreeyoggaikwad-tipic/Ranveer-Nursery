@@ -157,7 +157,7 @@ const NurseryHomepage = () => {
                         <p className="text-3xl font-bold text-green-700 group-hover:scale-110 transition-transform">
                           {yearsExperience}+
                         </p>
-                        <p className="text-sm text-gray-600">Years Experience</p>
+                        <p className="text-sm text-gray-600">Years of Experience</p>
                       </div>
                     </div>
 
@@ -206,7 +206,7 @@ const NurseryHomepage = () => {
               {
                 icon: "🚚",
                 title: "Fast Delivery",
-                description: "Same-day delivery available for local orders. We ensure your plants arrive fresh and ready to flourish."
+                description: "Same-day delivery is available for local orders. We ensure your plants arrive fresh and ready to flourish."
               },
               {
                 icon: "🛡️",

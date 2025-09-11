@@ -64,9 +64,10 @@ export default function AdminProfile() {
 
         // ✅ Client-side validation for phone number
         const newErrors = {};
-        if (!editData.number || !/^\d{10}$/.test(editData.number)) {
-            newErrors.number = ["Phone number must be 10 digits long."];
+        if (!editData.number || !/^[987]\d{9}$/.test(editData.number)) {
+            newErrors.number = ["Phone number must be 10 digits long and start with 9, 8, or 7."];
         }
+
 
         if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors);

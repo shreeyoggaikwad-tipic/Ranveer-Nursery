@@ -36,7 +36,7 @@ const AboutPage = () => {
 
   const whyChooseUs = [
     { title: "11+ Years Experience", description: "Over a decade of expertise in nurturing plants and serving customers.", icon: "📅" },
-    { title: "25 Acres Facility", description: "Spacious nursery with polyhouses and advanced growing infrastructure.", icon: "🏞️" },
+    { title: "25 Acre Facility", description: "Spacious nursery with polyhouses and advanced growing infrastructure.", icon: "🏞️" },
     { title: "Expert Guidance", description: "Professional horticulturists provide personalized plant care advice.", icon: "👨‍🌾" },
     { title: "Quality Assurance", description: "Every plant is carefully inspected before delivery to ensure health.", icon: "🔍" }
   ];
@@ -69,10 +69,10 @@ const AboutPage = () => {
 
         <div className="max-w-6xl mx-auto px-4 text-center">
           <h1 className="text-4xl sm:text-5xl font-bold text-gray-800 mb-6">
-            About <span className="text-green-600">Ranveer Rose nursery</span>
+            About <span className="text-green-600">Ranveer Rose Nursery</span>
           </h1>
           <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            For over 11+ years, we've been nurturing dreams and growing communities through our passion for plants.
+            For over 11+ of years, we've been nurturing dreams and growing communities through our passion for plants.
             From humble beginnings to becoming your trusted green partner, our story is rooted in love for nature.
           </p>
         </div>
