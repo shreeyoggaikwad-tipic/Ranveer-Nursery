@@ -19,8 +19,12 @@ function ManageInquiries() {
         },
       })
       .then((res) => {
-        setInquiries(res.data.data || []);
+        const filtered = (res.data.data || []).filter(
+          (inq) => inq.company_id === 1
+        );
+        setInquiries(filtered);
       })
+
       .catch((err) => {
         console.error("Error fetching inquiries:", err.response?.data || err);
       })
@@ -162,8 +166,8 @@ function ManageInquiries() {
                             <button
                               onClick={() => toggleRequestServed(inq.id)}
                               className={`relative inline-flex h-8 w-16 items-center rounded-full transition-colors duration-300 ease-in-out ${inq.request_served
-                                  ? "bg-green-500 hover:bg-green-600"
-                                  : "bg-gray-300 hover:bg-gray-400"
+                                ? "bg-green-500 hover:bg-green-600"
+                                : "bg-gray-300 hover:bg-gray-400"
                                 }`}
                               role="switch"
                               aria-checked={inq.request_served}

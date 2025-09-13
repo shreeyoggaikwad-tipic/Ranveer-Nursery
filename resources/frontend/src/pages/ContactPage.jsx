@@ -10,7 +10,8 @@ function ContactForm() {
         name: '',
         email: '',
         phone: '',
-        message: ''
+        message: '',
+        company_id: 1,
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitted, setSubmitted] = useState(false);
@@ -32,9 +33,9 @@ function ContactForm() {
             alert('Please enter a valid email address');
             return;
         } else if (!/^[9876]\d{9}$/.test(formData.phone)) {
-            alert('Please enter a valid 10-digit phone number.');
+            alert('Phone number must be 10 digits long and start with 9, 8, 7 or 6.');
             return;
-        } else if (!/^[\s\S]{10,500}$/.test(formData.message)) {
+        } else if (!/^[\s\S]{2,500}$/.test(formData.message)) {
             alert('Message must be between 10 and 500 characters');
             return;
         }

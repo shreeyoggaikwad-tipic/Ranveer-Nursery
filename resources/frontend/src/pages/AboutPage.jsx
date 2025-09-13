@@ -64,13 +64,13 @@ const AboutPage = () => {
       name: "Mrs. Chaitali Mangesh Shitole",
       role: "Founder",
       image: Founder, // Placeholder - replace with actual image
-      description: "With 11+ years in horticulture, Mrs. Chaitali founded Ranveer Rose Nursery in 2014, turning her passion for plants into a trusted name in Pune’s gardening community."
+      description: "With 11+ years in horticulture, Mrs. Chaitali Shitole founded Ranveer Rose Nursery in 2014, turning her passion for plants into a trusted name in Pune’s gardening community."
     },
     {
       name: "Mr. Mangesh Shitole",
       role: "CEO",
       image: CEO, // Placeholder - replace with actual image
-      description: "As CEO, Mr. Mangesh drives growth with innovative strategies while upholding the nursery’s core values of quality and sustainability."
+      description: "As CEO, Mr. Mangesh Shitole drives growth with innovative strategies while upholding the nursery’s core values of quality and sustainability."
     }
   ];
 
