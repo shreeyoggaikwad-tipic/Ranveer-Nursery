@@ -6,6 +6,8 @@ import Nur1 from "../assets/Nur1.jfif"
 import Nur2 from "../assets/Nur2.jpg"
 import Nur3 from "../assets/Nur3.jpg"
 import Nur4 from "../assets/Nur4.jpg"
+import Founder from "../assets/ChaitaliShitole.jpg"
+import CEO from "../assets/MangeshShitole.jpg"
 
 const AboutPage = () => {
   const [isVisible, setIsVisible] = useState({});
@@ -49,13 +51,29 @@ const AboutPage = () => {
     { name: "Mythri Infra", logo: "https://mipec.in/wp-content/uploads/2022/06/MYTHRRI-INFRA-PROJECTS-2024-LOGO-1.png" },
   ];
 
-
   const nurseryImages = [
     { src: Nur1, alt: "Polyhouse facility", caption: "Modern polyhouse infrastructure" },
     { src: Nur2, alt: "Plant varieties", caption: "Wide variety of healthy plants" },
     { src: Nur3, alt: "Growing areas", caption: "Spacious growing areas" },
     { src: Nur4, alt: "Expert team", caption: "Our dedicated team at work" }
   ];
+
+  // Founders data - Update with actual images and descriptions
+  const founders = [
+    {
+      name: "Mrs. Chaitali Mangesh Shitole",
+      role: "Founder",
+      image: Founder, // Placeholder - replace with actual image
+      description: "With 11+ years in horticulture, Mrs. Chaitali founded Ranveer Rose Nursery in 2014, turning her passion for plants into a trusted name in Pune’s gardening community."
+    },
+    {
+      name: "Mr. Mangesh Shitole",
+      role: "CEO",
+      image: CEO, // Placeholder - replace with actual image
+      description: "As CEO, Mr. Mangesh drives growth with innovative strategies while upholding the nursery’s core values of quality and sustainability."
+    }
+  ];
+
 
   return (
     <div className="min-h-screen bg-green-50">
@@ -105,8 +123,51 @@ const AboutPage = () => {
         </div>
       </section>
 
+      {/* Founders Section */}
+      <section id="section-founders" className={`py-10 bg-gray-50 transition-all duration-1000 ${isVisible['section-founders'] ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-800 mb-4">
+              Meet Our <span className="text-green-600">Leadership</span>
+            </h2>
+            <div className="w-20 h-1 bg-green-600 mx-auto rounded-full mb-4"></div>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              The visionary minds behind Ranveer Rose Nursery, dedicated to bringing nature closer to your life.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-16 max-w-4xl mx-auto">
+            {founders.map((founder, index) => (
+              <div key={index} className="pt-4 bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 group">
+                <div className="relative overflow-hidden">
+                  <img
+                    src={founder.image}
+                    alt={founder.name}
+                    className="w-full h-80 object-contain"
+                  />
+
+                </div>
+
+
+                <div className="p-4">
+                  <div className="text-center mb-6">
+                    <h3 className="text-2xl font-bold text-gray-800 mb-2">{founder.name}</h3>
+                    <div className="inline-block bg-green-100 text-green-700 px-4 py-2 rounded-full text-sm font-semibold">
+                      {founder.role}
+                    </div>
+                  </div>
+                  <p className="text-gray-600 leading-relaxed text-center">
+                    {founder.description}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Why Choose Us Section */}
-      <section id="section-why-choose" className={`py-10 bg-gray-50 transition-all duration-1000 ${isVisible['section-why-choose'] ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
+      <section id="section-why-choose" className={`py-10 bg-white transition-all duration-1000 ${isVisible['section-why-choose'] ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-800 mb-4">

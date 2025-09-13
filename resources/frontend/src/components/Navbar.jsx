@@ -54,6 +54,7 @@ function Navbar() {
     { name: 'Micro Plants', path: '/plants', emoji: '🌱' },        // potted plant
     { name: 'Landscaping Plants', path: '/plants', emoji: '🌿' },  // leaf / greenery
     { name: 'Flowering Plants', path: '/plants', emoji: '🌸' },    // flower blossom
+    { name: 'Imported Plants', path: '/plants', emoji: '✈️' },    // Imported varieties
   ];
 
 

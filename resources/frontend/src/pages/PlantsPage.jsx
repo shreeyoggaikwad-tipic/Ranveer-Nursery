@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { Filter, Flower, Apple, Sparkles, TreePine, Search, Home, Sun, Sprout, Trees } from 'lucide-react';
+import { Filter, Flower, Apple, TreePine, Search, Home, Sun, Sprout, Trees, TreePalm } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import PlantCard from '../components/PlantCard';
@@ -37,6 +37,9 @@ const NurseryPlantsPage = () => {
                 case 'Flowering Plants':
                     setActiveFilter('flowering');
                     break;
+                case 'Imported Plants':
+                    setActiveFilter('imported');
+                    break;
                 default:
                     setActiveFilter('all');
             }
@@ -52,6 +55,7 @@ const NurseryPlantsPage = () => {
         { id: 'micro', label: 'Micro Plants', icon: Sprout, color: 'green' },
         { id: 'landscape', label: 'Landscaping Plants', icon: Trees, color: 'green' },
         { id: 'flowering', label: 'Flowering Plants', icon: Flower, color: 'green' },
+        { id: 'imported', label: 'Imported Plants', icon: TreePalm, color: 'green' },
     ];
 
     // Shuffle function
@@ -67,7 +71,8 @@ const NurseryPlantsPage = () => {
             forest: 'Forest Plant',
             micro: 'Micro Plant',
             landscape: 'Landscaping Plant',
-            flowering: 'Flowering Plant'
+            flowering: 'Flowering Plant',
+            imported: 'Imported Plant'
         };
 
         const matchesFilter = (plant) =>
