@@ -2,14 +2,11 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import PlantCard from "../components/PlantCard";
-import Rose from "../assets/Rose.jpg"
-import MangoSampling from "../assets/Mango.webp"
-import MoneyPlant from "../assets/MoneyPlant.jpg"
-import SunflowerSeeds from "../assets/SunflowerSeeds.jpg"
 import { Link } from "react-router-dom";
 import host from "../utils/host"
 import axios from 'axios';
 import Plants from "../utils/Plants";
+import Plantss from "../components/Plants"
 
 
 const NurseryHomepage = () => {
@@ -277,6 +274,8 @@ const NurseryHomepage = () => {
           </div>
         </div>
       </section>
+
+      <Plantss/>
 
 
 

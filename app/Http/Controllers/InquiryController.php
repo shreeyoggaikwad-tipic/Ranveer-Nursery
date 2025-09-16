@@ -15,51 +15,157 @@ class InquiryController extends Controller
      * Display a listing of inquiries (Admin only)
      */
     public function index(): JsonResponse
-    {
-        $inquiries = Inquiry::latest()->get();
-        
-        return response()->json([
-            'success' => true,
-            'data' => $inquiries
-        ]);
-    }
+{
+    $inquiries = Inquiry::where('company_id', 1)
+                        ->latest()
+                        ->get();
+
+    return response()->json([
+        'success' => true,
+        'data' => $inquiries
+    ]);
+}
+
+
+    public function index2(): JsonResponse
+{
+    $inquiries = Inquiry::where('company_id', 2)
+                        ->latest()
+                        ->get();
+
+    return response()->json([
+        'success' => true,
+        'data' => $inquiries
+    ]);
+}
+
+
+public function index3(): JsonResponse
+{
+    $inquiries = Inquiry::where('company_id', 3)
+                        ->latest()
+                        ->get();
+
+    return response()->json([
+        'success' => true,
+        'data' => $inquiries
+    ]);
+}
+
 
     /**
      * Store a newly created inquiry (Public - Contact Form Submission)
      */
     public function store(Request $request): JsonResponse
-    {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'nullable|email|max:255',
-            'phone' => 'nullable|string|max:20',
-            'message' => 'required|string|max:5000',
-            'company_id' => 'required|integer|max:2'
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'errors' => $validator->errors()
-            ], 422);
-        }
-
-        // Ensure at least email or phone is provided
-        if (!$request->email && !$request->phone) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Please provide either email or phone number for contact.'
-            ], 422);
-        }
-
-        $inquiry = Inquiry::create($request->all());
-
+{
+    // Always set company_id to 1
+    $request->merge(['company_id' => 1]);
+ 
+    $validator = Validator::make($request->all(), [
+        'name'        => 'required|string|max:255',
+        'email'       => 'nullable|email|max:255',
+        'phone'       => 'nullable|string|max:20',
+        'message'     => 'required|string|max:5000',
+        'company_id'  => 'required|integer'
+    ]);
+ 
+    if ($validator->fails()) {
         return response()->json([
-            'success' => true,
-            'message' => 'Thank you for your inquiry! We will contact you soon.',
-            'data' => $inquiry
-        ], 201);
+            'success' => false,
+            'errors' => $validator->errors()
+        ], 422);
     }
+ 
+    // Ensure at least email or phone is provided
+    if (!$request->email && !$request->phone) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Please provide either email or phone number for contact.'
+        ], 422);
+    }
+ 
+    $inquiry = Inquiry::create($request->all());
+ 
+    return response()->json([
+        'success' => true,
+        'message' => 'Thank you for your inquiry! We will contact you soon.',
+        'data' => $inquiry
+    ], 201);
+}
+
+public function store2(Request $request): JsonResponse
+{
+    // Always set company_id to 1
+    $request->merge(['company_id' => 2]);
+ 
+    $validator = Validator::make($request->all(), [
+        'name'        => 'required|string|max:255',
+        'email'       => 'nullable|email|max:255',
+        'phone'       => 'nullable|string|max:20',
+        'message'     => 'required|string|max:5000',
+        'company_id'  => 'required|integer'
+    ]);
+ 
+    if ($validator->fails()) {
+        return response()->json([
+            'success' => false,
+            'errors' => $validator->errors()
+        ], 422);
+    }
+ 
+    // Ensure at least email or phone is provided
+    if (!$request->email && !$request->phone) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Please provide either email or phone number for contact.'
+        ], 422);
+    }
+ 
+    $inquiry = Inquiry::create($request->all());
+ 
+    return response()->json([
+        'success' => true,
+        'message' => 'Thank you for your inquiry! We will contact you soon.',
+        'data' => $inquiry
+    ], 201);
+}
+
+public function store3(Request $request): JsonResponse
+{
+    // Always set company_id to 1
+    $request->merge(['company_id' => 3]);
+ 
+    $validator = Validator::make($request->all(), [
+        'name'        => 'required|string|max:255',
+        'email'       => 'nullable|email|max:255',
+        'phone'       => 'nullable|string|max:20',
+        'message'     => 'required|string|max:5000',
+        'company_id'  => 'required|integer'
+    ]);
+ 
+    if ($validator->fails()) {
+        return response()->json([
+            'success' => false,
+            'errors' => $validator->errors()
+        ], 422);
+    }
+ 
+    // Ensure at least email or phone is provided
+    if (!$request->email && !$request->phone) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Please provide either email or phone number for contact.'
+        ], 422);
+    }
+ 
+    $inquiry = Inquiry::create($request->all());
+ 
+    return response()->json([
+        'success' => true,
+        'message' => 'Thank you for your inquiry! We will contact you soon.',
+        'data' => $inquiry
+    ], 201);
+}
 
     /**
      * Display the specified inquiry (Admin only)
@@ -80,6 +186,27 @@ class InquiryController extends Controller
             'data' => $inquiry
         ]);
     }
+
+public function show2(string $id): JsonResponse
+{
+    $inquiries = Inquiry::where('id', $id)
+                        ->where('company_id', 2)
+                        ->get();
+
+    if ($inquiries->isEmpty()) {
+        return response()->json([
+            'success' => false,
+            'message' => 'No inquiry found for this company with the given ID'
+        ], 404);
+    }
+
+    return response()->json([
+        'success' => true,
+        'data' => $inquiries
+    ]);
+}
+
+
 
     /**
      * Remove the specified inquiry (Admin only)
