@@ -14,7 +14,7 @@ class InquiryController extends Controller
     /**
      * Display a listing of inquiries (Admin only)
      */
-    public function index(): JsonResponse
+    public function index1(): JsonResponse
 {
     $inquiries = Inquiry::where('company_id', 1)
                         ->latest()
@@ -56,7 +56,7 @@ public function index3(): JsonResponse
     /**
      * Store a newly created inquiry (Public - Contact Form Submission)
      */
-    public function store(Request $request): JsonResponse
+    public function store1(Request $request): JsonResponse
 {
     // Always set company_id to 1
     $request->merge(['company_id' => 1]);
@@ -187,24 +187,6 @@ public function store3(Request $request): JsonResponse
         ]);
     }
 
-public function show2(string $id): JsonResponse
-{
-    $inquiries = Inquiry::where('id', $id)
-                        ->where('company_id', 2)
-                        ->get();
-
-    if ($inquiries->isEmpty()) {
-        return response()->json([
-            'success' => false,
-            'message' => 'No inquiry found for this company with the given ID'
-        ], 404);
-    }
-
-    return response()->json([
-        'success' => true,
-        'data' => $inquiries
-    ]);
-}
 
 
 

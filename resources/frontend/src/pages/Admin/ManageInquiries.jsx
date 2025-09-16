@@ -12,7 +12,7 @@ function ManageInquiries() {
     const token = localStorage.getItem("token");
 
     axios
-      .get(`${host}/api/inquiries`, {
+      .get(`${host}/api/inquiries1`, {
         headers: {
           Authorization: `Bearer ${token}`,
           Accept: "application/json",

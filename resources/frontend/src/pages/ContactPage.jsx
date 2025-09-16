@@ -44,7 +44,7 @@ function ContactForm() {
         setErrorMessage('');
 
         try {
-            const response = await axios.post(`${host}/api/inquiries`, formData);
+            const response = await axios.post(`${host}/api/inquiries1`, formData);
             if (response.status >= 200 && response.status < 300) {
                 setSubmitted(true);
                 setFormData({ name: '', email: '', phone: '', message: '' });
