@@ -6,6 +6,10 @@ import { Loader2, FileDown, Trash2 } from "lucide-react"; // add Trash icon
 
 function ManageInquiries() {
   const [inquiries, setInquiries] = useState([]);
+  const [inquiries2, setInquiries2] = useState([]);
+  // 🆕 Track which nursery is selected
+  const [selectedCompany, setSelectedCompany] = useState("ranveer");
+
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -23,6 +27,30 @@ function ManageInquiries() {
           (inq) => inq.company_id === 1
         );
         setInquiries(filtered);
+      })
+
+      .catch((err) => {
+        console.error("Error fetching inquiries:", err.response?.data || err);
+      })
+      .finally(() => setLoading(false));
+  }, []);
+
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    axios
+      .get(`${host}/api/inquiries2`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: "application/json",
+        },
+      })
+      .then((res) => {
+        const filtered = (res.data.data || []).filter(
+          (inq) => inq.company_id === 2
+        );
+        setInquiries2(filtered);
       })
 
       .catch((err) => {
@@ -78,28 +106,28 @@ function ManageInquiries() {
     }
   };
 
-  const downloadCSV = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      const response = await axios.get(`${host}/api/inquiries/export`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        responseType: "blob",
-      });
+  // const downloadCSV = async () => {
+  //   try {
+  //     const token = localStorage.getItem("token");
+  //     const response = await axios.get(`${host}/api/inquiries/export`, {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //       responseType: "blob",
+  //     });
 
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", "inquiries.csv");
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-    } catch (error) {
-      console.error("CSV download failed:", error);
-      alert("Failed to export inquiries. Please try again.");
-    }
-  };
+  //     const url = window.URL.createObjectURL(new Blob([response.data]));
+  //     const link = document.createElement("a");
+  //     link.href = url;
+  //     link.setAttribute("download", "inquiries.csv");
+  //     document.body.appendChild(link);
+  //     link.click();
+  //     link.remove();
+  //   } catch (error) {
+  //     console.error("CSV download failed:", error);
+  //     alert("Failed to export inquiries. Please try again.");
+  //   }
+  // };
 
   if (loading) {
     return (
@@ -126,20 +154,41 @@ function ManageInquiries() {
               Manage and track all customer inquiries in one place.
             </p>
 
-            <button
-              onClick={downloadCSV}
-              className="mt-8 flex items-center gap-2 px-6 py-3 rounded-xl bg-green-500 text-white font-semibold shadow-lg hover:bg-green-600 transition-transform transform hover:scale-105"
-            >
-              <FileDown className="w-5 h-5" />
-              Export to CSV
-            </button>
+            {/* CSV Export button - keep commented if not needed */}
+            {/* <button ...>Export</button> */}
+
+            {/* 🆕 Filter Buttons */}
+            <div className="mt-6 flex gap-4">
+              <button
+                onClick={() => setSelectedCompany("ranveer")}
+                className={`px-6 py-2 rounded-xl font-semibold shadow-md transition ${
+                  selectedCompany === "ranveer"
+                    ? "bg-green-600 text-white"
+                    : "bg-green-100 text-green-700 hover:bg-green-200"
+                }`}
+              >
+                Ranveer Nursery
+              </button>
+              <button
+                onClick={() => setSelectedCompany("amar")}
+                className={`px-6 py-2 rounded-xl font-semibold shadow-md transition ${
+                  selectedCompany === "amar"
+                    ? "bg-green-600 text-white"
+                    : "bg-green-100 text-green-700 hover:bg-green-200"
+                }`}
+              >
+                Amar Nursery
+              </button>
+            </div>
           </div>
         </section>
 
         {/* Inquiries Table */}
         <div className="w-[90%] lg:w-[80%] mb-20 animate-fade-in-up">
           <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-green-100">
-            {inquiries.length > 0 ? (
+            {(
+              selectedCompany === "ranveer" ? inquiries : inquiries2
+            ).length > 0 ? (
               <div className="overflow-x-auto">
                 <table className="min-w-full border-collapse">
                   <thead className="bg-green-100 text-green-800 text-left text-sm font-semibold uppercase tracking-wide">
@@ -154,53 +203,70 @@ function ManageInquiries() {
                     </tr>
                   </thead>
                   <tbody className="text-sm text-gray-600">
-                    {inquiries.map((inq, index) => (
-                      <tr key={inq.id} className="hover:bg-green-50 transition-colors">
-                        <td className="px-6 py-4 border-b">{index + 1}</td>
-                        <td className="px-6 py-4 border-b">{inq.name}</td>
-                        <td className="px-6 py-4 border-b">{inq.email ? inq.email : "N/A"}</td>
-                        <td className="px-6 py-4 border-b">{inq.phone}</td>
-                        <td className="px-6 py-4 border-b">{inq.message}</td>
-                        <td className="px-6 py-4 border-b text-center">
-                          <div className="flex items-center justify-center">
-                            <button
-                              onClick={() => toggleRequestServed(inq.id)}
-                              className={`relative inline-flex h-8 w-16 items-center rounded-full transition-colors duration-300 ease-in-out ${inq.request_served
-                                ? "bg-green-500 hover:bg-green-600"
-                                : "bg-gray-300 hover:bg-gray-400"
+                    {(selectedCompany === "ranveer" ? inquiries : inquiries2).map(
+                      (inq, index) => (
+                        <tr
+                          key={inq.id}
+                          className="hover:bg-green-50 transition-colors"
+                        >
+                          <td className="px-6 py-4 border-b">{index + 1}</td>
+                          <td className="px-6 py-4 border-b">{inq.name}</td>
+                          <td className="px-6 py-4 border-b">
+                            {inq.email ? inq.email : "N/A"}
+                          </td>
+                          <td className="px-6 py-4 border-b">{inq.phone}</td>
+                          <td className="px-6 py-4 border-b">{inq.message}</td>
+                          <td className="px-6 py-4 border-b text-center">
+                            {/* Toggle Switch */}
+                            <div className="flex items-center justify-center">
+                              <button
+                                onClick={() => toggleRequestServed(inq.id)}
+                                className={`relative inline-flex h-8 w-16 items-center rounded-full transition-colors duration-300 ease-in-out ${
+                                  inq.request_served
+                                    ? "bg-green-500 hover:bg-green-600"
+                                    : "bg-gray-300 hover:bg-gray-400"
                                 }`}
-                              role="switch"
-                              aria-checked={inq.request_served}
-                            >
-                              <span
-                                className={`inline-block h-6 w-6 transform rounded-full bg-white shadow-lg transition-transform duration-300 ease-in-out ${inq.request_served ? "translate-x-9" : "translate-x-1"
+                                role="switch"
+                                aria-checked={inq.request_served}
+                              >
+                                <span
+                                  className={`inline-block h-6 w-6 transform rounded-full bg-white shadow-lg transition-transform duration-300 ease-in-out ${
+                                    inq.request_served
+                                      ? "translate-x-9"
+                                      : "translate-x-1"
                                   }`}
-                              />
-                            </button>
-                            <span
-                              className={`ml-3 text-sm font-semibold ${inq.request_served ? "text-green-600" : "text-gray-500"
+                                />
+                              </button>
+                              <span
+                                className={`ml-3 text-sm font-semibold ${
+                                  inq.request_served
+                                    ? "text-green-600"
+                                    : "text-gray-500"
                                 }`}
+                              >
+                                {inq.request_served ? "Served" : "Pending"}
+                              </span>
+                            </div>
+                          </td>
+                          {/* Delete Action */}
+                          <td className="px-6 py-4 border-b text-center">
+                            <button
+                              onClick={() => deleteInquiry(inq.id)}
+                              className="text-red-500 hover:text-red-700 transition-colors"
                             >
-                              {inq.request_served ? "Served" : "Pending"}
-                            </span>
-                          </div>
-                        </td>
-                        {/* 🆕 Delete Action */}
-                        <td className="px-6 py-4 border-b text-center">
-                          <button
-                            onClick={() => deleteInquiry(inq.id)}
-                            className="text-red-500 hover:text-red-700 transition-colors"
-                          >
-                            <Trash2 className="w-5 h-5" />
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
+                              <Trash2 className="w-5 h-5" />
+                            </button>
+                          </td>
+                        </tr>
+                      )
+                    )}
                   </tbody>
                 </table>
               </div>
             ) : (
-              <div className="p-8 text-center text-gray-500">No inquiries found.</div>
+              <div className="p-8 text-center text-gray-500">
+                No inquiries found.
+              </div>
             )}
           </div>
         </div>
