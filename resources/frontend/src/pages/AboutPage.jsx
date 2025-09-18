@@ -37,7 +37,7 @@ const AboutPage = () => {
   ];
 
   const whyChooseUs = [
-    { title: "11+ of Years Experience", description: "Over a decade of expertise in nurturing plants and serving customers.", icon: "📅" },
+    { title: "11+ Years of Experience", description: "Over a decade of expertise in nurturing plants and serving customers.", icon: "📅" },
     { title: "25 Acre Facility", description: "Spacious nursery with polyhouses and advanced growing infrastructure.", icon: "🏞️" },
     { title: "Expert Guidance", description: "Professional horticulturists provide personalized plant care advice.", icon: "👨‍🌾" },
     { title: "Quality Assurance", description: "Every plant is carefully inspected before delivery to ensure health.", icon: "🔍" }
