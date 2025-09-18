@@ -99,7 +99,7 @@ function ManageInquiries() {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      setInquiries((prev) => prev.filter((inq) => inq.id !== id));
+      setInquiries2((prev) => prev.filter((inq) => inq.id !== id));
     } catch (err) {
       console.error("Delete failed:", err);
       alert("Failed to delete inquiry. Please try again.");
@@ -198,7 +198,7 @@ function ManageInquiries() {
                       <th className="px-6 py-4 border-b">Email</th>
                       <th className="px-6 py-4 border-b">Phone</th>
                       <th className="px-6 py-4 border-b">Message</th>
-                      <th className="px-6 py-4 border-b text-center">Status</th>
+                      {selectedCompany=='amar' ? null : <th className="px-6 py-4 border-b text-center">Status</th>}
                       <th className="px-6 py-4 border-b text-center">Actions</th>
                     </tr>
                   </thead>
@@ -216,7 +216,7 @@ function ManageInquiries() {
                           </td>
                           <td className="px-6 py-4 border-b">{inq.phone}</td>
                           <td className="px-6 py-4 border-b">{inq.message}</td>
-                          <td className="px-6 py-4 border-b text-center">
+                          {selectedCompany=='amar' ? null :<td className="px-6 py-4 border-b text-center">
                             {/* Toggle Switch */}
                             <div className="flex items-center justify-center">
                               <button
@@ -247,7 +247,7 @@ function ManageInquiries() {
                                 {inq.request_served ? "Served" : "Pending"}
                               </span>
                             </div>
-                          </td>
+                          </td>}
                           {/* Delete Action */}
                           <td className="px-6 py-4 border-b text-center">
                             <button
