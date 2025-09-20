@@ -7,6 +7,7 @@ import { Loader2, FileDown, Trash2 } from "lucide-react"; // add Trash icon
 function ManageInquiries() {
   const [inquiries, setInquiries] = useState([]);
   const [inquiries2, setInquiries2] = useState([]);
+  const [inquiries3, setInquiries3] = useState([]);
   // 🆕 Track which nursery is selected
   const [selectedCompany, setSelectedCompany] = useState("ranveer");
 
@@ -59,6 +60,29 @@ function ManageInquiries() {
       .finally(() => setLoading(false));
   }, []);
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    axios
+      .get(`${host}/api/inquiries3`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: "application/json",
+        },
+      })
+      .then((res) => {
+        const filtered = (res.data.data || []).filter(
+          (inq) => inq.company_id === 3
+        );
+        setInquiries3(filtered);
+      })
+
+      .catch((err) => {
+        console.error("Error fetching inquiries:", err.response?.data || err);
+      })
+      .finally(() => setLoading(false));
+  }, []);
+
   const toggleRequestServed = async (id) => {
     try {
       const token = localStorage.getItem("token");
@@ -73,6 +97,28 @@ function ManageInquiries() {
       );
 
       setInquiries((prev) => {
+        const updated = prev.map((inq) =>
+          inq.id === id
+            ? { ...inq, request_served: res.data.request_served }
+            : inq
+        );
+        return updated.sort((a, b) =>
+          a.request_served === b.request_served ? 0 : a.request_served ? 1 : -1
+        );
+      });
+
+      setInquiries2((prev) => {
+        const updated = prev.map((inq) =>
+          inq.id === id
+            ? { ...inq, request_served: res.data.request_served }
+            : inq
+        );
+        return updated.sort((a, b) =>
+          a.request_served === b.request_served ? 0 : a.request_served ? 1 : -1
+        );
+      });
+
+      setInquiries3((prev) => {
         const updated = prev.map((inq) =>
           inq.id === id
             ? { ...inq, request_served: res.data.request_served }
@@ -101,6 +147,7 @@ function ManageInquiries() {
 
       setInquiries((prev) => prev.filter((inq) => inq.id !== id));
       setInquiries2((prev) => prev.filter((inq) => inq.id !== id));
+      setInquiries3((prev) => prev.filter((inq) => inq.id !== id));
     } catch (err) {
       console.error("Delete failed:", err);
       alert("Failed to delete inquiry. Please try again.");
@@ -149,7 +196,7 @@ function ManageInquiries() {
         <section className="py-12 px-4 sm:px-6 lg:px-8 w-full">
           <div className="max-w-7xl mx-auto flex flex-col items-center text-center animate-fade-in">
             <h1 className="text-4xl md:text-6xl font-bold text-green-600 mb-4">
-              Client <span className="bg-black bg-clip-text text-transparent">Inquiries</span>
+              Deshmukh Enterprises   <span className="bg-black bg-clip-text text-transparent">and Businesses</span>
             </h1>
             <p className="text-green-700 max-w-xl">
               Manage and track all customer inquiries in one place.
@@ -180,6 +227,17 @@ function ManageInquiries() {
               >
                 Amar Nursery
               </button>
+
+              <button
+                onClick={() => setSelectedCompany("deshmukh")}
+                className={`px-6 py-2 rounded-xl font-semibold shadow-md transition ${
+                  selectedCompany === "deshmukh"
+                    ? "bg-green-600 text-white"
+                    : "bg-green-100 text-green-700 hover:bg-green-200"
+                }`}
+              >
+                Deshmukh Infra
+              </button>
             </div>
           </div>
         </section>
@@ -188,7 +246,7 @@ function ManageInquiries() {
         <div className="w-[90%] lg:w-[80%] mb-20 animate-fade-in-up">
           <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-green-100">
             {(
-              selectedCompany === "ranveer" ? inquiries : inquiries2
+              selectedCompany === "ranveer" ? inquiries : selectedCompany === "amar" ? inquiries2 : inquiries3
             ).length > 0 ? (
               <div className="overflow-x-auto">
                 <table className="min-w-full border-collapse">
@@ -199,12 +257,12 @@ function ManageInquiries() {
                       <th className="px-6 py-4 border-b">Email</th>
                       <th className="px-6 py-4 border-b">Phone</th>
                       <th className="px-6 py-4 border-b">Message</th>
-                      {/* {selectedCompany=='amar' ? null : <th className="px-6 py-4 border-b text-center">Status</th>} */}
+                      <th className="px-6 py-4 border-b text-center">Status</th>
                       <th className="px-6 py-4 border-b text-center">Actions</th>
                     </tr>
                   </thead>
                   <tbody className="text-sm text-gray-600">
-                    {(selectedCompany === "ranveer" ? inquiries : inquiries2).map(
+                    {(selectedCompany === "ranveer" ? inquiries : selectedCompany === "amar" ? inquiries2 : inquiries3).map(
                       (inq, index) => (
                         <tr
                           key={inq.id}
@@ -217,7 +275,7 @@ function ManageInquiries() {
                           </td>
                           <td className="px-6 py-4 border-b">{inq.phone}</td>
                           <td className="px-6 py-4 border-b">{inq.message}</td>
-                          {/* {selectedCompany=='amar' ? null :<td className="px-6 py-4 border-b text-center">
+                          <td className="px-6 py-4 border-b text-center">
                             <div className="flex items-center justify-center">
                               <button
                                 onClick={() => toggleRequestServed(inq.id)}
@@ -244,10 +302,10 @@ function ManageInquiries() {
                                     : "text-gray-500"
                                 }`}
                               >
-                                {inq.request_served ? "Served" : "Pending"}
+                                {inq.request_served ? "Resolved" : "Pending"}
                               </span>
                             </div>
-                          </td>} */}
+                          </td>
                           {/* Delete Action */}
                           <td className="px-6 py-4 border-b text-center">
                             <button
