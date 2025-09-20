@@ -196,7 +196,7 @@ function ManageInquiries() {
         <section className="py-12 px-4 sm:px-6 lg:px-8 w-full">
           <div className="max-w-7xl mx-auto flex flex-col items-center text-center animate-fade-in">
             <h1 className="text-4xl md:text-6xl font-bold text-green-600 mb-4">
-              Deshmukh Enterprises   <span className="bg-black bg-clip-text text-transparent">and Businesses</span>
+              Client <span className="bg-black bg-clip-text text-transparent">Inquiries</span>
             </h1>
             <p className="text-green-700 max-w-xl">
               Manage and track all customer inquiries in one place.

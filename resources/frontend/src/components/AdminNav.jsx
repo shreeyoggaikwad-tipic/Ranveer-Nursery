@@ -45,10 +45,13 @@ function AdminNav() {
                     {/* Logo + Brand */}
                     <div className="flex items-center space-x-3">
                         <Link to="/admin/inquiries" className="flex items-center">
-                            <img src={Logo} alt="Logo" className="w-14 h-14 rounded-full border-2 border-green-400 shadow-sm" />
+                            <div className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center mr-2 shadow-md">
+                                <span className="text-white text-3xl font-bold">D</span>
+                            </div>
+                            {/* <span className="w-14 h-14 rounded-full border-2 border-green-400 shadow-sm" >D <span/> */}
                         </Link>
                         <div className="hidden sm:block">
-                            <p className="text-xl font-bold text-green-700">Ranveer Rose Nursery</p>
+                            <p className="text-xl font-bold text-green-700">Deshmukh Enterprises and Businesses</p>
                             <p className="text-xs text-green-500">Admin Dashboard</p>
                         </div>
                     </div>
@@ -60,7 +63,7 @@ function AdminNav() {
                             className="flex items-center px-3 py-2 rounded-md text-sm font-medium text-green-700 hover:bg-green-100 transition-colors"
                         >
                             <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center mr-2 shadow-md">
-                                <span className="text-white text-sm font-medium">R</span>
+                                <span className="text-white text-sm font-medium">D</span>
                             </div>
                             <span className="hidden lg:block font-semibold">Admin</span>
                             <ChevronDown className="ml-1 w-4 h-4 text-green-600" />
